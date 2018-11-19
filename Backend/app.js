@@ -3,13 +3,24 @@ const app = express()
 const bodyParser = require('body-Parser')
 
 const loginRoutes = require('./api/routes/login')
-// app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// routes
+// Preventing CORS errors
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', '*')
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET, DELETE, POST, PUT, PATCH')
+    return res.status(200).send()
+  }
+  next()
+})
+
+// Routes
 app.use('/login', loginRoutes)
 
-// error handling needs to be after all routes
+// Error handling needs to be after all routes
 app.use((req, res, next) => {
   const error = new Error('Not found!')
   error.status = 404

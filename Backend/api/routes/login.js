@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 router.post('/', (req, res, next) => {
-  // temp test
+  // Temp test
   if (req.body.name === 'admin' && req.body.password === 'secret') {
     res.status(200).json({
       message: 'pass'
