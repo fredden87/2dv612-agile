@@ -1,8 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const typemodel = require('../db_resources/typemodel.js')
-// uncomment relevant lines to switch into post mode when frontend is ready
-
+// uncomment relevant lines to switch into post mode when frontend is ready. 
+router.get('/typedata', (req,res,next) => {
+  typemodel.find((err, types)=>{
+    if(err){
+      res.status(500).json({
+        message: 'unable to find any Customer Classes'
+      })} else {
+        res.status(200).send(types)
+      }
+      })
+})
 router.get('/', (req, res, next) => {
 // router.post('/', (req, res, next) => {  
 
@@ -16,24 +25,36 @@ router.get('/', (req, res, next) => {
           message: 'Unable to establish database connection'
         })
       }
-      let input="ok"
-      //let input=req.body.type
-
-      //TODO  check if already present
-      typemodel.create({type:input},function(err){
-        if(err){
-          res.status(500).json({
-            message: 'unable to create database object'
+      let input="Admin"
+      //let typedata=new typemodel({customerClass: req.body.type})
+      let typedata=new typemodel({customerClass: input})
+      typemodel.find({customerClass:input}).exec(function(err,docs){
+        if (err||docs.length!=0){
+          res.status(400).json({
+            message: 'Customer Class Already Exists'
           })
-        }
-        res.status(200).json({
-          message: 'successfuly created type in database'
-        })
+        } else {
+        console.log(docs.length)
+   
+          typedata.save(function(err){
+            if(err){
+              res.status(500).json({
+                message: 'unable to create database object'
+              })
+            } else {
+              res.status(200).json({
+                message: 'saved new Customer Class: '+input
+              })
+
+      
+          }})
+        } 
+       
       })
     })
   } else {
     res.status(401).json({
-      message: 'fail'
+      message: 'Unauthorized'
     })
   }
 })
