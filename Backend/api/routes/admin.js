@@ -1,8 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const typemodel = require('../db_resources/typemodel.js')
-// uncomment relevant lines to switch into post mode when frontend is ready
-
+// uncomment relevant lines to switch into post mode when frontend is ready. 
+router.get('/typedata', (req,res,next) => {
+  typemodel.find((err, types)=>{
+    if(err){
+      res.status(500).json({
+        message: 'unable to find any Customer Classes'
+      })} else {
+        res.status(200).send(types)
+      }
+      })
+})
 router.get('/', (req, res, next) => {
 // router.post('/', (req, res, next) => {  
 
@@ -33,15 +42,10 @@ router.get('/', (req, res, next) => {
                 message: 'unable to create database object'
               })
             } else {
-              //the return functionality, move this to a separate route and use this to read customer classes into frontend
-              typemodel.find((err, types)=>{
-            if(err){
-              res.status(500).json({
-                message: 'unable to create database object'
-              })} else {
-                res.status(200).send(types)
-              }
+              res.status(200).json({
+                message: 'saved new Customer Class: '+input
               })
+
       
           }})
         } 
@@ -50,7 +54,7 @@ router.get('/', (req, res, next) => {
     })
   } else {
     res.status(401).json({
-      message: 'fail'
+      message: 'Unauthorized'
     })
   }
 })
