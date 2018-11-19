@@ -10,6 +10,12 @@ npm install
 npm run serve
 ```
 
+or from project root directory
+
+```
+npm run serve --prefix Frontend/
+```
+
 ### Compiles and minifies for production
 ```
 npm run build
