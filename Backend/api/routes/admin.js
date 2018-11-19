@@ -11,8 +11,7 @@ router.get('/', (req, res, next) => {
     //you will need to have a PASS=mongoDBpassword environment variable to connect!
     mongoose.connect('mongodb+srv://team3:'+process.env.PASS+'@cluster0-xwlga.mongodb.net/admin', function(error){
       if(error){ console.log(error)}
-      
-              console.log("connection successful")
+      console.log("connection successful")
     })
 
   } else {
