@@ -63,7 +63,7 @@ export default {
       request.send(formData)
 
       // Get form data and make API call.
-      console.log('Registering user... '+request.response)
+      console.log('Registering user... '+formData+" : "+request.response)
     }
   }
 }
