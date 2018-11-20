@@ -52,21 +52,8 @@ export default {
   methods: {
     registerUser: function (event) {
       event.preventDefault()
-      let request=new XMLHttpRequest()
-      request.open('POST', 'http://127.0.0.1:3000/user/signup', false)
-      request.setRequestHeader('Content-Type', 'application/json')
-      request.setRequestHeader('Access-Control-Allow-Headers','*')
-      request.setRequestHeader('Access-Control-Allow-Origin', '*');
-      let formData=new FormData()
-      formData.append("password", document.getElementById("password1").value)
-      formData.append("email", document.getElementById("email").value)
-      formData.append("firstname", document.getElementById("first_name").value)
-      formData.append("lastname", document.getElementById("last_name").value)
-      formData.append("role", "noinputimplemented")
-      request.send(formData)
-
-      // Get form data and make API call.
-      console.log('Registering user... '+formData.toString()+" : "+request.response)
+      const request=require('request')
+      request.post('http://127.0.0.1:3000/user/signup', {form:{password:document.getElementById("password1").value, email: document.getElementById("email").value, firstname: document.getElementById("first_name").value, lastname: document.getElementById("last_name").value, role: "notimplemented"}})
     }
   }
 }
