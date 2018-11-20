@@ -52,8 +52,8 @@ export default {
   methods: {
     registerUser: function (event) {
       event.preventDefault()
-      // Get form data and make API call.
-      console.log('Registering user...')
+      const request=require('request')
+      request.post('http://127.0.0.1:3000/user/signup', {form:{password:document.getElementById("password1").value, email: document.getElementById("email").value, firstname: document.getElementById("first_name").value, lastname: document.getElementById("last_name").value, role: "notimplemented"}})
     }
   }
 }
