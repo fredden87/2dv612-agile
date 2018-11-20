@@ -53,7 +53,7 @@ export default {
     registerUser: function (event) {
       event.preventDefault()
       let request=new XMLHttpRequest()
-      request.open('POST', 'http://localhost:3000/signup', false)
+      request.open('POST', 'http://127.0.0.1:3000/signup', false)
       let formData=new FormData()
       formData.append("password", document.getElementById("password1").value)
       formData.append("email", document.getElementById("email").value)
