@@ -16,47 +16,41 @@ router.get('/signup', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
 
-    User.find({ email: req.body.email }).exec().then(data => {
-        if (data.length != 0) {
-            return res.status(400).json({ message: "User with such email already exists" })
+    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        if (err) {
+            return res.status(500).json({
+                error: err
+            });
         } else {
-            bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-                if (err) {
-                    return res.status(500).json({
-                        error: err
-                    });
-                } else {
-                    mongoose.connect(MONGODB_URL, {
-                        autoReconnect: true,
-                        useNewUrlParser: true
-                    }).catch(err => {
-                        console.log('Mongo connection error', err)
-                        res.status(500).json({
-                            error: err
-                        })
-                    })
+            mongoose.connect(MONGODB_URL, {
+                autoReconnect: true,
+                useNewUrlParser: true
+            }).catch(err => {
+                console.log('Mongo connection error', err)
+                res.status(500).json({
+                    error: err
+                })
+            })
 
-                    const user = new User({
-                        _id: new mongoose.Types.ObjectId(),
-                        firstname: req.body.firstname,
-                        lastname: req.body.lastname,
-                        role: req.body.role,
-                        email: req.body.email,
-                        password: hash
-                    })
+            const user = new User({
+                _id: new mongoose.Types.ObjectId(),
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                role: req.body.role,
+                email: req.body.email,
+                password: hash
+            })
 
-                    user.save().then(data => {
-                        console.log(data);
-                        res.status(200).json({
-                            message: 'New user added'
-                        })
-                    }).catch(err => {
-                        console.log(err);
-                        res.status(500).json({
-                            error: err
-                        })
-                    })
-                }
+            user.save().then(data => {
+                console.log(data);
+                res.status(200).json({
+                    message: 'New user added'
+                })
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error: err
+                })
             })
         }
     })
