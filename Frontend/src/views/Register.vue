@@ -53,6 +53,7 @@ export default {
     registerUser: function (event) {
       event.preventDefault()
       let request=new XMLHttpRequest()
+      request.setRequestHeader('Content-Type', 'application/json')
       request.open('POST', 'http://127.0.0.1:3000/user/signup', false)
       let formData=new FormData()
       formData.append("password", document.getElementById("password1").value)
