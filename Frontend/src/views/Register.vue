@@ -52,8 +52,18 @@ export default {
   methods: {
     registerUser: function (event) {
       event.preventDefault()
+      let request=new XMLHttpRequest()
+      request.open('POST', 'http://localhost:3000/signup', false)
+      let formData=new FormData()
+      formData.append("password", document.getElementById("password1").value)
+      formData.append("email", document.getElementById("email").value)
+      formData.append("firstname", document.getElementById("first_name").value)
+      formData.append("lastname", document.getElementById("last_name").value)
+      formData.append("role", "noinputimplemented")
+      request.send(formData)
+
       // Get form data and make API call.
-      console.log('Registering user...')
+      console.log('Registering user... '+request.response)
     }
   }
 }
