@@ -11,5 +11,5 @@ console.log('server running on port: ' + port)
 
 // sends the mail
 // if this lines are uncommented, the welcome email will send everytime you start server
-  mailModel.sendMail(() => {
-  })
+  // mailModel.sendMail(() => {
+  // })
