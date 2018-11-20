@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const MONGODB_URL = 'mongodb+srv://team3:'+process.env.PASS+'@cluster0-xwlga.mongodb.net/team3'
-
+//this route is in /user/signup fix this in Register.vue reference if not intended
 router.get('/signup', (req, res, next) => {
     res.render('signup', {title: 'Sign up'})
 })
