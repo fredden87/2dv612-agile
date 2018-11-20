@@ -54,7 +54,7 @@ export default {
       event.preventDefault()
       let request=new XMLHttpRequest()
       request.open('POST', 'http://127.0.0.1:3000/user/signup', false)
-      request.setRequestHeader('Content-Type', 'application/json')
+      request.setRequestHeader('Access-Control-Allow-Headers','Content-Type', 'application/json')
       let formData=new FormData()
       formData.append("password", document.getElementById("password1").value)
       formData.append("email", document.getElementById("email").value)
