@@ -1,19 +1,66 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
+const User = require('../db_resources/usermodel.js')
+const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const router = express.Router()
 
 router.post('/', (req, res, next) => {
-  // Temp test
-  if (req.body.name === 'admin' && req.body.password === 'secret') {
-    res.status(200).json({
-      message: 'pass'
+  connectDB(res)
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (user.length < 1) {
+        return res.status(401).json({
+          message: 'Authorization failed'
+        })
+      }
+      bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            message: 'Authorization failed'
+          })
+        }
+        if (result) {
+          return res.status(200).json({
+            message: 'Authorization successful'
+          })
+        }
+        return res.status(401).json({
+          message: 'Authorization failed'
+        })
+      })
     })
-    console.log('pass')
-  } else {
-    res.status(401).json({
-      message: 'fail'
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
     })
-    console.log('fail')
-  }
 })
 
+function connectDB (res) {
+  mongoose.connect(MONGODB_URL, {
+    autoReconnect: true,
+    useNewUrlParser: true
+  }).catch(err => {
+    console.log('Mongo connection error', err)
+    res.status(500).json({
+      error: err
+    })
+  })
+}
+// Temp test
+/* if (req.body.name === 'admin' && req.body.password === 'secret') {
+  res.status(200).json({
+    message: 'pass'
+  })
+  console.log('pass')
+} else {
+  res.status(401).json({
+    message: 'fail'
+  })
+  console.log('fail')
+}
+}) */
 module.exports = router
