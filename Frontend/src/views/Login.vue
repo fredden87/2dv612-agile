@@ -39,7 +39,7 @@
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }}, function(err, response, body) {
           console.log(JSON.stringify(response))
-         let isAdmin = response.data.user.is_admin
+          let isAdmin = response.body.user.is_admin
                         localStorage.setItem('user',JSON.stringify(response.body.user.email))
                         localStorage.setItem('jwt',response.body.token)
 
