@@ -38,6 +38,25 @@
         request.post('http://127.0.0.1:3000/login', {
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }
+        }).then(response=>{
+         let isAdmin = response.data.user.is_admin
+                        localStorage.setItem('user',JSON.stringify(response.data.user))
+                        localStorage.setItem('jwt',response.data.token)
+
+                        if (localStorage.getItem('jwt') != null){
+                            this.$emit('loggedIn')
+                            if(this.$route.params.nextUrl != null){
+                                this.$router.push(this.$route.params.nextUrl)
+                            }
+                            else {
+                                if(isAdmin === 1){
+                                    this.$router.push('admin')
+                                }
+                                else {
+                                    this.$router.push('welcome')
+                                }
+                            }
+                        }  
         })
       }
     }
