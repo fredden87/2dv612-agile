@@ -8,7 +8,7 @@ import Admin from './views/Admin.vue'
 
 Vue.use(Router)
 
-router = new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
