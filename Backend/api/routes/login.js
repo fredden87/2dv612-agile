@@ -5,6 +5,7 @@ const User = require('../db_resources/usermodel.js')
 const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const router = express.Router()
 
+// Using email and password to auth user
 router.post('/', (req, res, next) => {
   connectDB(res)
   User.find({ email: req.body.email })
