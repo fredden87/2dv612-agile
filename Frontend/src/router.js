@@ -8,7 +8,7 @@ import Admin from './views/Admin.vue'
 
 Vue.use(Router)
 
-let router = new Router({
+router = new Router({
   routes: [
     {
       path: '/',
@@ -57,12 +57,11 @@ router.beforeEach((to, from, next)=> {
     if (localStorage.getItem('jwt')==null){
       next({
         path: '/login',
-        params: { nextUrl: to.fullPath }
       })
     } else {
       let user = JSON.parse(localStorage.getItem('user'))
       if (to.matched.some(record=>record.meta.is_admin)){
-        if(user.is_admin==1){
+        if(user.is_admin===1){
           next()
         } else {
           next({path:'/welcome'})

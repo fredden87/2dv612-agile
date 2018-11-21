@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import router from '../router'
   export default {
     name: 'Login',
     components: {
@@ -35,27 +36,25 @@
       login: function (event) {
         event.preventDefault()
         const request=require('request')
-        request.post({ url: 'http://127.0.0.1:3000/login', 
+        request.post({ url: 'http://194.47.206.226:3000/login', 
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }}, function(err, response, body) {
-          console.log(JSON.stringify(response))
-          let isAdmin = response.body.user.is_admin
-                        localStorage.setItem('user',JSON.stringify(response.body.user.email))
-                        localStorage.setItem('jwt',response.body.token)
+          console.log(body)
+          let data = JSON.parse(body)
+          let isAdmin = data.user.is_admin
+                        localStorage.setItem('user', JSON.stringify(data.user))
+                        localStorage.setItem('jwt', JSON.stringify(data.token))
 
                         if (localStorage.getItem('jwt') != null){
-                            this.$emit('loggedIn')
-                            if(this.$route.params.nextUrl != null){
-                                this.$router.push(this.$route.params.nextUrl)
-                            }
-                            else {
+                            console.log('loggedIn')
                                 if(isAdmin === 1){
-                                    this.$router.push('admin')
+                                  console.log('privelege escalation')
+                                    router.push({ name: 'admin'})
                                 }
                                 else {
-                                    this.$router.push('welcome')
+                                    router.push({ name: 'welcome'})
                                 }
-                            }
+                            
                         }  
         })
       }
