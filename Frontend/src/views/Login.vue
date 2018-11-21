@@ -38,7 +38,7 @@
         request.post('http://127.0.0.1:3000/login', {
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }
-        }).then(response=>{
+        }).on('response', function(response) {
          let isAdmin = response.data.user.is_admin
                         localStorage.setItem('user',JSON.stringify(response.data.user))
                         localStorage.setItem('jwt',response.data.token)
