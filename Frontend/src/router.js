@@ -36,7 +36,10 @@ let router = new Router({
     {
       path: '/welcome',
       name: 'welcome',
-      component: Welcome
+      component: Welcome,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/admin',

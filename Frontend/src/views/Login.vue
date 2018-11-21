@@ -37,11 +37,11 @@
         const request=require('request')
         request.post({ url: 'http://127.0.0.1:3000/login', 
           form:{ password: document.getElementById("password").value, 
-            email: document.getElementById("email").value }}, function(response) {
-          console.log(JSON.sringify(response))
+            email: document.getElementById("email").value }}, function(err, response, body) {
+          console.log(JSON.stringify(response))
          let isAdmin = response.data.user.is_admin
-                        localStorage.setItem('user',JSON.stringify(response.data.email))
-                        localStorage.setItem('jwt',response.data.token)
+                        localStorage.setItem('user',JSON.stringify(response.body.user.email))
+                        localStorage.setItem('jwt',response.body.token)
 
                         if (localStorage.getItem('jwt') != null){
                             this.$emit('loggedIn')
