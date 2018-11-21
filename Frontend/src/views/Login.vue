@@ -39,8 +39,9 @@
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }
         }).on('response', function(response) {
+          console.log(JSON.sringify(response))
          let isAdmin = response.data.user.is_admin
-                        localStorage.setItem('user',JSON.stringify(response.data.user))
+                        localStorage.setItem('user',JSON.stringify(response.data.email))
                         localStorage.setItem('jwt',response.data.token)
 
                         if (localStorage.getItem('jwt') != null){
