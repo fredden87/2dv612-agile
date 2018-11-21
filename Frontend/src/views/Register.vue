@@ -53,7 +53,7 @@ export default {
     registerUser: function (event) {
       event.preventDefault()
       const request = require('request')
-      request.post('http://194.47.206.226:3000/user/signup', { form: { password: document.getElementById('password1').value, email: document.getElementById('email').value, firstname: document.getElementById('first_name').value, lastname: document.getElementById('last_name').value, role: 'notimplemented' } })
+      request.post('http://127.0.0.1:3000/user/signup', { form: { password: document.getElementById('password1').value, email: document.getElementById('email').value, firstname: document.getElementById('first_name').value, lastname: document.getElementById('last_name').value, role: 'notimplemented' } })
     }
   }
 }

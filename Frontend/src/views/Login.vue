@@ -35,8 +35,8 @@
       login: function (event) {
         event.preventDefault()
         const request=require('request')
-        request.post('http://127.0.0.1:3000/user/login', {
-          form:{password:document.getElementById("password").value,
+        request.post('http://127.0.0.1:3000/login', {
+          form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }
         })
       }
