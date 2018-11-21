@@ -4,8 +4,20 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    firstname: { type: String },
-    lastname: { type: String },
+    firstname: {
+        type: String,
+        required: true,
+        match: /^[A-Za-z-]+$/,
+        minlength: 3,
+        maxlength: 20
+    },
+    lastname: {
+        type: String,
+        required: true,
+        match: /^[A-Za-z-]+$/,
+        minlength: 3,
+        maxlength: 20
+    },
     role: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
