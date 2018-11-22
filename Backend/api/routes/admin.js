@@ -12,9 +12,9 @@ router.get('/typedata', (req,res,next) => {
       }
       })
 })
-router.get('/', (req, res, next) => {
-// router.post('/', (req, res, next) => {  
-
+//router.get('/', (req, res, next) => {
+ router.post('/', (req, res, next) => {  
+//need to control the API access somehow, currently admin checks are only on frontend
   if (true) { 
   // if(req.body.name === 'admin' && req.body.password === 'secret' && req.body.type) { // TODO DO NOT STORE PASSWORD AND USERNAME HERE
     const mongoose = require('mongoose')
@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
           message: 'Unable to establish database connection'
         })
       }
-      let input="Admin"
+      let input=req.body.cclass
       //let typedata=new typemodel({customerClass: req.body.type})
       let typedata=new typemodel({customerClass: input})
       typemodel.find({customerClass:input}).exec(function(err,docs){
