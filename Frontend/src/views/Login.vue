@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  import router from '../router'
   export default {
     name: 'Login',
     components: {
@@ -35,9 +36,26 @@
       login: function (event) {
         event.preventDefault()
         const request=require('request')
-        request.post('http://127.0.0.1:3000/user/login', {
-          form:{password:document.getElementById("password").value,
-            email: document.getElementById("email").value }
+        request.post({ url: 'http://194.47.206.226:3000/login', 
+          form:{ password: document.getElementById("password").value, 
+            email: document.getElementById("email").value }}, function(err, response, body) {
+          console.log(body)
+          let data = JSON.parse(body)
+          let isAdmin = data.user.is_admin
+                        localStorage.setItem('user', JSON.stringify(data.user))
+                        localStorage.setItem('jwt', JSON.stringify(data.token))
+
+                        if (localStorage.getItem('jwt') != null){
+                            console.log('loggedIn')
+                                if(isAdmin === 1){
+                                  console.log('privelege escalation')
+                                    router.push({ name: 'admin'})
+                                }
+                                else {
+                                    router.push({ name: 'welcome'})
+                                }
+                            
+                        }  
         })
       }
     }

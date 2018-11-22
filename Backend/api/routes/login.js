@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const User = require('../db_resources/usermodel.js')
 const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const router = express.Router()
+const jwt=require('jsonwebtoken')
 
 // Using email and password to auth user
 router.post('/', (req, res, next) => {
@@ -23,13 +24,13 @@ router.post('/', (req, res, next) => {
           })
         }
         if (result) {
-          return res.status(200).json({
-            message: 'Authorization successful'
-          })
-        }
+          let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
+          res.status(200).json({ auth: true, token: token, user: user[0] })
+        } else {
         return res.status(401).json({
           message: 'Authorization failed'
         })
+      }
       })
     })
     .catch(err => {
