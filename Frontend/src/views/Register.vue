@@ -72,7 +72,7 @@ export default {
       const request = require('request')
       if (document.getElementById('password1')!==document.getElementById('password2')){
         window.M.toast({
-        html: 'Incorrect password confirmation, verify spelling,
+        html: 'Incorrect password confirmation, verify spelling',
         classes: 'deep-orange accent-4 black-text',
         displayLength: 6000
        })
