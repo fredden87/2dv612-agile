@@ -70,14 +70,14 @@ export default {
       // this.$router.push({ name: 'home' })
 
       const request = require('request')
-      if (document.getElementById('password1')!==document.getElementById('password2')){
+      if (document.getElementById('password1').value!==document.getElementById('password2').value){
         window.M.toast({
         html: 'Incorrect password confirmation, verify spelling',
         classes: 'deep-orange accent-4 black-text',
         displayLength: 6000
        })
         } else {
-      request.post({ 'http://194.47.206.226:3000/user/signup',
+      request.post({ uri: 'http://194.47.206.226:3000/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,
@@ -85,16 +85,16 @@ export default {
           lastname: document.getElementById('last_name').value,
           role: 'notimplemented' } },
           function(err, response, body){
-
-            if (err||response.status!==200){
+            let data=JSON.parse(body)
+            if (err||response.statusCode!==200){
              window.M.toast({
-             html: JSON.stringify(response.err),
+             html: data.error.errmsg,
              classes: 'deep-orange accent-4 black-text',
              displayLength: 6000
              })
             } else {
                window.M.toast({
-               html: JSON.stringify(response.message),
+               html: data.message,
                classes: 'green darken-1'
              })
             }
