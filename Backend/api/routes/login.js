@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
         }
         if (result) {
           let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
-          res.status(200).json({ auth: true, token: token, user: user[0] })
+          res.status(200).json({ message: 'Welcome: '+user[0].firstname+' '+user[0].lastname, auth: true, token: token, user: user[0] })
         } else {
         return res.status(401).json({
           message: 'Authorization failed'

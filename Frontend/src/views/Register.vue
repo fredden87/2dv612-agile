@@ -43,7 +43,7 @@
 </template>
 
 <script>
-
+import router from '../router'
 export default {
   name: 'Register',
   components: {
@@ -52,8 +52,54 @@ export default {
   methods: {
     registerUser: function (event) {
       event.preventDefault()
+
+      // Creates a green 'success message'.
+      // window.M.toast({
+      //   html: 'Success message',
+      //   classes: 'green darken-1'
+      // })
+
+      // Creates a red 'error message'.
+      // window.M.toast({
+      //   html: 'Error message',
+      //   classes: 'deep-orange accent-4 black-text',
+      //   displayLength: 6000
+      // })
+
+      // Redirects to home page.
+      // this.$router.push({ name: 'home' })
+
       const request = require('request')
-      request.post('http://194.47.206.226:3000/user/signup', { form: { password: document.getElementById('password1').value, email: document.getElementById('email').value, firstname: document.getElementById('first_name').value, lastname: document.getElementById('last_name').value, role: 'notimplemented' } })
+      if (document.getElementById('password1').value!==document.getElementById('password2').value){
+        window.M.toast({
+        html: 'Incorrect password confirmation, verify spelling',
+        classes: 'deep-orange accent-4 black-text',
+        displayLength: 6000
+       })
+        } else {
+      request.post({ uri: 'http://194.47.206.226:3000/user/signup',
+        form: {
+          password: document.getElementById('password1').value,
+          email: document.getElementById('email').value,
+          firstname: document.getElementById('first_name').value,
+          lastname: document.getElementById('last_name').value,
+          role: 'notimplemented' } },
+          function(err, response, body){
+            let data=JSON.parse(body)
+            if (err||response.statusCode!==200){
+             window.M.toast({
+             html: data.error.errmsg,
+             classes: 'deep-orange accent-4 black-text',
+             displayLength: 6000
+             })
+            } else {
+               window.M.toast({
+               html: data.message,
+               classes: 'green darken-1'
+             })
+            }
+          })
+    }
     }
   }
 }
