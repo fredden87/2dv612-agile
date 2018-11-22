@@ -31,7 +31,7 @@ router.get('/typedata', (req,res,next) => {
       typemodel.find({customerClass:input}).exec(function(err,docs){
         if (err||docs.length!=0){
           res.status(400).json({
-            message: 'Customer Class Already Exists'
+            message: 'Customer Class: '+input+' Already Exists'
           })
         } else {
         console.log(docs.length)

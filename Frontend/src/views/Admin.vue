@@ -34,9 +34,19 @@
         const request=require('request')
         request.post({ url: 'http://194.47.206.226:3000/admin', 
           form:{ cclass: document.getElementById("cclass").value }}, function(err, response, body) {
-          console.log(body)
           let data = JSON.parse(body)
-//present err/res notification
+            if (err||response.statusCode!==200){
+             window.M.toast({
+             html: data.message,
+             classes: 'deep-orange accent-4 black-text',
+             displayLength: 6000
+             })
+            } else {
+               window.M.toast({
+               html: data.message,
+               classes: 'green darken-1'
+             })
+            }
         })
       }
   }
