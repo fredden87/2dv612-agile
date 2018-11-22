@@ -5,7 +5,7 @@
       <div>
       <form class="col s8" method="post">
         <div class="input-field col s6">
-          <input id="text" type="text" class="validate">
+          <input id="`cclass" type="text" class="validate">
           <label for="text">New Customer Class</label>
         </div>
         
@@ -33,13 +33,13 @@
         event.preventDefault()
         const request=require('request')
         request.post({ url: 'http://194.47.206.226:3000/admin', 
-          form:{ cclass: document.getElementById("cclass").value, function(err, response, body) {
+          form:{ cclass: document.getElementById("cclass").value }}, function(err, response, body) {
           console.log(body)
           let data = JSON.parse(body)
 //present err/res notification
         })
       }
-    }
+  }
   }
 </script>
 <style>
