@@ -43,7 +43,7 @@
 </template>
 
 <script>
-
+import router from '../router'
 export default {
   name: 'Register',
   components: {
@@ -70,7 +70,36 @@ export default {
       // this.$router.push({ name: 'home' })
 
       const request = require('request')
-      request.post('http://194.47.206.226:3000/user/signup', { form: { password: document.getElementById('password1').value, email: document.getElementById('email').value, firstname: document.getElementById('first_name').value, lastname: document.getElementById('last_name').value, role: 'notimplemented' } })
+      if (document.getElementById('password1')!==document.getElementById('password2')){
+        window.M.toast({
+        html: 'Incorrect password confirmation, verify spelling,
+        classes: 'deep-orange accent-4 black-text',
+        displayLength: 6000
+       })
+        } else {
+      request.post({ 'http://194.47.206.226:3000/user/signup',
+        form: {
+          password: document.getElementById('password1').value,
+          email: document.getElementById('email').value,
+          firstname: document.getElementById('first_name').value,
+          lastname: document.getElementById('last_name').value,
+          role: 'notimplemented' } },
+          function(err, response, body){
+
+            if (err||response.status!==200){
+             window.M.toast({
+             html: JSON.stringify(response.err),
+             classes: 'deep-orange accent-4 black-text',
+             displayLength: 6000
+             })
+            } else {
+               window.M.toast({
+               html: JSON.stringify(response.message),
+               classes: 'green darken-1'
+             })
+            }
+          })
+    }
     }
   }
 }
