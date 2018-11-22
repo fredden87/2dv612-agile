@@ -5,7 +5,7 @@
       <div>
       <form class="col s8" method="post">
         <div class="input-field col s6">
-          <input id="`cclass" type="text" class="validate">
+          <input id="cclass" type="text" class="validate">
           <label for="text">New Customer Class</label>
         </div>
         
