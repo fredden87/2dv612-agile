@@ -20,7 +20,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['Admin', 'Employee', 'Park owner', 'Car owner'],
+       // enum: ['Admin', 'Employee', 'Park owner', 'Car owner'],
         required: true
     },
     email: {
@@ -31,7 +31,6 @@ const userSchema = new Schema({
         unique: true,
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/},
     password: { type: String, required: true },
-    confirmPassword: { type: String, required: true }
 })
 
 module.exports = mongoose.model('User', userSchema);
