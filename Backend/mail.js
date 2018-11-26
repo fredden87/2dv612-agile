@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 
 function sendMail(settings, callback){
     // var reciever = 'pe222gq@student.lnu.se'; // logged in users email
-    var reciever = settings.user.email;
+    var reciever = 'rjosih@hotmail.com'; // logged in users email
     var subject = 'Welcome to the parkinglot';
     var message = 'Hello and welcome :)!!!!!!!!!';
     
@@ -22,7 +22,7 @@ function sendMail(settings, callback){
 
 // from the account the mail is sent from
 let HelperOptions = {
-    from: 'Team 3 <' + process.env.email_user + '>',
+    from: 'Team 3 <' + process.env.EMAIL_USER + '>',
     to: reciever,
     subject: subject,
     text: message
