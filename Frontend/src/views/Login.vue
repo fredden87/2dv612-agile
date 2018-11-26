@@ -38,7 +38,7 @@
         event.preventDefault()
         const request=require('request')
         let backendUrl = '127.0.0.1:3000'
-        if (process.env.ENVIRONMENT==="production"){
+        if (process.env.VUE_APP_ENVIRONMENT==="production"){
           backendUrl='194.47.206.226:3000'
         }
         request.post({ url: 'http://'+backendUrl+'/login', 
