@@ -4,7 +4,7 @@
       <form class="col s12">
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder="" id="first_name" type="text" class="validate">
+            <input id="first_name" type="text" class="validate">
             <label for="first_name">First Name</label>
           </div>
           <div class="input-field col s6">
@@ -31,9 +31,9 @@
   <div class="input-field col s12">
     <select id="cClass">
       <option value="" disabled selected>Choose your service profile</option>
-      <option value="1">Car Owner</option>
-      <option value="2">Parking lot Owner</option>
-      <option value="3">Parking Guard</option>
+      <option value="Car Owner">Car Owner</option>
+      <option value="Parking lot Owner">Parking lot Owner</option>
+      <option value="Parking Guard">Parking Guard</option>
     </select>
     <label>Customer profile selection</label>
   </div>
@@ -53,12 +53,10 @@
 <script>
 import router from '../router'
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const elem = document.getElementById('cClass');
-    const init = M.FormSelect.init(elem, options);
-  });
-
 export default {
+  mounted(){
+  M.FormSelect.init(document.getElementById('cClass'))
+  },
   name: 'Register',
   components: {
 
@@ -78,14 +76,15 @@ export default {
         displayLength: 6000
        })
         } else {
-      let instance = M.FormSelect.getInstance(document.getElementById('cClass'))    
+      let instance = M.FormSelect.getInstance(document.getElementById('cClass'))  
+      console.log(instance.options[instance.selectedIndex].value)  
       request.post({ uri: 'http://'+backendUrl+'/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,
           firstname: document.getElementById('first_name').value,
           lastname: document.getElementById('last_name').value,
-          role: instance.getSelectedValues[0] } },
+          role: instance.options[instance.selectedIndex].value } },
           function(err, response, body){
             let data=JSON.parse(body)
             if (err||response.statusCode!==200){
