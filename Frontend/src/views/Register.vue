@@ -52,24 +52,11 @@ export default {
   methods: {
     registerUser: function (event) {
       event.preventDefault()
-
-      // Creates a green 'success message'.
-      // window.M.toast({
-      //   html: 'Success message',
-      //   classes: 'green darken-1'
-      // })
-
-      // Creates a red 'error message'.
-      // window.M.toast({
-      //   html: 'Error message',
-      //   classes: 'deep-orange accent-4 black-text',
-      //   displayLength: 6000
-      // })
-
-      // Redirects to home page.
-      // this.$router.push({ name: 'home' })
-
       const request = require('request')
+      let backendUrl = '127.0.0.1:3000'
+      if (process.env.VUE_APP_ENVIRONMENT==="production"){
+        backendUrl='194.47.206.226:3000'
+      }
       if (document.getElementById('password1').value!==document.getElementById('password2').value){
         window.M.toast({
         html: 'Incorrect password confirmation, verify spelling',
@@ -77,7 +64,7 @@ export default {
         displayLength: 6000
        })
         } else {
-      request.post({ uri: 'http://194.47.206.226:3000/user/signup',
+      request.post({ uri: 'http://'+backendUrl+'/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,
