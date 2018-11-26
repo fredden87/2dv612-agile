@@ -77,7 +77,7 @@ export default {
         displayLength: 6000
        })
         } else {
-      request.post({ uri: 'http://194.47.206.226:3000/user/signup',
+      request.post({ uri: 'http://localhost:3000/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,
