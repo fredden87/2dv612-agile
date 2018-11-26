@@ -8,10 +8,11 @@ const User = require('../db_resources/usermodel.js')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
-const MONGODB_URL = 'mongodb+srv://team3:'+process.env.PASS+'@cluster0-xwlga.mongodb.net/team3'
+const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
+const mailModel = require('../routes_resources/mail.js')
 //this route is in /user/signup fix this in Register.vue reference if not intended
 router.get('/signup', (req, res, next) => {
-    res.render('signup', {title: 'Sign up'})
+    res.render('signup', { title: 'Sign up' })
 })
 
 router.post('/signup', (req, res, next) => {
@@ -46,6 +47,13 @@ router.post('/signup', (req, res, next) => {
                 res.status(200).json({
                     message: 'New user added'
                 })
+                // sends the welcome mail to 
+                mailModel.sendMail(user,(error) => {
+                    if(error){
+                        return console.log('Error: ' + error)
+                    }
+                })
+
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
