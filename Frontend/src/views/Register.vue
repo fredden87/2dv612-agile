@@ -28,7 +28,15 @@
             <label for="password2">Confirm Password</label>
           </div>
         </div>
-
+  <div class="input-field col s12">
+    <select id="cClass">
+      <option value="" disabled selected>Choose your service profile</option>
+      <option value="1">Car Owner</option>
+      <option value="2">Parking lot Owner</option>
+      <option value="3">Parking Guard</option>
+    </select>
+    <label>Customer profile selection</label>
+  </div>
         <button
           class="btn
           waves-effect waves-light"
@@ -44,6 +52,12 @@
 
 <script>
 import router from '../router'
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const elem = document.getElementById('cClass');
+    const init = M.FormSelect.init(elem, options);
+  });
+
 export default {
   name: 'Register',
   components: {
@@ -64,13 +78,14 @@ export default {
         displayLength: 6000
        })
         } else {
+      let instance = M.FormSelect.getInstance(document.getElementById('cClass'))    
       request.post({ uri: 'http://'+backendUrl+'/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,
           firstname: document.getElementById('first_name').value,
           lastname: document.getElementById('last_name').value,
-          role: 'notimplemented' } },
+          role: instance.getSelectedValues[0] } },
           function(err, response, body){
             let data=JSON.parse(body)
             if (err||response.statusCode!==200){
