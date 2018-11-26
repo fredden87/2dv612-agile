@@ -27,6 +27,7 @@
 
 <script>
   import router from '../router'
+  
   export default {
     name: 'Login',
     components: {
@@ -36,7 +37,11 @@
       login: function (event) {
         event.preventDefault()
         const request=require('request')
-        request.post({ url: 'http://http://194.47.206.226:3000/login', 
+        let backendUrl = '127.0.0.1:3000'
+        if (process.env.ENVIRONMENT==="production"){
+          backendUrl='194.47.206.226:3000'
+        }
+        request.post({ url: 'http://'+backendUrl+'/login', 
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }}, function(err, response, body) {
           let data = JSON.parse(body)
