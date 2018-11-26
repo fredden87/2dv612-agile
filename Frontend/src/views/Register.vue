@@ -76,7 +76,7 @@ export default {
         displayLength: 6000
        })
         } else {
-      let instance = M.FormSelect.getInstance(document.getElementById('cClass'))  
+      let instance = document.getElementById('cClass')  
       console.log(instance.options[instance.selectedIndex].value)  
       request.post({ uri: 'http://'+backendUrl+'/user/signup',
         form: {
