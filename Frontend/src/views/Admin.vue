@@ -32,7 +32,7 @@
       submit: function (event) {
         event.preventDefault()
         const request=require('request')
-        request.post({ url: 'http://localhost:3000/admin', 
+        request.post({ url: 'http://194.47.206.226:3000/admin', 
           form:{ cclass: document.getElementById("cclass").value }}, function(err, response, body) {
           let data = JSON.parse(body)
             if (err||response.statusCode!==200){

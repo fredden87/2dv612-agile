@@ -36,7 +36,7 @@
       login: function (event) {
         event.preventDefault()
         const request=require('request')
-        request.post({ url: 'http://localhost:3000/login', 
+        request.post({ url: 'http://http://194.47.206.226:3000/login', 
           form:{ password: document.getElementById("password").value, 
             email: document.getElementById("email").value }}, function(err, response, body) {
           let data = JSON.parse(body)
