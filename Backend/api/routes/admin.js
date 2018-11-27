@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const typemodel = require('../db_resources/typemodel.js')
 // uncomment relevant lines to switch into post mode when frontend is ready. 
-router.get('/typedata', (req,res,next) => {
+router.post('/typedata', (req,res,next) => {
   typemodel.find((err, types)=>{
     if(err){
       res.status(500).json({
