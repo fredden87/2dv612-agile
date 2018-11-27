@@ -58,10 +58,15 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
 export default {
   mounted(){
   //      <option value="Car Owner">Car Owner</option>
-  request.post('http://'+backendUrl+'/admin/typedata', function(err,response,body){
+  request.post({uri: 'http://'+backendUrl+'/admin/typedata', form: {}}, function(err,response,body){
   let data=JSON.parse(body)
-  console.log(data)
-  console.log(body)
+  data.forEach(function(item)){
+   let opt = document.createElement('option')
+   opt.value=item.customerClass
+   opt.textContent=item.customerClass
+   document.getElementById('cClass').appendChild(opt)
+  }
+
   M.FormSelect.init(document.getElementById('cClass'))
   })
 
