@@ -24,10 +24,12 @@ router.post('/', (req, res, next) => {
           })
         }
         if (result) {
-          if (!req.session.email && !req.session.password) {
+         // if (!req.session.email && !req.session.password) {
+            console.log(req.session)
+            req.session.cookie.email = req.body.email
             req.session.email = req.body.email;
             req.session.password = req.body.password;
-          }
+         // }
           let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
           res.status(200).json({ message: 'Welcome: '+user[0].firstname+' '+user[0].lastname, auth: true, token: token, user: user[0] })
         } else {
@@ -53,7 +55,7 @@ router.get('/logout',function(req,res){
         error: err
       })
     } else {
-      res.redirect('/');
+//      res.redirect('/');
       res.status(200).json({
           message: 'User logged out'
       })
