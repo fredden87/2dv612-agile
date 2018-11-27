@@ -31,9 +31,6 @@
   <div class="input-field col s12">
     <select id="cClass">
       <option value="" disabled selected>Choose your service profile</option>
-      <option value="Car Owner">Car Owner</option>
-      <option value="Parking lot Owner">Parking lot Owner</option>
-      <option value="Parking Guard">Parking Guard</option>
     </select>
     <label>Customer profile selection</label>
   </div>
@@ -52,10 +49,22 @@
 
 <script>
 import router from '../router'
+const request = require('request')
+let backendUrl = '127.0.0.1:3000'
+if (process.env.VUE_APP_ENVIRONMENT==="production"){
+    backendUrl='194.47.206.226:3000'
+  }
 
 export default {
   mounted(){
+  //      <option value="Car Owner">Car Owner</option>
+  request.get('http://'+backendUrl+'/user/signup', function(err,response,body){
+  let data=JSON.parse(body)
+  console.log(data)
+  console.log(body)
   M.FormSelect.init(document.getElementById('cClass'))
+  })
+
   },
   name: 'Register',
   components: {
@@ -64,11 +73,7 @@ export default {
   methods: {
     registerUser: function (event) {
       event.preventDefault()
-      const request = require('request')
-      let backendUrl = '127.0.0.1:3000'
-      if (process.env.VUE_APP_ENVIRONMENT==="production"){
-        backendUrl='194.47.206.226:3000'
-      }
+
       if (document.getElementById('password1').value!==document.getElementById('password2').value){
         window.M.toast({
         html: 'Incorrect password confirmation, verify spelling',
