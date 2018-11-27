@@ -78,7 +78,7 @@ export default {
         } else {
       let instance = document.getElementById('cClass')  
       console.log(instance.options[instance.selectedIndex].value)  
-      request.post({ uri: 'http://'+backendUrl+'/user/signup',
+      request.post({ uri: 'http://194.47.206.226:3000/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,
