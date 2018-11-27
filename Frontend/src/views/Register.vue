@@ -58,7 +58,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
 export default {
   mounted(){
   //      <option value="Car Owner">Car Owner</option>
-  request.get('http://'+backendUrl+'/user/signup', function(err,response,body){
+  request.get('http://'+backendUrl+'/admin/typedata', function(err,response,body){
   let data=JSON.parse(body)
   console.log(data)
   console.log(body)
