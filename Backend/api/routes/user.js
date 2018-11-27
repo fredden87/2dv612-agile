@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
-const mailModel = require('../routes_resources/mail.js')
+const mailModel = require('../../mail.js')
 
 router.post('/signup', (req, res, next) => {
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
