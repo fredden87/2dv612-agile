@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer')
 
 function sendMail (settings, callback) {
   // var reciever = 'pe222gq@student.lnu.se'; // logged in users email
-  var reciever = settings.user.email // logged in users email
+  var reciever = settings.email // logged in users email
   var subject = 'Welcome to the parkinglot'
   var message = 'Hello and welcome :)!!!!!!!!!'
   let transporter = nodemailer.createTransport({
