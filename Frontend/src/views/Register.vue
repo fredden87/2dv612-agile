@@ -60,12 +60,12 @@ export default {
   //      <option value="Car Owner">Car Owner</option>
   request.post({uri: 'http://'+backendUrl+'/admin/typedata', form: {}}, function(err,response,body){
   let data=JSON.parse(body)
-  data.forEach(function(item)){
+  data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.customerClass
    opt.textContent=item.customerClass
    document.getElementById('cClass').appendChild(opt)
-  }
+  })
 
   M.FormSelect.init(document.getElementById('cClass'))
   })
