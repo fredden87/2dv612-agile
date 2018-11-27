@@ -61,15 +61,15 @@ let router = new Router({
   ]
 })
 router.beforeEach((to, from, next)=> {
+  let cookie = JSON.parse(sessionStorage.getItem('email'))
   const reqSession = to.matched.some(route => route.meta.requiresSession)
-  if (!reqSession) { 
-    next()
+  if (reqSession) { 
+    if (cookie) {
+      next()
+    } else { 
+      next({ path: '/login' })
+    }
   }
-  if (router.app.session.exists()) {
-    next()
-  } else { 
-    next({ path: '/login' })
-  }  
   if(to.matched.some(record=>record.meta.requiresAuth)){
     if (localStorage.getItem('jwt')==null){
       next({
