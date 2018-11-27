@@ -45,7 +45,8 @@ export default {
              classes: 'green darken-1'
              })
           }
-          delete localStorage.token
+          localStorage.removeItem('user', JSON.stringify(data.user))
+          localStorage.removeItem('jwt', JSON.stringify(data.token))
           router.push('/')
       })
    }
