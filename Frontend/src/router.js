@@ -44,7 +44,8 @@ let router = new Router({
       name: 'welcome',
       component: Welcome,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresSession: true
       }
     },
     {
@@ -53,12 +54,22 @@ let router = new Router({
       component: Admin,
       meta: {
         requiresAuth: true,
+        requiresSession: true,
         is_admin: true
       }
     }
   ]
 })
 router.beforeEach((to, from, next)=> {
+  const reqSession = to.matched.some(route => route.meta.requiresSession)
+  if (!reqSession) { 
+    next()
+  }
+  if (router.app.session.exists()) {
+    next()
+  } else { 
+    next({ path: '/login' })
+  }  
   if(to.matched.some(record=>record.meta.requiresAuth)){
     if (localStorage.getItem('jwt')==null){
       next({
