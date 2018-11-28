@@ -28,8 +28,8 @@ function connect (response) {
 }
 router.get('/verify/:auth', function (req, res) {
   connect(res)
-  console.log(req.params.auth)
-  User.find({ token: req.params.auth })
+  let authToken = req.params.auth
+  User.find({ token: authToken })
     .exec()
     .then(user => {
       if (user.length !== 1) {
@@ -37,22 +37,14 @@ router.get('/verify/:auth', function (req, res) {
           message: 'Email Verification Failed'
         })
       } else {
-        user.verified = true
-        user.url = ''
-        user.token = ''
-        user.save().then(data => {
-          mailModel.sendMail(user, (error) => {
-            if (error) {
-              return console.log('Error: ' + error)
-            }
-          })
+        User.update({ token: authToken }, { $set: { verified: true } }, function (err, user) {
+          if (err) {
+            res.status(500).json({
+              error: err
+            })
+          }
           res.status(200).json({
-            message: user.email + ' email verification complete'
-          })
-        }).catch(err => {
-          console.log(err)
-          res.status(500).json({
-            error: err
+            message: user.email + ' Email verified'
           })
         })
       }
