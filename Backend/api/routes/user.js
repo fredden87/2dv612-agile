@@ -12,9 +12,9 @@ const saltRounds = 10
 const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const mailModel = require('../../mail.js')
 let backendUrl = '127.0.0.1:3000'
-if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='194.47.206.226:3000'
-  }
+if (process.env.VUE_APP_ENVIRONMENT === 'production') {
+  backendUrl = '194.47.206.226:3000'
+}
 function connect (response) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
@@ -39,6 +39,7 @@ router.get('/verify/:auth', function (req, res) {
       } else {
         user.verified = true
         user.url = ''
+        user.token = ''
         user.save().then(data => {
           mailModel.sendMail(user, (error) => {
             if (error) {
@@ -81,6 +82,7 @@ router.post('/signup', (req, res, next) => {
         role: req.body.role,
         email: req.body.email,
         password: hash,
+        token: authToken,
         url: 'http://' + backendUrl + '/user/verify/' + authToken,
         verified: false
       })

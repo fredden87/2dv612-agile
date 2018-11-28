@@ -23,6 +23,9 @@ const userSchema = new Schema({
     // enum: ['Admin', 'Employee', 'Park owner', 'Car owner'],
     required: true
   },
+  token: {
+    type: String
+  },
   url: {
     type: String
   },
