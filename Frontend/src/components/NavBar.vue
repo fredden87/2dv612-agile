@@ -1,5 +1,5 @@
 <template>
-    <div id="nav" v-on:click="setLoggedIn">
+    <div id="nav">
       <router-link class="spacing"
         v-for="routes in links"
         v-bind:key="routes.id"
