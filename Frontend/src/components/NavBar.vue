@@ -9,38 +9,19 @@
 </template>
 
 <script>
-import Vue from 'vue'
+/* eslint-disable */
+//import Vue from 'vue'
 export default {
   name: "NavBar",
   data() {
     return {
-      links: [
-        {
-          id: 0,
-          text: "Home",
-          page: "/"
-        },
-        {
-          id: 1,
-          text: "About",
-          page: "/about"
-        },
-        {
-          id: 2,
-          text: "Register",
-          page: "/register"
-        },
-        {
-          id: 3,
-          text: "Login",
-          page: "/login"
-        }
-      ]
+      links: this.$store.state.navbarLinks
     }
   },
   methods: {
     setLoggedIn: function() {
-      Vue.set(this.links, 3, {
+      console.log(this.$store.state.navbarLinks)
+      /* Vue.set(this.links, 3, {
         id: 3,
         text: "Log out",
         page: "/logout"
@@ -48,8 +29,8 @@ export default {
       Vue.set(this.links, 4, {
         id: 4,
         text: "Settings",
-        page: "/settings"
-      })
+        page: "/usersettings"
+      }) */
     }
   }
 }
