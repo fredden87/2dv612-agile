@@ -7,7 +7,7 @@ const adminRoutes = require('./api/routes/admin')
 const userRoutes = require('./api/routes/user')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+app.use('/favicon.ico', express.static('api/favicon.ico'))
 // Preventing CORS errors
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
