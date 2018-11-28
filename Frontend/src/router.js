@@ -5,7 +5,7 @@ import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 import Welcome from './views/Welcome.vue'
 import Admin from './views/Admin.vue'
-
+import Guard from './views/Guard.vue'
 Vue.use(Router)
 
 let router = new Router({
