@@ -1,7 +1,6 @@
 <template>
   <div class="login-wrapper">
-    <h4 class="text">Welcome!</h4>
-    <p>Please verify your email address to access the services</p>
+    <h4 class="text">Parking Guard Feature Page</h4>
   </div>
 </template>
 
