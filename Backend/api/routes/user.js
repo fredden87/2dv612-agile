@@ -44,7 +44,7 @@ router.get('/verify/:auth', function (req, res) {
             })
           }
           res.status(200).json({
-            message: user.email + ' Email verified'
+            message: 'Email verified'
           })
         })
       }
