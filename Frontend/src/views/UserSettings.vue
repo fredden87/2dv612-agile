@@ -33,7 +33,12 @@ export default {
       console.log(userEmail)
       const data = {email: userEmail, car: carRegistration}
 
-      fetch('http://localhost:3000/vehicle', {
+      let backendUrl = "127.0.0.1:3000";
+      if (process.env.VUE_APP_ENVIRONMENT === "production") {
+        backendUrl = "194.47.206.226:3000";
+      }
+
+      fetch("http://" + backendUrl + "/login", {
         method: 'PATCH', 
         headers: {
           'Accept': 'application/json',
@@ -41,7 +46,20 @@ export default {
         },
         body: JSON.stringify(data)})
       .then((response) => {
-        console.log(response)
+        if (response.status === 200) {
+          // Display success message
+          window.M.toast({
+            html: "Vehicle was added",
+            classes: 'green darken-1'
+          })
+        } else {
+          // Display error message
+          window.M.toast({
+            html: "Vehicle could not be added",
+            classes: 'deep-orange accent-4 black-text',
+            displayLength: 6000
+          })
+        }
       })
     }
   }
