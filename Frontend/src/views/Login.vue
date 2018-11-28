@@ -62,7 +62,7 @@
                         localStorage.setItem('jwt', JSON.stringify(data.token))
 
                         if (localStorage.getItem('jwt') != null){
-                            console.log('loggedIn')
+                            console.log('loggedIn as :' + data.user.role)
                                 if(isAdmin === 1){
                                   console.log('privelege escalation')
                                     router.push({ name: 'admin'})
