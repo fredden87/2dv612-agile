@@ -88,7 +88,7 @@ router.beforeEach((to, from, next)=> {
             next()
             }
           } else{
-            next({path:'/welcome'})
+              next({path:'/welcome'})          
           }
       } else {
         next()

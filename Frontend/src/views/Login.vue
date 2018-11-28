@@ -66,8 +66,9 @@
                                 if(isAdmin === 1){
                                   console.log('privelege escalation')
                                     router.push({ name: 'admin'})
-                                }
-                                else {
+                                } else if (data.user.role==="Parking Guard"){
+                                    router.push({ name: 'guard'})
+                                } else {
                                     router.push({ name: 'welcome'})
                                 }
                             
