@@ -1,15 +1,57 @@
 <template>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/login">Login</router-link>
+    <div id="nav" v-on:click="setLoggedIn">
+      <router-link class="spacing"
+        v-for="routes in links"
+        v-bind:key="routes.id"
+        :to="`${routes.page}`"
+      >{{routes.text}}</router-link>
     </div>
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
-    
+  name: "NavBar",
+  data() {
+    return {
+      links: [
+        {
+          id: 0,
+          text: "Home",
+          page: "/"
+        },
+        {
+          id: 1,
+          text: "About",
+          page: "/about"
+        },
+        {
+          id: 2,
+          text: "Register",
+          page: "/register"
+        },
+        {
+          id: 3,
+          text: "Login",
+          page: "/login"
+        }
+      ]
+    }
+  },
+  methods: {
+    setLoggedIn: function() {
+      Vue.set(this.links, 3, {
+        id: 3,
+        text: "Log out",
+        page: "/logout"
+      })
+      Vue.set(this.links, 4, {
+        id: 4,
+        text: "Settings",
+        page: "/settings"
+      })
+    }
+  }
 }
 </script>
 
@@ -33,4 +75,8 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.spacing { 
+  margin-right: 10px; 
+} 
 </style>
