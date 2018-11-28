@@ -34,6 +34,7 @@ const userSchema = new Schema({
   vehicle: {
     type: String,
     uppercase: true,
+    unique: true,
     default: 'No registered vehicle'
   }
 })

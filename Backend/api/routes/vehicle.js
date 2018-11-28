@@ -9,6 +9,7 @@ router.patch('/', (req, res, next) => {
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
+      console.log(req.body)
       user.vehicle = req.body.car
       user.save()
       return res.status(200).json({

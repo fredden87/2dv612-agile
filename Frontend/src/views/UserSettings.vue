@@ -31,6 +31,18 @@ export default {
       const userEmail = JSON.parse(localStorage.getItem('user')).email
       console.log(carRegistration)
       console.log(userEmail)
+      const data = {email: userEmail, car: carRegistration}
+
+      fetch('http://localhost:3000/vehicle', {
+        method: 'PATCH', 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)})
+      .then((response) => {
+        console.log(response)
+      })
     }
   }
 }
