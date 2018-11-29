@@ -1,4 +1,6 @@
+
 'use strict'
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -32,15 +34,23 @@ const userSchema = new Schema({
   verified: {
     type: Boolean,
     required: true
-  },
+
   email: {
     type: String,
     trim: true,
     lowercase: true,
     required: true,
     unique: true,
-    match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/ },
-  password: { type: String, required: true }
+
+    match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+  },
+  password: { type: String, required: true },
+  vehicle: {
+    type: String,
+    uppercase: true,
+    unique: true,
+    default: 'No registered vehicle'
+  }
 })
 
 module.exports = mongoose.model('User', userSchema)
