@@ -6,7 +6,7 @@ import Login from './views/Login.vue'
 import Logout from './views/Logout.vue'
 import Welcome from './views/Welcome.vue'
 import Admin from './views/Admin.vue'
-
+import Guard from './views/Guard.vue'
 Vue.use(Router)
 
 let router = new Router({
@@ -49,6 +49,16 @@ let router = new Router({
       }
     },
     {
+      path: '/guard',
+      name: 'guard',
+      component: Guard,
+      meta: {
+        requiresAuth: true,
+        verified: true,
+        guard: true
+      }
+    },
+    {
       path: '/admin',
       name: 'admin',
       component: Admin,
@@ -84,7 +94,21 @@ router.beforeEach((to, from, next)=> {
         } else {
           next({path:'/welcome'})
         }
-      }  else {
+      } else if (to.matched.some(record=>record.meta.verified)) {
+          if (user.verified){
+            if (to.matched.some(record=>record.meta.guard)){
+              if(user.role==="Parking Guard"){
+                next()
+              } else {
+                next({path:'/welcome'})
+              }
+            } else {
+            next()
+            }
+          } else{
+              next({path:'/welcome'})          
+          }
+      } else {
         next()
       }
     }
