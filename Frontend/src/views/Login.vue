@@ -60,7 +60,9 @@
           let isAdmin = data.user.is_admin
                         localStorage.setItem('user', JSON.stringify(data.user))
                         localStorage.setItem('jwt', JSON.stringify(data.token))
-
+                        sessionStorage.setItem('email', JSON.stringify(data.user.email))  
+                        sessionStorage.setItem('jwt', JSON.stringify(data.token))                            
+ 
                         if (localStorage.getItem('jwt') != null){
                             console.log('loggedIn as :' + data.user.role)
                                 if(isAdmin === 1){
