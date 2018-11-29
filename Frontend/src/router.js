@@ -3,9 +3,11 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Register from './views/Register.vue'
 import Login from './views/Login.vue'
+import Logout from './views/Logout.vue'
 import Welcome from './views/Welcome.vue'
 import Admin from './views/Admin.vue'
 import UserSettings from './views/UserSettings.vue'
+import Guard from './views/Guard.vue'
 
 Vue.use(Router)
 
@@ -40,11 +42,27 @@ let router = new Router({
       component: UserSettings
     },
     {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
+    },
+    {
       path: '/welcome',
       name: 'welcome',
       component: Welcome,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresSession: true
+      }
+    },
+    {
+      path: '/guard',
+      name: 'guard',
+      component: Guard,
+      meta: {
+        requiresAuth: true,
+        verified: true,
+        guard: true
       }
     },
     {
@@ -53,12 +71,23 @@ let router = new Router({
       component: Admin,
       meta: {
         requiresAuth: true,
+        requiresSession: true,
         is_admin: true
       }
     }
   ]
 })
 router.beforeEach((to, from, next)=> {
+  let cookie = JSON.parse(sessionStorage.getItem('email'))
+  console.log(cookie)
+  const reqSession = to.matched.some(record => record.meta.requiresSession)
+  if (reqSession) { 
+    if (cookie) {
+      next()
+    } else { 
+      next({ path: '/login' })
+    }
+  }
   if(to.matched.some(record=>record.meta.requiresAuth)){
     if (localStorage.getItem('jwt')==null){
       next({
@@ -72,7 +101,21 @@ router.beforeEach((to, from, next)=> {
         } else {
           next({path:'/welcome'})
         }
-      }  else {
+      } else if (to.matched.some(record=>record.meta.verified)) {
+          if (user.verified){
+            if (to.matched.some(record=>record.meta.guard)){
+              if(user.role==="Parking Guard"){
+                next()
+              } else {
+                next({path:'/welcome'})
+              }
+            } else {
+            next()
+            }
+          } else{
+              next({path:'/welcome'})          
+          }
+      } else {
         next()
       }
     }

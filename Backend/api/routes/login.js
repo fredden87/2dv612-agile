@@ -24,6 +24,14 @@ router.post('/', (req, res, next) => {
           })
         }
         if (result) {
+         // if (!req.session.email && !req.session.password) {
+            console.log(req.session)
+            req.session.isLoggedIn = true;
+            //req.session.cookie.email = req.body.email
+            req.session.email = req.body.email;
+            req.session.password = req.body.password;
+            req.session.save()
+         // }
           let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
           res.status(200).json({ message: 'Welcome: ' + user[0].firstname + ' ' + user[0].lastname, auth: true, token: token, user: user[0] })
         } else {
@@ -39,6 +47,22 @@ router.post('/', (req, res, next) => {
         error: err
       })
     })
+})
+
+router.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      })
+    } else {
+//      res.redirect('/');
+      res.status(200).json({
+          message: 'User logged out'
+      })
+    }
+  })
 })
 
 function connectDB (res) {

@@ -4,7 +4,7 @@ function sendMail (settings, callback) {
   // var reciever = 'pe222gq@student.lnu.se'; // logged in users email
   var reciever = settings.email // logged in users email
   var subject = 'Welcome to the parkinglot'
-  var message = 'Hello and welcome :)!!!!!!!!!'
+  var message = 'Dear ' + settings.firstname + ' ' + settings.lastname + '\n Please verify your email by visiting the link: \n' + settings.url
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp@gmail.com',
