@@ -28,39 +28,47 @@ export default {
     addVehicle: function(event) {
       event.preventDefault()
       const carRegistration = document.getElementById("car_reg").value
-      const userEmail = JSON.parse(localStorage.getItem('user')).email
-      console.log(carRegistration)
-      console.log(userEmail)
-      const data = {email: userEmail, car: carRegistration}
+      const user = JSON.parse(localStorage.getItem('user'))
 
-      let backendUrl = "127.0.0.1:3000";
-      if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "194.47.206.226:3000";
-      }
+      if (user !== null) {
+        const userEmail = user.email
+        const data = {email: userEmail, car: carRegistration}
 
-      fetch("http://" + backendUrl + "/login", {
-        method: 'PATCH', 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)})
-      .then((response) => {
-        if (response.status === 200) {
-          // Display success message
-          window.M.toast({
-            html: "Vehicle was added",
-            classes: 'green darken-1'
-          })
-        } else {
-          // Display error message
-          window.M.toast({
-            html: "Vehicle could not be added",
-            classes: 'deep-orange accent-4 black-text',
-            displayLength: 6000
-          })
+        let backendUrl = "127.0.0.1:3000";
+        if (process.env.VUE_APP_ENVIRONMENT === "production") {
+          backendUrl = "194.47.206.226:3000";
         }
-      })
+
+        fetch("http://" + backendUrl + "/login", {
+          method: 'PATCH', 
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)})
+        .then((response) => {
+          if (response.status === 200) {
+            // Display success message
+            window.M.toast({
+              html: "Vehicle was added",
+              classes: 'green darken-1'
+            })
+          } else {
+            // Display error message
+            window.M.toast({
+              html: "Vehicle could not be added",
+              classes: 'deep-orange accent-4 black-text',
+              displayLength: 6000
+            })
+          }
+        })
+      } else {
+        window.M.toast({
+          html: "Vehicle could not be added, are you logged in?",
+          classes: 'deep-orange accent-4 black-text',
+          displayLength: 6000
+        })
+      }
     }
   }
 }
