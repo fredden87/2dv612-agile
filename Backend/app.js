@@ -1,13 +1,11 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-
 const loginRoutes = require('./api/routes/login')
 const adminRoutes = require('./api/routes/admin')
 const userRoutes = require('./api/routes/user')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
 // Preventing CORS errors
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
