@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="register-wrapper">
     <div class="row">
       <form class="col s12">
         <div class="row">
-          <div class="input-field col s6">
+          <div class="input-field col s12">
             <input id="car_reg" type="text" class="validate">
             <label for="car_reg">Vehicle registration number</label>
           </div>
@@ -14,7 +14,7 @@
           type="submit"
           name="action"
           v-on:click="addVehicle">
-          Register
+          Add Vehicle
         </button>
       </form>
     </div>
@@ -67,5 +67,8 @@ export default {
 </script>
 
 <style>
-
+.register-wrapper {
+  width: 60%;
+  margin: 0 auto;
+}
 </style>
