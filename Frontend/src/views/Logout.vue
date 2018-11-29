@@ -30,9 +30,11 @@ export default {
       if (process.env.VUE_APP_ENVIRONMENT==="production"){
         backendUrl='194.47.206.226:3000'
       }
-      request.get({ url: 'http://'+backendUrl+'/login/logout', 
+      request.get({ uri: 'http://'+backendUrl+'/login/logout'}, 
         function(err, response, body) {
           let data = JSON.parse(body)
+          console.log(data)
+          
           if (err||response.statusCode!==200){
             window.M.toast({
             html: data.message,
@@ -45,12 +47,16 @@ export default {
              classes: 'green darken-1'
              })
           }
+          sessionStorage.removeItem('email')
+          sessionStorage.removeItem('jwt')
+
           localStorage.removeItem('user')
           localStorage.removeItem('jwt')
-          sessionStorage.clear()
-          router.push('/')
+          //sessionStorage.clear()
+          console.log('loggedOUT')
+          router.push({ name: 'home' })
 	}
-      })
+      )
    }
   }
 }

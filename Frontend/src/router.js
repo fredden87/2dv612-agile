@@ -62,7 +62,8 @@ let router = new Router({
 })
 router.beforeEach((to, from, next)=> {
   let cookie = JSON.parse(sessionStorage.getItem('email'))
-  const reqSession = to.matched.some(route => route.meta.requiresSession)
+  console.log(cookie)
+  const reqSession = to.matched.some(record => record.meta.requiresSession)
   if (reqSession) { 
     if (cookie) {
       next()
