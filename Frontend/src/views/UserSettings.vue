@@ -39,7 +39,7 @@ export default {
           backendUrl = "194.47.206.226:3000";
         }
 
-        fetch("http://" + backendUrl + "/login", {
+        fetch("http://" + backendUrl + "/vehicle", {
           method: 'PATCH', 
           headers: {
             'Accept': 'application/json',
