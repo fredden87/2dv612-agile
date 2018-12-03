@@ -54,10 +54,8 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
-
-export default {
-  mounted(){
-  request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+  let selectorData= function(){
+      request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   console.log(data)
   data.forEach(function(item){
@@ -69,6 +67,11 @@ export default {
 
   M.FormSelect.init(document.getElementById('areaOpt'))
   })
+  }
+
+export default {
+  mounted(){
+selectorData()
 
   },
   name: "Area",
@@ -99,6 +102,7 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             // Display success message
+            selectorData()
             window.M.toast({
               html: "Area was added",
               classes: 'green darken-1'
