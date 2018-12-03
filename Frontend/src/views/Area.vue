@@ -54,15 +54,19 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
+
   let selectorData= function(){
       request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
-  console.log(data)
+  let area=document.getElementById('areaOpt')
+  while (area.childNodes.length>1){
+area.removeChild(area.lastChild)
+  }
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.name
    opt.textContent=item.name + ' : ' + item.lat + ' , ' + item.long
-   document.getElementById('areaOpt').appendChild(opt)
+   area.appendChild(opt)
   })
 
   M.FormSelect.init(document.getElementById('areaOpt'))
