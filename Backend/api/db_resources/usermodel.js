@@ -25,6 +25,14 @@ const userSchema = new Schema({
     // enum: ['Admin', 'Employee', 'Park owner', 'Car owner'],
     required: true
   },
+  area: {
+    long: {
+      type: Number
+    },
+    lat: {
+      type: Number
+    }
+  },
   token: {
     type: String
   },
