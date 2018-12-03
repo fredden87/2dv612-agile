@@ -28,7 +28,8 @@ const userSchema = new Schema({
   areas: [{
     name: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     long: {
       type: Number,
