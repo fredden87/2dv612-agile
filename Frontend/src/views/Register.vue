@@ -57,7 +57,6 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
 
 export default {
   mounted(){
-  //      <option value="Car Owner">Car Owner</option>
   request.post({uri: 'http://'+backendUrl+'/admin/typedata', form: {}}, function(err,response,body){
   let data=JSON.parse(body)
   data.forEach(function(item){

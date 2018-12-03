@@ -57,12 +57,13 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
 
 export default {
   mounted(){
-  request.post({uri: 'http://'+backendUrl+'/area', form: {email: sessionStorage.getItem('email')}}, function(err,response,body){
+  request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
+  console.log(data)
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.name
-   opt.textContent=item.name + ' : ' + item.lat + '  ' + item.long
+   opt.textContent=item.name + ' : ' + item.lat + ' , ' + item.long
    document.getElementById('areaOpt').appendChild(opt)
   })
 
