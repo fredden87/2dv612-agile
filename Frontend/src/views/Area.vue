@@ -135,8 +135,11 @@ selectorData()
     viewArea: function(event){
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
+      while (document.getElementById('parkview').childNodes.length>0){
+        document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
+      }
       let renderView= document.createElement('table')
-      renderView.class="minimalistBlack"
+      renderView.class="comicGreen"
       document.getElementById('parkview').appendChild(renderView)
       for (let i=0; i < selected.lat; i++){
         let newRow= document.createElement('tr')
@@ -164,39 +167,37 @@ selectorData()
     width: 50%;
     margin: 0 auto;
   }
-table.minimalistBlack {
-  border: 3px solid #000000;
+table.comicGreen {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  border: 2px solid #4F7849;
+  background-color: #EEEEEE;
   width: 100%;
-  text-align: left;
+  text-align: center;
   border-collapse: collapse;
 }
-table.minimalistBlack td, table.minimalistBlack th {
-  border: 1px solid #000000;
-  padding: 5px 4px;
+table.comicGreen td, table.comicGreen th {
+  border: 1px solid #4F7849;
+  padding: 3px 2px;
 }
-table.minimalistBlack tbody td {
-  font-size: 13px;
-}
-table.minimalistBlack thead {
-  background: #CFCFCF;
-  background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  border-bottom: 3px solid #000000;
-}
-table.minimalistBlack thead th {
-  font-size: 15px;
+table.comicGreen tbody td {
+  font-size: 5px;
   font-weight: bold;
-  color: #000000;
-  text-align: left;
+  color: #4F7849;
 }
-table.minimalistBlack tfoot {
-  font-size: 14px;
+table.comicGreen tr:nth-child(even) {
+  background: #CEE0CC;
+}
+table.comicGreen tfoot {
+  font-size: 5px;
   font-weight: bold;
-  color: #000000;
-  border-top: 3px solid #000000;
+  color: #FFFFFF;
+  background: #4F7849;
+  background: -moz-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  background: -webkit-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  background: linear-gradient(to bottom, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  border-top: 1px solid #444444;
 }
-table.minimalistBlack tfoot td {
-  font-size: 14px;
+table.comicGreen tfoot td {
+  font-size: 5px;
 }
 </style>
