@@ -139,7 +139,7 @@ selectorData()
         document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
       }
       let renderView= document.createElement('table')
-      renderView.class="comicGreen"
+      renderView.setAttribute('class','comicGreen')
       document.getElementById('parkview').appendChild(renderView)
       for (let i=0; i < selected.lat; i++){
         let newRow= document.createElement('tr')
