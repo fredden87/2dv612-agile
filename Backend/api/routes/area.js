@@ -6,30 +6,41 @@ const router = express.Router()
 
 router.patch('/', (req, res, next) => {
   connectDB(res)
-  User.findOne({ email: req.body.email })
-    .exec()
-    .then(user => {
-      user.area.long = req.body.long
-      user.area.lat = req.body.lat
-      user.save()
-      return res.status(200).json({
-        message: 'New area added'
-      })
-    })
-    .catch(err => {
-      console.log(err)
+  User.update({ email: req.body.email }, { $push: { name: req.body.name, long: req.body.long, lat: req.body.lat } }, function (err, user) {
+    if (err) {
       res.status(500).json({
         error: err
       })
+    }
+    res.status(200).json({
+      message: 'New Area added'
     })
+  })
+
+  // User.findOne({ email: req.body.email })
+  //   .exec()
+  //   .then(user => {
+  //     user.area.long = req.body.long
+  //     user.area.lat = req.body.lat
+  //     user.save()
+  //     return res.status(200).json({
+  //       message: 'New area added'
+  //     })
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //     res.status(500).json({
+  //       error: err
+  //     })
+  //   })
 })
 
-router.get('/', (req, res, next) => {
+router.post('/', (req, res, next) => {
   connectDB(res)
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
-      return res.status(200).send(user.area)
+      return res.status(200).send(user.areas)
     })
     .catch(err => {
       console.log(err)
