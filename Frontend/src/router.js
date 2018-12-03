@@ -8,7 +8,7 @@ import Welcome from './views/Welcome.vue'
 import Admin from './views/Admin.vue'
 import UserSettings from './views/UserSettings.vue'
 import Guard from './views/Guard.vue'
-import Park from './views/Park.vue'
+import Area from './views/Area.vue'
 
 Vue.use(Router)
 
@@ -73,14 +73,14 @@ let router = new Router({
       }
     },
     {
-      path: '/park',
-      name: 'park',
-      component: Park,
+      path: '/area',
+      name: 'area',
+      component: Area,
       meta: {
         requiresAuth: true,
         requiresSession: true,
         verified: true,
-        park: true
+        area: true
       }
     },
     {
@@ -145,7 +145,7 @@ router.beforeEach((to, from, next)=> {
     accessNotify('Parking guard account required')
     }
   // park owner feature page restriction
-  let reqPark = to.matched.some(record=>record.meta.park)
+  let reqPark = to.matched.some(record=>record.meta.area)
   if (reqPark && user.role !== "Park owner"){
     next({path:'/welcome'})
     accessNotify('Park owner account required')
