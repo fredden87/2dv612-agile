@@ -58,21 +58,19 @@
              })
             }
           let isAdmin = data.user.is_admin
-                        localStorage.setItem('user', JSON.stringify(data.user))
-                        localStorage.setItem('jwt', JSON.stringify(data.token))
-                        sessionStorage.setItem('email', JSON.stringify(data.user.email))  
-                        sessionStorage.setItem('jwt', JSON.stringify(data.token))                            
- 
-                        if (localStorage.getItem('jwt') != null){
-                            console.log('loggedIn as :' + data.user.role)
-                                if(isAdmin === 1){
-                                  console.log('privelege escalation')
-                                    router.push({ name: 'admin'})
-                                } else if (data.user.role==="Parking Guard"){
-                                    router.push({ name: 'guard'})
-                                } else {
-                                    router.push({ name: 'welcome'})
-                                }
+          localStorage.setItem('user', JSON.stringify(data.user))
+          localStorage.setItem('jwt', JSON.stringify(data.token))
+          sessionStorage.setItem('email', JSON.stringify(data.user.email))  
+          sessionStorage.setItem('jwt', JSON.stringify(data.token))    
+          // the checks are done in router.js, but we need to initiate the route by pushing to a page                        
+          if (localStorage.getItem('jwt') != null){
+            if(isAdmin === 1){
+              router.push({ name: 'admin'})
+            } else if (data.user.role==="Parking Guard"){
+              router.push({ name: 'guard'})
+          } else {
+            router.push({ name: 'welcome'})
+          }
                             
                         }  
         })
