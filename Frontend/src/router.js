@@ -21,10 +21,7 @@ let router = new Router({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: () => import('./views/About.vue')
     },
     {
       path: '/register',
@@ -86,35 +83,54 @@ let router = new Router({
     }
   ]
 })
-// gated approach, next(where) will exit the loops if conditions are matched
+// notifications function
+function accessNotify(message, ok) {
+  let color = 'deep-orange accent-4 black-text'
+  if (ok) {
+    color = 'green darken-1'
+  }
+  window.M.toast({
+    html: message,
+    classes: color,
+    displayLength: 6000
+    })
+}
+// gated approach, next(where) will exit the loops if conditions are matched'
+// final next() lets user through since all conditions are ok
+// this is ACCESS CONTROL only, directing traffic should be done on actual pages.
 router.beforeEach((to, from, next)=> {
   // no cookie -> login
   let cookie = JSON.parse(sessionStorage.getItem('email'))
   const reqSession = to.matched.some(record => record.meta.requiresSession)
     if (reqSession && !cookie) {
       next({ path: '/login' })
+      accessNotify('Session timed out, please login')
     }
   // no jwt in localStorage -> login
   let jwt = localStorage.getItem('jwt')
   const reqAuth = to.matched.some(record=>record.meta.requiresAuth)
     if (reqAuth && !jwt){
       next({ path: '/login' })
+      accessNotify('Authentication required, please login')
     }
-  // user is admin -> ok
+  // user is not admin -> welcome (go away)
   let reqAdmin = to.matched.some(record=>record.meta.is_admin)
   let user = JSON.parse(localStorage.getItem('user'))
-  if (reqAdmin && user.is_admin ===1){
-      next()
+  if (reqAdmin && user.is_admin !==1){
+      next('/welcome')
+      accessNotify('Administrator access required')
     }
   // user is not verified -> landing page only
   let reqVerify = to.matched.some(record=>record.meta.verified)
   if (reqVerify && !user.verified){
     next({path:'/welcome'})
+    accessNotify('Please verify your registered email')
     }
-  // parking guard feature page restriction
+  // parking guard feature page restriction, do this to restrict feature pages
   let reqGuard = to.matched.some(record=>record.meta.guard)
   if (reqGuard && user.role !== "Parking Guard"){
     next({path:'/welcome'})
+    accessNotify('Parking guard account required')
     }
   // all other cases ok
   next()

@@ -9,7 +9,6 @@
           v-on:click="logout">
           Logout
         </button>
-      </form>
     </div>
   </div>
 </template>
