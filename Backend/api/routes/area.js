@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.patch('/', (req, res, next) => {
   connectDB(res)
-  User.update({ email: req.body.email }, { $push: { âreas: { name: req.body.name, long: req.body.long, lat: req.body.lat } } }, function (err, user) {
+  User.update({ email: req.body.email }, { $push: { areas: { name: req.body.name, long: req.body.long, lat: req.body.lat } } }, function (err, user) {
     if (err) {
       res.status(500).json({
         error: err
