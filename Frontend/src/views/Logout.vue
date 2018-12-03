@@ -54,7 +54,7 @@ export default {
           localStorage.removeItem('jwt')
           //sessionStorage.clear()
           console.log('loggedOUT')
-          router.push({ name: 'home' })
+          router.push({ name: 'login' })
 	}
       )
    }

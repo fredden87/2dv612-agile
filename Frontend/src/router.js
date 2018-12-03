@@ -39,12 +39,20 @@ let router = new Router({
     {
       path: '/usersettings',
       name: 'usersettings',
-      component: UserSettings
+      component: UserSettings,
+      meta: {
+        requiresAuth: true,
+        requiresSession: true
+      }
     },
     {
       path: '/logout',
       name: 'logout',
-      component: Logout
+      component: Logout,
+      meta: {
+        requiresAuth: true,
+        requiresSession: true
+      }
     },
     {
       path: '/welcome',
@@ -61,6 +69,7 @@ let router = new Router({
       component: Guard,
       meta: {
         requiresAuth: true,
+        requiresSession: true,
         verified: true,
         guard: true
       }
@@ -77,50 +86,37 @@ let router = new Router({
     }
   ]
 })
+// gated approach, next(where) will exit the loops if conditions are matched
 router.beforeEach((to, from, next)=> {
+  // no cookie -> login
   let cookie = JSON.parse(sessionStorage.getItem('email'))
-  console.log(cookie)
   const reqSession = to.matched.some(record => record.meta.requiresSession)
-  if (reqSession) { 
-    if (cookie) {
-      next()
-    } else { 
+    if (reqSession && !cookie) {
       next({ path: '/login' })
     }
-  }
-  if(to.matched.some(record=>record.meta.requiresAuth)){
-    if (localStorage.getItem('jwt')==null){
-      next({
-        path: '/login',
-      })
-    } else {
-      let user = JSON.parse(localStorage.getItem('user'))
-      if (to.matched.some(record=>record.meta.is_admin)){
-        if(user.is_admin===1){
-          next()
-        } else {
-          next({path:'/welcome'})
-        }
-      } else if (to.matched.some(record=>record.meta.verified)) {
-          if (user.verified){
-            if (to.matched.some(record=>record.meta.guard)){
-              if(user.role==="Parking Guard"){
-                next()
-              } else {
-                next({path:'/welcome'})
-              }
-            } else {
-            next()
-            }
-          } else{
-              next({path:'/welcome'})          
-          }
-      } else {
-        next()
-      }
+  // no jwt in localStorage -> login
+  let jwt = localStorage.getItem('jwt')
+  const reqAuth = to.matched.some(record=>record.meta.requiresAuth)
+    if (reqAuth && !jwt){
+      next({ path: '/login' })
     }
-  } else {
-    next()
-  }
+  // user is admin -> ok
+  let reqAdmin = to.matched.some(record=>record.meta.is_admin)
+  let user = JSON.parse(localStorage.getItem('user'))
+  if (reqAdmin && user.is_admin ===1){
+      next()
+    }
+  // user is not verified -> landing page only
+  let reqVerify = to.matched.some(record=>record.meta.verified)
+  if (reqVerify && !user.verified){
+    next({path:'/welcome'})
+    }
+  // parking guard feature page restriction
+  let reqGuard = to.matched.some(record=>record.meta.guard)
+  if (reqGuard && user.role !== "Parking Guard"){
+    next({path:'/welcome'})
+    }
+  // all other cases ok
+  next()
 })
 export default router
