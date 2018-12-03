@@ -44,6 +44,8 @@
         </button>
     </div>
   </div>
+  <div id="parkview">
+  </div> 
   </div>
 </template>
 
@@ -65,7 +67,9 @@ area.removeChild(area.lastChild)
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.name
-   opt.textContent=item.name + ' : ' + item.lat + ' , ' + item.long
+   opt.lat=item.lat
+   opt.long=item.long
+   opt.textContent=item.name + ' : ( ' + item.lat + ', ' + item.long + ')'
    area.appendChild(opt)
   })
 
@@ -130,8 +134,21 @@ selectorData()
     },
     viewArea: function(event){
       let instance = document.getElementById('areaOpt')
+      let selected=instance.options[instance.selectedIndex]
+      let renderView= document.getElementById('parkview')
+      for (let i=0; i < selected.lat; i++){
+        let newRow= document.createAttribute('div')
+        newRow.class="row"
+        for (let j=0; j < selected.long; j++){
+          let newCol= document.createAttribute('div')
+          newCol.class="input-field col s"+(j+1)
+          newCol.textContent=(j+1)
+          newRow.appendChild(newCol)
+        }
+        renderView.appendChild(newRow)
+      }
       window.M.toast({
-      html: instance.options[instance.selectedIndex].value ,
+      html: selected.value ,
       classes: 'green darken-1',
       displayLength: 6000
       })
