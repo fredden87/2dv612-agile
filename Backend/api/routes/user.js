@@ -66,6 +66,7 @@ router.post('/signup', (req, res, next) => {
       connect(res)
       let seed = crypto.randomBytes(20)
       let authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex')
+      let sessionToken = 'qwerty'
 
       const user = new User({
         _id: new mongoose.Types.ObjectId(),
@@ -75,6 +76,7 @@ router.post('/signup', (req, res, next) => {
         email: req.body.email,
         password: hash,
         token: authToken,
+        sessionToken: sessionToken,
         url: 'http://' + backendUrl + '/user/verify/' + authToken,
         verified: false
       })
