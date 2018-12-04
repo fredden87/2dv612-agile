@@ -43,6 +43,9 @@ const userSchema = new Schema({
   token: {
     type: String
   },
+  sessionToken: {
+    type: String
+  },
   url: {
     type: String
   },
