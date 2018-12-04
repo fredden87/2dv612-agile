@@ -37,8 +37,8 @@ function checkDuplicates (cars, car) {
     if (cars[i] === car) {
       return false
     }
-    return true
   }
+  return true
 }
 
 function connectDB (res) {
