@@ -6,7 +6,10 @@ const loginRoutes = require('./api/routes/login')
 const adminRoutes = require('./api/routes/admin')
 const userRoutes = require('./api/routes/user')
 const vehicleRoutes = require('./api/routes/vehicle')
-
+const areaRoutes = require('./api/routes/area')
+// enable preflight headers for all routes
+const cors = require('cors')
+app.options('*', cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(session({
@@ -14,8 +17,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
-  //default server-side session storage, MemoryStore, is not designed for a production environment
-  //store: new MongoStore({mongoose_connection: mongoose.connection })
+  // default server-side session storage, MemoryStore, is not designed for a production environment
+  // store: new MongoStore({mongoose_connection: mongoose.connection })
 }))
 
 // Preventing CORS errors
@@ -34,6 +37,7 @@ app.use('/login', loginRoutes)
 app.use('/admin', adminRoutes)
 app.use('/user', userRoutes)
 app.use('/vehicle', vehicleRoutes)
+app.use('/area', areaRoutes)
 
 // Error handling needs to be after all routes
 app.use((req, res, next) => {

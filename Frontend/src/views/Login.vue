@@ -68,6 +68,8 @@
               router.push({ name: 'admin'})
             } else if (data.user.role==="Parking Guard"){
               router.push({ name: 'guard'})
+            } else if (data.user.role==="Park owner"){
+              router.push({ name: 'area'})
           } else {
             router.push({ name: 'welcome'})
           }
