@@ -7,6 +7,8 @@ const adminRoutes = require('./api/routes/admin')
 const userRoutes = require('./api/routes/user')
 const vehicleRoutes = require('./api/routes/vehicle')
 const areaRoutes = require('./api/routes/area')
+const checkToken = require('./api/middleware/checkToken')
+
 // enable preflight headers for all routes
 const cors = require('cors')
 app.options('*', cors())
@@ -33,6 +35,7 @@ app.use((req, res, next) => {
 })
 
 // Routes
+app.use('*', checkToken)
 app.use('/login', loginRoutes)
 app.use('/admin', adminRoutes)
 app.use('/user', userRoutes)
