@@ -53,7 +53,7 @@
              })
             } else {
                window.M.toast({
-               html: data.message,
+               html: data.message||data.error.errmsg,
                classes: 'green darken-1'
              })
             }
