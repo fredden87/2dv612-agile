@@ -93,7 +93,7 @@ selectorData()
 
       if (user !== null) {
         const userEmail = user.email
-        const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat}
+        const data = {sessionToken: user.sessionToken ,email: userEmail, name: areaName, long: areaLong, lat: areaLat}
 
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {

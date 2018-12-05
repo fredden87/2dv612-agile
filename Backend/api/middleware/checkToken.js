@@ -2,17 +2,15 @@
 const User = require('../db_resources/usermodel.js')
 
 module.exports = (req, res, next) => {
+  console.log(req.body)
+  const sessionToken = JSON.parse(req.body.sessionToken)
+  // const sessionToken = req.header(sessionToken);
+  // const sessionToken = req.headers.authorization.split("")[1];
+  // const sessionToken = url.parse(req.url,true).query.sessionToken;
+  // const sessionToken = req.headers['sessionToken'];
+  // const sessionToken = req.params.sessionToken
 
-    console.log(req.body)
-    const sessionToken = JSON.parse(req.body.sessionToken)
-    //const sessionToken = req.header(sessionToken);
-    //const sessionToken = req.headers.authorization.split("")[1];
-    //const sessionToken = url.parse(req.url,true).query.sessionToken;
-    //const sessionToken = req.headers['sessionToken'];
-    //const sessionToken = req.params.sessionToken
-
-    if (sessionToken) {
-
+  if (sessionToken) {
 	    User.find({ sessionToken: sessionToken })
 	    .exec()
 	    .then(user => {
@@ -21,7 +19,7 @@ module.exports = (req, res, next) => {
 	          message: 'Token does not match any user in the database. Access denied'
 	        })
 	      } else {
-	        next();
+	        next()
 	      }
 	    })
 	    .catch(err => {
@@ -30,13 +28,10 @@ module.exports = (req, res, next) => {
 	        error: err
 	      })
 	    })
-
-    } else {
-
-      // if no token provided
-      res.send({ 
-          message: 'No token provided.' 
-      })
-
-    }
+  } else {
+    // if no token provided
+    res.send({
+      message: 'No token provided.'
+    })
   }
+}

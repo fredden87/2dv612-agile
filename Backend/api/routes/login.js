@@ -27,11 +27,11 @@ router.post('/', (req, res, next) => {
           req.session.isLoggedIn = true
           req.session.email = req.body.email
           req.session.password = req.body.password
-          req.session.sessionToken = req.body.sessionToken
+          let newSessionToken = 'qwerty'
+          req.session.sessionToken = newSessionToken
           req.session.save()
-          let sessionToken = 'qwerty'
           let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
-          res.status(200).json({ message: 'Welcome: ' + user[0].firstname + ' ' + user[0].lastname, auth: true, token: token, sessionToken: sessionToken, user: user[0] })
+          res.status(200).json({ message: 'Welcome: ' + user[0].firstname + ' ' + user[0].lastname, auth: true, token: token, sessionToken: newSessionToken, user: user[0] })
         } else {
           return res.status(401).json({
             message: 'Authorization failed'
