@@ -35,12 +35,12 @@ app.use((req, res, next) => {
 })
 
 // Routes
-app.use('*', checkToken)
+// app.use('*', checkToken)
 app.use('/login', loginRoutes)
-app.use('/admin', adminRoutes)
 app.use('/user', userRoutes)
-app.use('/vehicle', vehicleRoutes)
-app.use('/area', areaRoutes)
+app.use('/admin', checkToken, adminRoutes)
+app.use('/vehicle', checkToken, vehicleRoutes)
+app.use('/area', checkToken, areaRoutes)
 
 // Error handling needs to be after all routes
 app.use((req, res, next) => {
