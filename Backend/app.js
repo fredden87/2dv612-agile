@@ -40,7 +40,8 @@ app.use('/login', loginRoutes)
 app.use('/user', userRoutes)
 app.use('/admin', adminRoutes)
 app.use('/vehicle', vehicleRoutes)
-app.use('/area', checkToken, areaRoutes)
+app.use('/area', checkToken)
+app.use('/area', areaRoutes)
 
 // Error handling needs to be after all routes
 app.use((req, res, next) => {
