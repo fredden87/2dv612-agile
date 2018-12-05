@@ -30,6 +30,17 @@ router.post('/', (req, res, next) => {
           let newSessionToken = 'qwerty'
           req.session.sessionToken = newSessionToken
           req.session.save()
+          // save to db
+          User.update({ email: req.body.email }, { $set: { sessionToken: newSessionToken } }, function (err, user) {
+            if (err) {
+              res.status(500).json({
+                error: err
+              })
+            }
+            res.status(200).json({
+              message: 'Session token stored'
+            })
+          })
           let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
           res.status(200).json({ message: 'Welcome: ' + user[0].firstname + ' ' + user[0].lastname, auth: true, token: token, sessionToken: newSessionToken, user: user[0] })
         } else {
