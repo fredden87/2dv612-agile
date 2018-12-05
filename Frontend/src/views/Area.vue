@@ -59,7 +59,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
 
   let selectorData= function(){
      const user = JSON.parse(localStorage.getItem('user'))
-      request.post({uri: 'http://'+backendUrl+'/area', form: {sessionToken: user.sessionToken, email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+      request.post({uri: 'http://'+backendUrl+'/area', form: {sessionToken: JSON.stringify(user.sessionToken), email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   let area=document.getElementById('areaOpt')
   while (area.childNodes.length>1){
