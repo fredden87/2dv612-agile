@@ -31,7 +31,7 @@ router.post('/', (req, res, next) => {
           req.session.sessionToken = newSessionToken
           req.session.save()
           // save to db
-          User.update({ email: req.body.email }, { $set: { sessionToken: newSessionToken } }, function (err, user) {
+          User.update({ email: req.body.email }, { $set: { sessionToken: newSessionToken } }, function (err, updated) {
             if (err) {
               res.status(500).json({
                 error: err
@@ -40,7 +40,6 @@ router.post('/', (req, res, next) => {
             let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
             res.status(200).json({ message: 'Welcome: ' + user[0].firstname + ' ' + user[0].lastname, auth: true, token: token, sessionToken: newSessionToken, user: user[0] })
           })
-
         } else {
           return res.status(401).json({
             message: 'Authorization failed'
