@@ -77,10 +77,10 @@ area.removeChild(area.lastChild)
   }
   data.forEach(function(item){
    let opt = document.createElement('option')
-   opt.value=item.name
-   opt.lat=item.lat
-   opt.long=item.long
-   opt.textContent=item.name + ' : ( ' + item.lat + ', ' + item.long + ')'
+   opt.value=item.area.name
+   opt.lat=item.area.lat
+   opt.long=item.area.long
+   opt.textContent=item.area.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
   M.FormSelect.init(document.getElementById('areaOpt'))
