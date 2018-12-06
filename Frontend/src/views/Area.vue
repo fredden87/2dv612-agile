@@ -75,6 +75,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
   while (area.childNodes.length>1){
 area.removeChild(area.lastChild)
   }
+  if (data){
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.area.name
@@ -84,6 +85,7 @@ area.removeChild(area.lastChild)
    area.appendChild(opt)
   })
   M.FormSelect.init(document.getElementById('areaOpt'))
+}
   })
   }
 export default {
