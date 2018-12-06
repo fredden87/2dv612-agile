@@ -40,7 +40,19 @@
           type="submit"
           name="action"
           v-on:click="viewArea">
+          <i class="material-icons left">
           View
+          </i>
+        </button>
+        <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeArea">
+          <i class="material-icons left">
+          Remove
+          </i>
         </button>
     </div>
   </div>
@@ -56,7 +68,6 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
-
   let selectorData= function(){
       request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
@@ -72,34 +83,35 @@ area.removeChild(area.lastChild)
    opt.textContent=item.name + ' : ( ' + item.lat + ', ' + item.long + ')'
    area.appendChild(opt)
   })
-
   M.FormSelect.init(document.getElementById('areaOpt'))
   })
   }
-
 export default {
   mounted(){
 selectorData()
-
   },
   name: "Area",
   methods: {
+    removeArea: function(event){
+      event.preventDefault()
+            let instance = document.getElementById('areaOpt')
+      let selected=instance.options[instance.selectedIndex]
+      //get by user and delete by name??
+      console.log("delete: " + selected.value)
+    },
     addArea: function(event) {
       event.preventDefault()
       const areaLong = document.getElementById("long").value
       const areaLat = document.getElementById("lat").value
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
-
       if (user !== null) {
         const userEmail = user.email
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat}
-
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
           backendUrl = "194.47.206.226:3000";
         }
-
         fetch("http://" + backendUrl + "/area", {
           method: 'PATCH', 
           headers: {
