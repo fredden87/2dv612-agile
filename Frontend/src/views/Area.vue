@@ -84,8 +84,9 @@ area.removeChild(area.lastChild)
    opt.textContent=item.area.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
-  M.FormSelect.init(document.getElementById('areaOpt'))
+ 
 }
+ M.FormSelect.init(document.getElementById('areaOpt'))
   })
   }
 export default {
