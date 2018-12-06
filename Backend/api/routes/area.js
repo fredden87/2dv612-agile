@@ -35,6 +35,21 @@ router.patch('/', (req, res, next) => {
         })
       })
   })
+  router.post('/remove', (req, res, next) => {
+    connectDB(res)
+    Area.find({ email: req.body.email, area: { name: req.body.name } })
+      .remove()
+      .exec()
+      .then(area => {
+        return res.status(200).json({ message: JSON.stringify(req.body.name) + ' removed' })
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(500).json({
+          error: err
+        })
+      })
+  })
 
   function connectDB (res) {
     mongoose.connect(MONGODB_URL, {
