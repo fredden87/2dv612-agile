@@ -9,7 +9,8 @@ router.patch('/', (req, res, next) => {
   const area = new Area({
     _id: new mongoose.Types.ObjectId(),
     email: req.body.email,
-    area: { name: req.body.name, long: req.body.long, lat: req.body.lat }
+    name: req.body.name,
+    area: { long: req.body.long, lat: req.body.lat }
   })
   area.save().then(data => {
     res.status(200).json({
@@ -37,7 +38,7 @@ router.patch('/', (req, res, next) => {
   })
   router.post('/remove', (req, res, next) => {
     connectDB(res)
-    Area.find({ email: req.body.email })
+    Area.find({ email: req.body.email, name: req.body.name })
       .remove()
       .exec()
       .then(area => {

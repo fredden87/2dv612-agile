@@ -78,10 +78,10 @@ area.removeChild(area.lastChild)
  
   data.forEach(function(item){
    let opt = document.createElement('option')
-   opt.value=item.area.name
+   opt.value=item.name
    opt.lat=item.area.lat
    opt.long=item.area.long
-   opt.textContent=item.area.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
+   opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
  

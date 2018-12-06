@@ -6,12 +6,12 @@ const Schema = mongoose.Schema
 
 const areaSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   area: {
-    name: {
-      type: String,
-      required: true,
-      unique: true
-    },
     long: {
       type: Number,
       required: true
