@@ -75,7 +75,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
   while (area.childNodes.length>1){
 area.removeChild(area.lastChild)
   }
-  if (data){
+  if (data.length>0){
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.area.name
@@ -96,7 +96,7 @@ selectorData()
   methods: {
     removeArea: function(event){
       event.preventDefault()
-            let instance = document.getElementById('areaOpt')
+      let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
       //get by user and delete by name??
       console.log("delete: " + selected.value)
