@@ -37,10 +37,10 @@ router.patch('/', (req, res, next) => {
   })
   router.post('/remove', (req, res, next) => {
     connectDB(res)
-    Area.find({ email: req.body.email, area: { name: req.body.name } })
-      .remove()
+    Area.remove({ email: req.body.email, area: { name: req.body.name } })
       .exec()
       .then(area => {
+        console.log(area)
         return res.status(200).json({ message: JSON.stringify(req.body.name) + ' removed' })
       })
       .catch(err => {
