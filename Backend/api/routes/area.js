@@ -55,6 +55,11 @@ router.patch('/', (req, res, next) => {
     mongoose.connect(MONGODB_URL, {
       autoReconnect: true,
       useNewUrlParser: true
+    }).catch(err => {
+      console.log('Mongo connection error', err)
+      res.status(500).json({
+        error: err
+      })
     })
   }
 })
