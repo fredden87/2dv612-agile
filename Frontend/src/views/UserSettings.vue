@@ -9,6 +9,14 @@
             <label for="car_reg">Vehicle registration number</label>
           </div>
         </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <select id="vehicleOpt">
+              <option value="" disabled selected>Select Vehicle</option>
+            </select>
+            <label>View Registered Vehicles</label>
+          </div>
+        </div>
         <button
           class="btn
           waves-effect waves-light"
@@ -17,13 +25,21 @@
           v-on:click="addVehicle">
           Add Vehicle
         </button>
+        <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeVehicle">
+          Remove Vehicle
+        </button>
       </form>
     </div>
     <div class="row">
       <div class="col s6">
         <h5>Registered vehicles</h5>
         <ul class="collection" id="vehicleList">
-          
+
         </ul>
       </div>
     </div>
@@ -31,12 +47,13 @@
 </template>
 
 <script>
+  
 export default {
   name: "UserSettings",
   mounted() {
     // <li class="collection-item">Alvin</li>
     const user = JSON.parse(localStorage.getItem('user'))
-    if (user !== null) { 
+    if (user !== null) {
       // Logged in
       const listElement = document.getElementById('vehicleList')
 
@@ -67,7 +84,7 @@ export default {
         }
 
         fetch("http://" + backendUrl + "/vehicle", {
-          method: 'PATCH', 
+          method: 'PATCH',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
