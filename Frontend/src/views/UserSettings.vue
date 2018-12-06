@@ -2,6 +2,7 @@
   <div class="register-wrapper">
     <div class="row">
       <form class="col s12">
+        <h5>Register new vehicle</h5>
         <div class="row">
           <div class="input-field col s12">
             <input id="car_reg" type="text" class="validate">
@@ -18,12 +19,38 @@
         </button>
       </form>
     </div>
+    <div class="row">
+      <div class="col s6">
+        <h5>Registered vehicles</h5>
+        <ul class="collection" id="vehicleList">
+          
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "UserSettings",
+  mounted() {
+    // <li class="collection-item">Alvin</li>
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user !== null) { 
+      // Logged in
+      const listElement = document.getElementById('vehicleList')
+
+      let html = ''
+      user.vehicle.forEach(element => {
+        html += '<li class="collection-item">' + element + "</li>"
+      });
+
+      listElement.innerHTML = html
+
+    } else {
+      // Not logged in
+    }
+  },
   methods: {
     addVehicle: function(event) {
       event.preventDefault()
@@ -53,6 +80,12 @@ export default {
               html: "Vehicle was added",
               classes: 'green darken-1'
             })
+
+            const listElement = document.getElementById('vehicleList')
+
+            let html = '<li class="collection-item">' + carRegistration.toUpperCase() +'</li>'
+
+            listElement.innerHTML += html
           } else {
             // Display error message
             window.M.toast({
