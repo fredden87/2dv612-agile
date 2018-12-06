@@ -37,7 +37,8 @@ router.patch('/', (req, res, next) => {
   })
   router.post('/remove', (req, res, next) => {
     connectDB(res)
-    Area.remove({ email: req.body.email })
+    Area.find({ email: req.body.email })
+      .remove()
       .exec()
       .then(area => {
         console.log(area)
