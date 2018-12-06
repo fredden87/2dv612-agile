@@ -107,7 +107,7 @@ selectorData()
       const areaName = selected.value
       const user = JSON.parse(localStorage.getItem('user'))
       const data = {email: user.email, name: areaName}
-      fetch("http://" + backendUrl + "/area", {
+      fetch("http://" + backendUrl + "/area/remove", {
           method: 'POST', 
           headers: {
             'Accept': 'application/json',
