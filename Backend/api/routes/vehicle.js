@@ -29,6 +29,20 @@ router.patch('/', (req, res, next) => {
     })
 })
 
+router.delete('/', (req, res, next) => {
+  connectDB(res)
+  User.updateOne({ email: req.body.email }, { $pull: { vehicle: req.body.car } }, (err) => {
+    if (err) {
+      res.status(500).json({
+        error: err
+      })
+    }
+    res.status(200).json({
+      message: 'Vehicle removed'
+    })
+  })
+})
+
 function checkDuplicates (cars, car) {
   if (cars.length === 0) {
     return true
