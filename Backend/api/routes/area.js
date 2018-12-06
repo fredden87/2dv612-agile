@@ -12,7 +12,6 @@ router.patch('/', (req, res, next) => {
     area: { name: req.body.name, long: req.body.long, lat: req.body.lat }
   })
   area.save().then(data => {
-
     res.status(200).json({
       message: 'New Area added'
     })
@@ -21,7 +20,7 @@ router.patch('/', (req, res, next) => {
     res.status(500).json({
       error: err
     })
-
+  })
   router.post('/', (req, res, next) => {
     connectDB(res)
     Area.find({ email: req.body.email })
