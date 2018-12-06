@@ -40,7 +40,19 @@
           type="submit"
           name="action"
           v-on:click="viewArea">
+          <i class="material-icons left">
           View
+          </i>
+        </button>
+        <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeArea">
+          <i class="material-icons left">
+          Remove
+          </i>
         </button>
     </div>
   </div>
@@ -56,50 +68,83 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
-
   let selectorData= function(){
-      request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+  request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   let area=document.getElementById('areaOpt')
   while (area.childNodes.length>1){
 area.removeChild(area.lastChild)
   }
+ 
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.name
-   opt.lat=item.lat
-   opt.long=item.long
-   opt.textContent=item.name + ' : ( ' + item.lat + ', ' + item.long + ')'
+   opt.lat=item.area.lat
+   opt.long=item.area.long
+   opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
+ 
 
-  M.FormSelect.init(document.getElementById('areaOpt'))
+ M.FormSelect.init(document.getElementById('areaOpt'))
   })
   }
-
 export default {
   mounted(){
 selectorData()
-
   },
   name: "Area",
   methods: {
+    removeArea: function(event){
+      event.preventDefault()
+      let backendUrl = "127.0.0.1:3000";
+      if (process.env.VUE_APP_ENVIRONMENT === "production") {
+        backendUrl = "194.47.206.226:3000";
+      }
+
+      let instance = document.getElementById('areaOpt')
+      let selected=instance.options[instance.selectedIndex]
+      const areaName = selected.value
+      const user = JSON.parse(localStorage.getItem('user'))
+      const data = {email: user.email, name: areaName}
+      fetch("http://" + backendUrl + "/area/remove", {
+          method: 'POST', 
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)})
+        .then((response) => {
+          if (response.status === 200) {
+            // Display success message
+            selectorData()
+            window.M.toast({
+              html: "Area was removed",
+              classes: 'green darken-1'
+            })
+          } else {
+            // Display error message
+            window.M.toast({
+              html: "Area could not be removed",
+              classes: 'deep-orange accent-4 black-text',
+              displayLength: 6000
+            })
+          }
+        })
+    },
     addArea: function(event) {
       event.preventDefault()
       const areaLong = document.getElementById("long").value
       const areaLat = document.getElementById("lat").value
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
-
       if (user !== null) {
         const userEmail = user.email
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat}
-
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
           backendUrl = "194.47.206.226:3000";
         }
-
         fetch("http://" + backendUrl + "/area", {
           method: 'PATCH', 
           headers: {
