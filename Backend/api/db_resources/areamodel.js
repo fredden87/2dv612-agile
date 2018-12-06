@@ -29,4 +29,4 @@ const areaSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Areas', areaSchema)
+module.exports = mongoose.model('Area', areaSchema)

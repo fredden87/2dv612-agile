@@ -25,8 +25,8 @@ router.patch('/', (req, res, next) => {
     connectDB(res)
     Area.find({ email: req.body.email })
       .exec()
-      .then(areas => {
-        return res.status(200).send(areas)
+      .then(area => {
+        return res.status(200).send(area)
       })
       .catch(err => {
         console.log(err)
