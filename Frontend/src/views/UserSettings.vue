@@ -60,11 +60,12 @@
       while (vehicle.childNodes.length>1){
         vehicle.removeChild(vehicle.lastChild)
       }
-
-      data.forEach(function(item){
+      //console.log(data['0'].vehicle)
+      data['0'].vehicle.forEach(function(item){
+        console.log(item)
         let opt = document.createElement('option')
         //opt.value = document.getElementById("car_reg").value
-        opt.value=item.vehicle
+        opt.value=item
         opt.textContent=opt.value
         vehicle.appendChild(opt)
       })
