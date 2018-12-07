@@ -62,12 +62,11 @@
 
       data.forEach(function(item){
         let opt = document.createElement('option')
+        //opt.value = document.getElementById("car_reg").value
         opt.value=item.user.vehicle.type
-        //console.log(item.user.vehicle.type)
         opt.textContent=opt.value
         vehicle.appendChild(opt)
       })
-
 
       M.FormSelect.init(document.getElementById('vehicleOpt'))
     })
@@ -96,6 +95,44 @@ export default {
     selectorData()
   },
   methods: {
+    removeVehicle: function(event){
+      event.preventDefault()
+      let backendUrl = "127.0.0.1:3000";
+      if (process.env.VUE_APP_ENVIRONMENT === "production") {
+        backendUrl = "194.47.206.226:3000";
+      }
+
+      let instance = document.getElementById('vehicleOpt')
+      let selected=instance.options[instance.selectedIndex]
+      const vehicleNum = selected.value
+      const user = JSON.parse(localStorage.getItem('user'))
+      const data = {email: user.email, vehicle: vehicleNum}
+      console.log(data)
+      fetch("http://" + backendUrl + "/vehicle/remove", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)})
+        .then((response) => {
+          if (response.status === 200) {
+            // Display success message
+            //selectorData()
+            window.M.toast({
+              html: "Vehicle was removed",
+              classes: 'green darken-1'
+            })
+          } else {
+            // Display error message
+            window.M.toast({
+              html: "Vehicle could not be removed",
+              classes: 'deep-orange accent-4 black-text',
+              displayLength: 6000
+            })
+          }
+        })
+    },
     addVehicle: function(event) {
       event.preventDefault()
       const carRegistration = document.getElementById("car_reg").value
@@ -130,6 +167,18 @@ export default {
             let html = '<li class="collection-item">' + carRegistration.toUpperCase() +'</li>'
 
             listElement.innerHTML += html
+
+            let vehicleSelect=document.getElementById('vehicleOpt')
+
+
+            //data.forEach(function(item){
+              let opt = document.createElement('option')
+              opt.value=carRegistration.toUpperCase()
+              opt.textContent=opt.value
+              vehicleSelect.appendChild(opt)
+            //})
+
+            M.FormSelect.init(document.getElementById('vehicleOpt'))
           } else {
             // Display error message
             window.M.toast({
