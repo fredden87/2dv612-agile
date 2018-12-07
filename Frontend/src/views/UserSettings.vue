@@ -60,11 +60,9 @@
       while (vehicle.childNodes.length>1){
         vehicle.removeChild(vehicle.lastChild)
       }
-      //console.log(data['0'].vehicle)
+
       data['0'].vehicle.forEach(function(item){
-        console.log(item)
         let opt = document.createElement('option')
-        //opt.value = document.getElementById("car_reg").value
         opt.value=item
         opt.textContent=opt.value
         vehicle.appendChild(opt)
@@ -76,7 +74,6 @@
   export default {
     name: "UserSettings",
       mounted() {
-        // <li class="collection-item">Alvin</li>
         const user = JSON.parse(localStorage.getItem('user'))
         if (user !== null) {
           // Logged in
@@ -166,9 +163,7 @@
                 })
 
                 const listElement = document.getElementById('vehicleList')
-
                 let html = '<li class="collection-item">' + carRegistration.toUpperCase() +'</li>'
-
                 listElement.innerHTML += html
 
               } else {
