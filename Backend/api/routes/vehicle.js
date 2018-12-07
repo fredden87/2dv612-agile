@@ -9,8 +9,8 @@ router.patch('/', (req, res, next) => {
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
-      if (checkDuplicates(user.vehicle, req.body.car)) {
-        user.vehicle.push(req.body.car)
+      if (checkDuplicates(user.vehicle, req.body.vehicle)) {
+        user.vehicle.push(req.body.vehicle)
         user.save()
         return res.status(200).json({
           message: 'New vehicle added'
@@ -29,9 +29,24 @@ router.patch('/', (req, res, next) => {
     })
 })
 
-router.delete('/', (req, res, next) => {
+router.post('/', (req, res, next) => {
+    connectDB(res)
+    User.find({ email: req.body.email })
+        .exec()
+        .then(user => {
+            return res.status(200).send(user)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                error: err
+            })
+        })
+})
+
+router.post('/remove', (req, res, next) => {
   connectDB(res)
-  User.updateOne({ email: req.body.email }, { $pull: { vehicle: req.body.car } }, (err) => {
+  User.updateOne({ email: req.body.email }, { $pull: { vehicle: req.body.vehicle } }, (err) => {
     if (err) {
       res.status(500).json({
         error: err
