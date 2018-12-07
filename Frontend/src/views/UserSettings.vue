@@ -47,7 +47,31 @@
 </template>
 
 <script>
-  
+  const request = require('request')
+  let backendUrl = '127.0.0.1:3000'
+  if (process.env.VUE_APP_ENVIRONMENT==="production"){
+    backendUrl='194.47.206.226:3000'
+  }
+  let selectorData= function(){
+    request.post({uri: 'http://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+      let data=JSON.parse(body)
+      let vehicle=document.getElementById('vehicleOpt')
+      while (vehicle.childNodes.length>1){
+        vehicle.removeChild(vehicle.lastChild)
+      }
+
+      data.forEach(function(item){
+        let opt = document.createElement('option')
+        opt.value=item.user.vehicle.type
+        //console.log(item.user.vehicle.type)
+        opt.textContent=opt.value
+        vehicle.appendChild(opt)
+      })
+
+
+      M.FormSelect.init(document.getElementById('vehicleOpt'))
+    })
+  }
 export default {
   name: "UserSettings",
   mounted() {
@@ -67,6 +91,9 @@ export default {
     } else {
       // Not logged in
     }
+  },
+  mounted(){
+    selectorData()
   },
   methods: {
     addVehicle: function(event) {
