@@ -30,6 +30,14 @@
           waves-effect waves-light"
           type="submit"
           name="action"
+          v-on:click="viewVehicle">
+          View Vehicle(s)
+        </button>
+        <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
           v-on:click="removeVehicle">
           Remove Vehicle
         </button>
@@ -73,7 +81,7 @@
   }
   export default {
     name: "UserSettings",
-      mounted() {
+/*      mounted() {
         const user = JSON.parse(localStorage.getItem('user'))
         if (user !== null) {
           // Logged in
@@ -89,7 +97,7 @@
         } else {
           // Not logged in
         }
-      },
+      },*/
     mounted(){
       selectorData()
     },
@@ -162,9 +170,9 @@
                   classes: 'green darken-1'
                 })
 
-                const listElement = document.getElementById('vehicleList')
+               /* const listElement = document.getElementById('vehicleList')
                 let html = '<li class="collection-item">' + carRegistration.toUpperCase() +'</li>'
-                listElement.innerHTML += html
+                listElement.innerHTML += html*/
 
               } else {
                 // Display error message
@@ -182,7 +190,25 @@
             displayLength: 6000
           })
         }
+      },
+      viewVehicle: function(event){
+
+        let instance = document.getElementById('vehicleOpt')
+        let ul = document.getElementById('vehicleList')
+
+        while (ul.childNodes.length>0){
+          ul.removeChild(ul.lastChild)
+        }
+        //console.log(instance.childNodes.length)
+        for (let i=1; i < instance.childNodes.length; i++){
+          let li = document.createElement("li");
+
+          li.appendChild(document.createTextNode(instance.childNodes[i].outerText));
+
+          ul.appendChild(li);
+        }
       }
+
     }
   }
 </script>
