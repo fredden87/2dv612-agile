@@ -182,16 +182,16 @@ router.beforeEach((to, from, next)=> {
   let feature = to.matched.some(record=>record.meta.feature)
   if (feature){
     if (user.is_admin === 1){
-      next({path:'./admin'})
+      this.push({path:'./admin'})
     } else if (user.role === "Car Owner"){
-      next({path:'./car'})
+      this.push({path:'./car'})
     } else if (user.role === "Park owner"){
-      next({path:'./area'})
+      this.push({path:'./area'})
     } else if (user.role === "Parking Guard"){
-      next({path:'./guard'})
+      this.push({path:'./guard'})
     } else {
       // new roles will end up on welcome unless defined
-      next({path:'/.welcome'})
+      this.push({path:'/.welcome'})
     }
     } 
 
