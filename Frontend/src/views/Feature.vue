@@ -7,7 +7,7 @@
 <script>
 
   export default {
-    name: "UserSettings",
+    name: "Feature",
     mounted(){
     },
     methods: {

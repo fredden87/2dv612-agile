@@ -183,7 +183,7 @@ router.beforeEach((to, from, next)=> {
   let feature = to.matched.some(record=>record.meta.feature)
   if (feature){
     if (user.is_admin === 1){
-      this.router.push({path:'./admin'})
+      next({path:'./admin'})
     } else if (user.role === "Car Owner"){
       next({path:'./car'})
     } else if (user.role === "Park owner"){
