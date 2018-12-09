@@ -171,7 +171,7 @@ router.beforeEach((to, from, next)=> {
     }  
   // unverified to welcome, else feature pages from home
   let reqNone = to.matched.some(record=>record.meta.notVerified)
-  if (reqNone && !user.verified){
+  if (reqNone && user && !user.verified){
     //unverified email case is supposed to be "welcomed"
     next()
     accessNotify('Please verify your registered email')
