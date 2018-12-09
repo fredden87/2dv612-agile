@@ -171,14 +171,14 @@ router.beforeEach((to, from, next)=> {
     }  
   // unverified to welcome, else feature pages from home
   let reqNone = to.matched.some(record=>record.meta.notVerified)
-  if (reqNone && user!==null && !user.verified){
+  if (reqNone && !user.verified){
     //unverified email case is supposed to be "welcomed"
     next()
     accessNotify('Please verify your registered email')
     } else {
       // feature page routing for verified users
       if (user.is_admin === 1){
-        next({ath:'admin'})
+        next({path:'./admin'})
       } else if (user.role === "Car Owner"){
         next({path:'./car'})
       } else if (user.role === "Park owner"){
