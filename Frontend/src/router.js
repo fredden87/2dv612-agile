@@ -59,8 +59,7 @@ let router = new Router({
       component: Welcome,
       meta: {
         requiresAuth: true,
-        requiresSession: true,
-        notVerified: true
+        requiresSession: true
       }
     },
     {
@@ -104,6 +103,16 @@ let router = new Router({
         requiresAuth: true,
         requiresSession: true,
         is_admin: true
+      }
+    }, 
+    {
+      path: '/feature',
+      name: 'feature',
+      //component: Feature, /**there is no component, simple route */
+      meta: {
+        requiresAuth: true,
+        requiresSession: true,
+        feature: true
       }
     }
   ]
@@ -170,12 +179,13 @@ router.beforeEach((to, from, next)=> {
     accessNotify('Car owner account required')
     }  
   // unverified to welcome, else feature pages from home
-  let reqNone = to.matched.some(record=>record.meta.notVerified)
-  if (reqNone && !user.verified){
+  let feature = to.matched.some(record=>record.meta.feature)
+  if (feature){
     //unverified email case is supposed to be "welcomed"
-    next()
-    accessNotify('Please verify your registered email')
-    } else if (user){
+    if (!user){
+      //no user -> login
+      next({path:'/.login'})
+    } else if (user!==null){
       // feature page routing for verified users
       if (user.is_admin === 1){
         next({path:'./admin'})
@@ -187,9 +197,10 @@ router.beforeEach((to, from, next)=> {
         next({path:'./guard'})
       } else {
         // new roles will end up on welcome unless defined
-        next()
+        next({path:'/.welcome'})
       }
     }
+  }
   // all other cases ok
   next()
 })
