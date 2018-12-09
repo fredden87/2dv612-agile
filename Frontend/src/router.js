@@ -175,7 +175,7 @@ router.beforeEach((to, from, next)=> {
     //unverified email case is supposed to be "welcomed"
     next()
     accessNotify('Please verify your registered email')
-    } else {
+    } else if (user){
       // feature page routing for verified users
       if (user.is_admin === 1){
         next({path:'./admin'})
