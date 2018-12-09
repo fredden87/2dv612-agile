@@ -181,26 +181,23 @@ router.beforeEach((to, from, next)=> {
   // unverified to welcome, else feature pages from home
   let feature = to.matched.some(record=>record.meta.feature)
   if (feature){
-    //unverified email case is supposed to be "welcomed"
-    if (!user){
-      //no user -> login
-      next({path:'/.login'})
-    } else if (user!==null){
-      // feature page routing for verified users
-      if (user.is_admin === 1){
-        next({path:'./admin'})
-      } else if (user.role === "Car Owner"){
-        next({path:'./car'})
-      } else if (user.role === "Park owner"){
-        next({path:'./area'})
-      } else if (user.role === "Parking Guard"){
-        next({path:'./guard'})
-      } else {
-        // new roles will end up on welcome unless defined
-        next({path:'/.welcome'})
-      }
+    if (user.is_admin === 1){
+      next({path:'./admin'})
+    } else if (user.role === "Car Owner"){
+      next({path:'./car'})
+    } else if (user.role === "Park owner"){
+      next({path:'./area'})
+    } else if (user.role === "Parking Guard"){
+      next({path:'./guard'})
+    } else {
+      // new roles will end up on welcome unless defined
+      next({path:'/.welcome'})
     }
-  }
+    } 
+
+
+    
+  
   // all other cases ok
   next()
 })
