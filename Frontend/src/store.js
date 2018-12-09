@@ -13,7 +13,7 @@ export default new Vuex.Store({
       },
       {
         id: 1,
-        text: "My Personal Page",
+        text: "My Pages",
         page: "/feature"
       },
       {

@@ -10,6 +10,7 @@ import UserSettings from './views/UserSettings.vue'
 import Guard from './views/Guard.vue'
 import Area from './views/Area.vue'
 import Car from './views/Car.vue'
+import Feature from './views/Feature.vue'
 
 Vue.use(Router)
 
@@ -108,7 +109,7 @@ let router = new Router({
     {
       path: '/feature',
       name: 'feature',
-      //component: Feature, /**there is no component, simple route */
+      component: Feature, /**there is no actual component, simple route */
       meta: {
         requiresAuth: true,
         requiresSession: true,
@@ -184,14 +185,14 @@ router.beforeEach((to, from, next)=> {
     if (user.is_admin === 1){
       this.router.push({path:'./admin'})
     } else if (user.role === "Car Owner"){
-      this.router.push({path:'./car'})
+      next({path:'./car'})
     } else if (user.role === "Park owner"){
-      this.router.push({path:'./area'})
+      next({path:'./area'})
     } else if (user.role === "Parking Guard"){
-      this.router.push({path:'./guard'})
+      next({path:'./guard'})
     } else {
       // new roles will end up on welcome unless defined
-      this.router.push({path:'/.welcome'})
+      next({path:'/.welcome'})
     }
     } 
 
