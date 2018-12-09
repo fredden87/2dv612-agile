@@ -5,11 +5,10 @@
 </template>
 
 <script>
-
+    import router from '../router'
   export default {
     name: "Feature",
-    mounted(){
-        import router from '../router'
+    mounted(){  
         let user = JSON.parse(localStorage.getItem('user'))
     if (user.is_admin === 1){
       router.push({path:'./admin'})
