@@ -9,6 +9,7 @@ import Admin from './views/Admin.vue'
 import UserSettings from './views/UserSettings.vue'
 import Guard from './views/Guard.vue'
 import Area from './views/Area.vue'
+import Car from './views/Car.vue'
 
 Vue.use(Router)
 
@@ -84,6 +85,17 @@ let router = new Router({
       }
     },
     {
+      path: '/car',
+      name: 'car',
+      component: Car,
+      meta: {
+        requiresAuth: true,
+        requiresSession: true,
+        verified: true,
+        car: true
+      }
+    },
+    {
       path: '/admin',
       name: 'admin',
       component: Admin,
@@ -149,6 +161,12 @@ router.beforeEach((to, from, next)=> {
   if (reqPark && user.role !== "Park owner"){
     next({path:'/welcome'})
     accessNotify('Park owner account required')
+    }  
+  // car owner feature page restriction
+  let reqCar = to.matched.some(record=>record.meta.car)
+  if (reqCar && user.role !== "Car Owner"){
+    next({path:'/welcome'})
+    accessNotify('Car owner account required')
     }  
   // all other cases ok
   next()
