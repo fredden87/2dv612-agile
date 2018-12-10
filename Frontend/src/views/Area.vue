@@ -307,7 +307,7 @@ switch(timezone){
     break
   case '21':
     document.getElementById('row3hour4').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row4edit4').value=value
+    document.getElementById('row3edit4').value=value
     break
   case '22':
     document.getElementById('row3hour5').textContent=timezone+':00-'+timezone+':59'
