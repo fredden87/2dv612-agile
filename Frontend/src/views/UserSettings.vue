@@ -245,6 +245,11 @@
                 html: "Account was removed",
                 classes: 'green darken-1'
               })
+              sessionStorage.removeItem('email')
+              sessionStorage.removeItem('jwt')
+              localStorage.removeItem('user')
+              localStorage.removeItem('jwt')
+              router.push({ name: 'login' })
             } else {
               // Display error message
               window.M.toast({
