@@ -221,12 +221,13 @@ timetable.appendChild(newRow)
         for (let j=0; j<6; j++){
 let newCell = document.createElement('td')
 newCell.setAttribute('id', 'row'+(i+1)+'cell'+(j+1))
+let hour = document.createElement('div')
+hour.setAttribute('id', 'row'+(i+1)+'hour'+(j+1))
 let edit = document.createElement('input')
 edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
 edit.type='number'
-//newCell.textContent="time:" 
-//edit.value=0
 newRow.appendChild(newCell)
+newCell.appendChild(hour)
 newCell.appendChild(edit)
         }
       }
@@ -240,7 +241,7 @@ newCell.appendChild(edit)
 switch(timezone){
   case '0':
   console.log('case 0 fired')
-    document.getElementById('row4cell1').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4hour1').textContent='0'+timezone+':00-0'+timezone+':59'
     document.getElementById('row4edit1').value=value
     break
   default:
