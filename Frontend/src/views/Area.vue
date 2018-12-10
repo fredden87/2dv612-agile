@@ -233,7 +233,7 @@ label.textContent="rate: "
 newRow.appendChild(newCell)
 
 newCell.appendChild(hour)
-newCell.appendChild(edit)
+label.appendChild(edit)
 newCell.appendChild(label)
         }
       }
