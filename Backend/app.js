@@ -7,6 +7,8 @@ const adminRoutes = require('./api/routes/admin')
 const userRoutes = require('./api/routes/user')
 const vehicleRoutes = require('./api/routes/vehicle')
 const areaRoutes = require('./api/routes/area')
+const messageRoutes = require('./api/routes/message')
+
 // enable preflight headers for all routes
 const cors = require('cors')
 app.options('*', cors())
@@ -38,6 +40,7 @@ app.use('/admin', adminRoutes)
 app.use('/user', userRoutes)
 app.use('/vehicle', vehicleRoutes)
 app.use('/area', areaRoutes)
+app.use('/message', messageRoutes)
 
 // Error handling needs to be after all routes
 app.use((req, res, next) => {
