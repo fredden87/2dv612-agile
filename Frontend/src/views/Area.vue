@@ -361,6 +361,7 @@ switch(timezone){
 <style>
 label {
   display: flex;
+  padding: 2px;
 }
   .login-wrapper {
     width: 50%;
@@ -380,6 +381,7 @@ table.comicGreen {
   width: 100%;
   text-align: center;
   border-collapse: collapse;
+  font-size: 5px;
 }
 table.comicGreen td, table.comicGreen th {
   border: 1px solid #4F7849;
