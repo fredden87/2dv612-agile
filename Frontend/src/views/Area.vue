@@ -24,7 +24,7 @@
           type="submit"
           name="action"
           v-on:click="addArea">
-          Add New Parking Area
+          Save
         </button>
       </form>
     </div>
@@ -33,7 +33,7 @@
     <select id="areaOpt">
       <option value="" disabled selected>Select Area</option>
     </select>
-    <label>View Parking Areas</label>
+    <label>Select</label>
           <button
           class="btn
           waves-effect waves-light"
@@ -81,6 +81,7 @@ area.removeChild(area.lastChild)
    opt.value=item.name
    opt.lat=item.area.lat
    opt.long=item.area.long
+   opt.timezones=item.area.timezones
    opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
@@ -138,9 +139,15 @@ selectorData()
       const areaLat = document.getElementById("lat").value
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
+      // input actual timezones here
+      const areaTimezones = {}
+for (let i=0; i< 24; i++){
+  areaTimezones.i=undefined
+}
+      
       if (user !== null) {
         const userEmail = user.email
-        const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat}
+        const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
           backendUrl = "194.47.206.226:3000";
@@ -157,7 +164,7 @@ selectorData()
             // Display success message
             selectorData()
             window.M.toast({
-              html: "Area was added",
+              html: "Area saved",
               classes: 'green darken-1'
             })
           } else {
@@ -197,6 +204,8 @@ selectorData()
           newRow.appendChild(newCol)
         }
       }
+      //render here
+      console.log(selected.timezones)
       window.M.toast({
       html: selected.value ,
       classes: 'green darken-1',
@@ -211,6 +220,10 @@ selectorData()
   .login-wrapper {
     width: 50%;
     margin: 0 auto;
+  }
+  button {
+    padding: 5px;
+    margin: 5px;
   }
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
