@@ -231,7 +231,7 @@ newCell.appendChild(edit)
         }
       }
 
-      selected.timezones.forEach(function(timezone){
+      JSON.parse(selected.timezones).forEach(function(timezone){
      //  let hour = Object.keys(timezone)
         console.log('what')
 // switch(hour){
