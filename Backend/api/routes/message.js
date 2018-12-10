@@ -28,11 +28,13 @@ router.post('/', (req, res, next) => {
     let update = { message: req.body.message, viewed_by: [], stringId: 'admin_message' }
     let options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
-    Messagemodel.findOneAndUpdate(query, update, options, function (err, res) {
+    Messagemodel.findOneAndUpdate(query, update, options, function (err, response) {
       if (err) {
         console.log(err)
       } else {
-        console.log('Success')
+        //console.log('Success')
+        mongoose.connection.close()
+        next()
       }
     })
   })
