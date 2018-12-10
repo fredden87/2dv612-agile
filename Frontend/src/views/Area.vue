@@ -204,6 +204,8 @@ for (let i=0; i< 24; i++){
           newRow.appendChild(newCol)
         }
       }
+      //render here
+      console.log(selected.timezones)
       window.M.toast({
       html: selected.value ,
       classes: 'green darken-1',
