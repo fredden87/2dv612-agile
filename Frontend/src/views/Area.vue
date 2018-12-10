@@ -219,7 +219,8 @@ for (let i=0; i< 24; i++){
 timetable.appendChild(newRow)
         for (let j=0; j<6; j++){
 let newCell = document.createElement('td')
-let edit = document.createElement('div contenteditable')
+let edit = document.createElement('div')
+edit.contenteditable='true'
 newCell.textContent="time:"+i+j
 edit.textContent="rate:"
 newRow.appendChild(newCell)
