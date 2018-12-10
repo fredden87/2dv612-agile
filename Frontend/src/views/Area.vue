@@ -234,7 +234,7 @@ newCell.appendChild(edit)
       for (let timezone in selected.timezones){
        let hour = Object.keys(timezone)
         console.log(timezone)
-        console.log(timezone.value)
+        console.log(selected.timezones[timezone])
         console.log('_____')
 // switch(hour){
 //   case 0:
