@@ -81,6 +81,7 @@ area.removeChild(area.lastChild)
    opt.value=item.name
    opt.lat=item.area.lat
    opt.long=item.area.long
+   opt.timezones=item.area.timezones
    opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
@@ -139,7 +140,11 @@ selectorData()
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
       // input actual timezones here
-      const areaTimezones = null
+      const areaTimezones = {}
+for (let i=0; i< 24; i++){
+  areaTimezones.i=undefined
+}
+      
       if (user !== null) {
         const userEmail = user.email
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
