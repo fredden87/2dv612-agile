@@ -99,7 +99,7 @@ router.post('/signup', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    connectDB(res)
+    connect(res)
     User.find({ _id: req.params.id, email: req.body.email })
         .exec()
         .then(user => {
@@ -114,7 +114,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.post('/delete/:id', (req, res, next) => {
-    connectDB(res)
+    connect(res)
     User.find({ _id: req.params.id, email: req.body.email })
         .remove()
         .exec()
