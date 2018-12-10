@@ -2,6 +2,8 @@
  <div class="register-wrapper">
     <div class="row">
       <form class="col s8">
+        <div id='timezonesview' class='timezonesview'>
+        </div>
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
@@ -198,14 +200,32 @@ for (let i=0; i< 24; i++){
         newRow.class="row"
         renderView.appendChild(newRow)
         for (let j=0; j < selected.long; j++){
-          let newCol= document.createElement('td')
-          newCol.class="col"
-          newCol.textContent=(j+1)
-          newRow.appendChild(newCol)
+          let newCell= document.createElement('td')
+          newCell.class="col"
+          newCell.textContent=(j+1)
+          newRow.appendChild(newCell)
         }
       }
       //render here
       console.log(selected.timezones)
+      let timezonesview=document.getElementById('timezonesview')
+      while (document.getElementById('parkview').childNodes.length>0){
+        timezonesview.removeChild(timezonesview.lastChild)
+      }
+      let timetable=document.createElement('table')
+      timezonesview.appendChild(timetable)
+      for (let i=0; i<4; i++){
+        let newRow=document.createElement('tr')
+timezonesview.appendChild(newRow)
+        for (let j=0; j<6; j++){
+let newCell = document.createElement('td')
+let edit = document.createElement('div contenteditable')
+newCell.textContent="time:"+i+j
+edit.textContent="rate:"
+newRow.appendChild(newCell)
+newCell.appendChild(edit)
+        }
+      }
       window.M.toast({
       html: selected.value ,
       classes: 'green darken-1',
@@ -224,6 +244,9 @@ for (let i=0; i< 24; i++){
   button {
     padding: 5px;
     margin: 5px;
+  }
+  .timezonesview {
+float: right;
   }
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
