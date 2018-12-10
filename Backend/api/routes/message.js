@@ -69,7 +69,6 @@ router.post('/', (req, res, next) => {
       if (err) {
         console.log(err)
       } else {
-        //console.log('Success')
         mongoose.connection.close()
         next()
       }
@@ -102,9 +101,6 @@ router.patch('/', (req, res, next) => {
       if (err) {
         console.log(err)
       } else {
-        //console.log(result)
-        //console.log(req.body.email)
-        //console.log(result)
         result.save((err) => {
           if (err) {
             console.log(err)
@@ -112,10 +108,6 @@ router.patch('/', (req, res, next) => {
             console.log('You saved!')
           }
         })
-        //let list = result.viewed_by
-        //list.push(req.body.email)
-        //mongoose.connection.close()
-        //res.status(200).json(result)
       }
     })
     .then(data => {
