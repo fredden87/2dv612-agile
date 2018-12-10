@@ -98,4 +98,36 @@ router.post('/signup', (req, res, next) => {
   })
 })
 
+router.post('/', (req, res, next) => {
+    connectDB(res)
+    User.find({ _id: req.params.id, email: req.body.email })
+        .exec()
+        .then(user => {
+            return res.status(200).send(user)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                error: err
+            })
+        })
+})
+
+router.post('/delete/:id', (req, res, next) => {
+    connectDB(res)
+    User.find({ _id: req.params.id, email: req.body.email })
+        .remove()
+        .exec()
+        .then(user => {
+            console.log(user)
+            return res.status(200).json({ message: JSON.stringify(req.body.email) + ' removed' })
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({
+                error: err
+            })
+        })
+})
+
 module.exports = router
