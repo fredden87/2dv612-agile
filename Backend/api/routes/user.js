@@ -5,6 +5,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../db_resources/usermodel.js')
+const Area = require('../db_resources/areamodel.js')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
@@ -99,35 +100,47 @@ router.post('/signup', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    connect(res)
-    User.find({ _id: req.params.id, email: req.body.email })
-        .exec()
-        .then(user => {
-            return res.status(200).send(user)
-        })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                error: err
-            })
-        })
+  connect(res)
+  User.find({ _id: req.params.id, email: req.body.email })
+    .exec()
+    .then(user => {
+      return res.status(200).send(user)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
 })
 
 router.post('/delete/:id', (req, res, next) => {
-    connect(res)
-    User.find({ _id: req.params.id, email: req.body.email })
+  connect(res)
+  User.find({ _id: req.params.id, email: req.body.email })
+    .remove()
+    .exec()
+    .then(user => {
+      console.log(user)
+      Area.find({ email: req.body.email })
         .remove()
         .exec()
         .then(user => {
-            console.log(user)
-            return res.status(200).json({ message: JSON.stringify(req.body.email) + ' removed' })
+          console.log(user)
+          return res.status(200).json({ message: JSON.stringify(req.body.email) + ' removed' })
         })
         .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                error: err
-            })
+          console.log(err)
+          res.status(500).json({
+            error: err
+          })
         })
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
 })
 
 module.exports = router
