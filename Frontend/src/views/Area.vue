@@ -221,6 +221,10 @@ for (let i=0; i< 24; i++){
     width: 50%;
     margin: 0 auto;
   }
+  button {
+    padding: 5px;
+    margin: 5px;
+  }
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
   border: 2px solid #4F7849;
