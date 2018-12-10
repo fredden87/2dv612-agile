@@ -109,7 +109,7 @@ let router = new Router({
     {
       path: '/feature',
       name: 'feature',
-      component: Feature, /**there is no actual component, simple route */
+      component: Feature, /**this component will route dependent on role*/
       meta: {
         requiresAuth: true,
         requiresSession: true,
@@ -179,27 +179,6 @@ router.beforeEach((to, from, next)=> {
     next({path:'/welcome'})
     accessNotify('Car owner account required')
     }  
-  // unverified to welcome, else feature pages from home
-  
-  // let feature = to.matched.some(record=>record.meta.feature)
-  // if (feature){
-  //   if (user.is_admin === 1){
-  //     next({path:'./admin'})
-  //   } else if (user.role === "Car Owner"){
-  //     next({path:'./car'})
-  //   } else if (user.role === "Park owner"){
-  //     next({path:'./area'})
-  //   } else if (user.role === "Parking Guard"){
-  //     next({path:'./guard'})
-  //   } else {
-  //     // new roles will end up on welcome unless defined
-  //     next({path:'/.welcome'})
-  //   }
-  //   } 
-
-
-    
-  
   // all other cases ok
   next()
 })
