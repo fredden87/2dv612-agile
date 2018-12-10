@@ -70,9 +70,11 @@
               router.push({ name: 'guard'})
             } else if (data.user.role==="Park owner"){
               router.push({ name: 'area'})
-          } else {
-            router.push({ name: 'welcome'})
-          }
+            } else if (data.user.role==="Car Owner"){
+              router.push({ name: 'car'})
+            } else {
+             router.push({ name: 'welcome'})
+            }
                             
                         }  
         })
