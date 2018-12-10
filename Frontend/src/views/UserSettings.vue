@@ -249,7 +249,7 @@
               sessionStorage.removeItem('jwt')
               localStorage.removeItem('user')
               localStorage.removeItem('jwt')
-              router.push({ name: 'login' })
+              router.push({ name: 'register' })
             } else {
               // Display error message
               window.M.toast({
