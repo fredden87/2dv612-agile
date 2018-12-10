@@ -209,14 +209,14 @@ for (let i=0; i< 24; i++){
       //render here
       console.log(selected.timezones)
       let timezonesview=document.getElementById('timezonesview')
-      while (document.getElementById('parkview').childNodes.length>0){
+      while (timezonesview.childNodes.length>0){
         timezonesview.removeChild(timezonesview.lastChild)
       }
       let timetable=document.createElement('table')
       timezonesview.appendChild(timetable)
       for (let i=0; i<4; i++){
         let newRow=document.createElement('tr')
-timezonesview.appendChild(newRow)
+timetable.appendChild(newRow)
         for (let j=0; j<6; j++){
 let newCell = document.createElement('td')
 let edit = document.createElement('div contenteditable')
