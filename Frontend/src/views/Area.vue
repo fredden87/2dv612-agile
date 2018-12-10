@@ -214,19 +214,36 @@ for (let i=0; i< 24; i++){
       }
       let timetable=document.createElement('table')
       timezonesview.appendChild(timetable)
-      for (let i=0; i<4; i++){
+            for (let i=0; i<4; i++){
         let newRow=document.createElement('tr')
+        newRow.setAttribute('id', 'row'+(i+1))
 timetable.appendChild(newRow)
         for (let j=0; j<6; j++){
 let newCell = document.createElement('td')
+newCell.setAttribute('id', 'row'+(i+1)+'cell'+(j+1))
 let edit = document.createElement('input')
+edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
 edit.type='number'
-newCell.textContent="time:"+i+j
-edit.textContent="rate:"
+//newCell.textContent="time:" 
+//edit.value=0
 newRow.appendChild(newCell)
 newCell.appendChild(edit)
         }
       }
+
+      selected.timezones.forEach(function(timezone){
+        let hour = Object.keys(timezone)
+        console.log(hour)
+switch(hour){
+  case 0:
+    document.getElementById('row4cell1').textContent='0'+hour+':00-0'+hour+':59'
+    document.getElementById('row4cell1').value=timezone.value
+    break
+  default:
+    break
+}
+      })
+
       window.M.toast({
       html: selected.value ,
       classes: 'green darken-1',
