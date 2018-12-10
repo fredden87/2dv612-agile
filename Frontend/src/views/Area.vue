@@ -213,6 +213,7 @@ for (let i=0; i< 24; i++){
         timezonesview.removeChild(timezonesview.lastChild)
       }
       let timetable=document.createElement('table')
+      timetable.setAttribute('class','comicGreen')
       timezonesview.appendChild(timetable)
             for (let i=0; i<4; i++){
         let newRow=document.createElement('tr')
