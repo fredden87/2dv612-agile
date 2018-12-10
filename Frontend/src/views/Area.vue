@@ -159,7 +159,7 @@ selectorData()
             // Display success message
             selectorData()
             window.M.toast({
-              html: "Area was added",
+              html: response.body.message,
               classes: 'green darken-1'
             })
           } else {
