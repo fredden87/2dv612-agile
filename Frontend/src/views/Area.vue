@@ -159,7 +159,7 @@ selectorData()
             // Display success message
             selectorData()
             window.M.toast({
-              html: response.body.message,
+              html: JSON.parse(response.body).message,
               classes: 'green darken-1'
             })
           } else {
