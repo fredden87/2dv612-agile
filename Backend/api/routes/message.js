@@ -6,7 +6,23 @@ const Messagemodel = require('../db_resources/messagemodel.js')
  * Get the admin message.
  */
 router.get('/', (req, res, next) => {
-  res.status(200).json({message: 'hej'})
+  const mongoose = require('mongoose')
+
+  mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
+    if (error) {
+      res.status(500).json({
+        message: 'Unable to establish database connection'
+      })
+    }
+
+    Messagemodel.findOne({stringId: 'admin_message'}, function (err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+        res.status(200).json(result)
+      }
+    })
+  })
 })
 
 /**
@@ -14,8 +30,6 @@ router.get('/', (req, res, next) => {
  */
 router.post('/', (req, res, next) => {
   const mongoose = require('mongoose')
-
-  console.log(req.body)
 
   mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
     if (error) {
