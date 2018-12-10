@@ -44,11 +44,24 @@
       </form>
     </div>
     <div class="row">
-      <div class="col s6">
+      <div class="col s12">
         <h5>Registered vehicles</h5>
         <ul class="collection" id="vehicleList">
 
         </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <h5>Remove account</h5>
+        <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeAccount">
+          Remove Account
+        </button>
       </div>
     </div>
   </div>
