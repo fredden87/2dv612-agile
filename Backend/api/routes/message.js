@@ -4,6 +4,20 @@ const Messagemodel = require('../db_resources/messagemodel.js')
 
 /**
  * Get the admin message.
+ *
+ * GET /message
+ *
+ * 200: Returns object like:
+ *      {
+ *        "viewed_by": [],
+ *        "_id": "5c0eabcadbaa400b6cb86cc0",
+ *        "stringId": "admin_message",
+ *        "__v": 0,
+ *        "message": "Tjolahopp, tjolahej, tjolahoppsan..."
+ *      }
+ *
+ * 500: DB connection error
+ *
  */
 router.get('/', (req, res, next) => {
   const mongoose = require('mongoose')
@@ -27,6 +41,14 @@ router.get('/', (req, res, next) => {
 
 /**
  * Set a new message. Empties `viewed_by` array.
+ *
+ * POST /message
+ * Takes JSON: { "message": "Your message here..." }
+ *
+ * 200: Success setting new message, clears viewed-by-list.
+ *
+ * 500: DB Connection error.
+ *
  */
 router.post('/', (req, res, next) => {
   const mongoose = require('mongoose')
@@ -55,7 +77,15 @@ router.post('/', (req, res, next) => {
 })
 
 /**
- * Updates `viewed_by` array.
+ * Updates `viewed_by` array. Needs email to add to list.
+ *
+ * PATCH /message
+ * Takes an email: { "email": "your@email.com" }
+ *
+ * 200: Added email to list.
+ *
+ * 500: DB Connection error.
+ *
  */
 router.patch('/', (req, res, next) => {})
 
