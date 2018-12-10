@@ -232,8 +232,8 @@ newCell.appendChild(edit)
       }
 
       for (let timezone in selected.timezones){
-     //  let hour = Object.keys(timezone)
-        console.log('what')
+       let hour = Object.keys(timezone)
+        console.log(hour)
 // switch(hour){
 //   case 0:
 //     document.getElementById('row4cell1').textContent='0'+hour+':00-0'+hour+':59'
