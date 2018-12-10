@@ -35,6 +35,11 @@ export default new Vuex.Store({
         id: 5,
         text: "Log out",
         page: "/logout"
+      },
+      {
+        id: 6,
+        text: "Remove account",
+        page: "/usersettings"
       }
     ]
   },
