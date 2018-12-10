@@ -30,18 +30,18 @@ router.patch('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    connectDB(res)
-    User.find({ email: req.body.email })
-        .exec()
-        .then(user => {
-            return res.status(200).send(user)
-        })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({
-                error: err
-            })
-        })
+  connectDB(res)
+  User.find({ email: req.body.email })
+    .exec()
+    .then(user => {
+      return res.status(200).send(user)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
 })
 
 router.post('/remove', (req, res, next) => {

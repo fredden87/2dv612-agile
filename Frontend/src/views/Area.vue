@@ -24,7 +24,7 @@
           type="submit"
           name="action"
           v-on:click="addArea">
-          Add New Parking Area
+          Save
         </button>
       </form>
     </div>
@@ -33,7 +33,7 @@
     <select id="areaOpt">
       <option value="" disabled selected>Select Area</option>
     </select>
-    <label>View Parking Areas</label>
+    <label>Select</label>
           <button
           class="btn
           waves-effect waves-light"
@@ -138,9 +138,11 @@ selectorData()
       const areaLat = document.getElementById("lat").value
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
+      // input actual timezones here
+      const areaTimezones = null
       if (user !== null) {
         const userEmail = user.email
-        const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat}
+        const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
           backendUrl = "194.47.206.226:3000";
