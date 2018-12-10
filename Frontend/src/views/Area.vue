@@ -232,18 +232,19 @@ newCell.appendChild(edit)
       }
 
       for (let timezone in selected.timezones){
-       let hour = Object.keys(timezone)
+  
         console.log(timezone)
         console.log(selected.timezones[timezone])
         console.log('_____')
-// switch(hour){
-//   case 0:
-//     document.getElementById('row4cell1').textContent='0'+hour+':00-0'+hour+':59'
-//     document.getElementById('row4cell1').value=timezone.value
-//     break
-//   default:
-//     break
-// }
+        let value = selected.timezones[timezone]
+switch(timezone){
+  case 0:
+    document.getElementById('row4cell1').textContent='0'+hour+':00-0'+hour+':59'
+    document.getElementById('row4edit1').value=value
+    break
+  default:
+    break
+}
       }
 
       window.M.toast({
