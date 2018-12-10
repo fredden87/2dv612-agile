@@ -337,6 +337,10 @@ switch(timezone){
     document.getElementById('row4hour5').textContent='0'+timezone+':00-0'+timezone+':59'
     document.getElementById('row4edit5').value=value
     break
+  case '5':
+    document.getElementById('row4hour6').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit6').value=value
+    break
 
   default:
     break
@@ -354,6 +358,9 @@ switch(timezone){
 </script>
 
 <style>
+label {
+  display: flex;
+}
   .login-wrapper {
     width: 50%;
     margin: 0 auto;
