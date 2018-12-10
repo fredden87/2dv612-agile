@@ -238,7 +238,7 @@ newCell.appendChild(edit)
         console.log('_____')
         let value = selected.timezones[timezone]
 switch(timezone){
-  case 0:
+  case '0':
   console.log('case 0 fired')
     document.getElementById('row4cell1').textContent='0'+hour+':00-0'+hour+':59'
     document.getElementById('row4edit1').value=value
