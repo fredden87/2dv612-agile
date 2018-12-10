@@ -155,12 +155,11 @@ selectorData()
           },
           body: JSON.stringify(data)})
         .then((response) => {
-          console.log(response)
           if (response.status === 200) {
             // Display success message
             selectorData()
             window.M.toast({
-              html: "Area was added",
+              html: "Area saved",
               classes: 'green darken-1'
             })
           } else {
