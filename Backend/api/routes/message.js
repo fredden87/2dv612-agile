@@ -69,8 +69,9 @@ router.post('/', (req, res, next) => {
       if (err) {
         console.log(err)
       } else {
+        console.log('Hej hopp')
         mongoose.connection.close()
-        next()
+        res.status(200).json({ message: 'Message updated!' })
       }
     })
   })
