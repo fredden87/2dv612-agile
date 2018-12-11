@@ -53,6 +53,7 @@ router.get('/', (req, res, next) => {
  */
 router.post('/', (req, res, next) => {
   const mongoose = require('mongoose')
+  console.log(req.body)
 
   mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
     if (error) {
@@ -68,9 +69,10 @@ router.post('/', (req, res, next) => {
     Messagemodel.findOneAndUpdate(query, update, options, function (err, response) {
       if (err) {
         console.log(err)
+        res.status(400).json({ message: 'Message could not be updated!' })
       } else {
         mongoose.connection.close()
-        next()
+        res.status(200).json({ message: 'Message updated!' })
       }
     })
   })
