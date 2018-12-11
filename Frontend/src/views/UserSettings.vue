@@ -86,30 +86,25 @@ export default {
     changePassword: function(event) {
       event.preventDefault();
       let backendUrl = "127.0.0.1:3000";
-      if (process.env.VUE_APP_ENVIRONMENT === "production") {
+      if (process.env.VUE_APP_ENVIRONMENT != "production") {
         backendUrl = "194.47.206.226:3000";
-        if (document.getElementById("password2").value !== document.getElementById("password3").value) {
-          window.M.toast({
-            html: "Incorrect password confirmation, verify spelling",
-            classes: "deep-orange accent-4 black-text",
-            displayLength: 6000
-          });
-        }else{
-          // TODO SAVE NEW PASSWORD
-
-          // Password changes succeed
-          window.M.toast({
-            html: "Password changed",
-            classes: "green darken-1",
-            displayLength: 6000
-          });
-        }
-
-      } else {
-        // Display error message
+      }
+      if (
+        document.getElementById("password2").value !==
+        document.getElementById("password3").value
+      ) {
         window.M.toast({
-          html: "Password didn't changed",
+          html: "Incorrect password confirmation, verify spelling",
           classes: "deep-orange accent-4 black-text",
+          displayLength: 6000
+        });
+      } else {
+        // TODO SAVE NEW PASSWORD
+
+        // Password changes succeed
+        window.M.toast({
+          html: "Password changed",
+          classes: "green darken-1",
           displayLength: 6000
         });
       }
