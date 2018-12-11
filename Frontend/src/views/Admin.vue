@@ -8,7 +8,7 @@
           <input id="cclass" type="text" class="validate">
           <label for="text">New Customer Class</label>
         </div>
-        
+
         <button
           class="btn
           waves-effect waves-light"
@@ -18,15 +18,18 @@
           Submit
         </button>
       </form>
-    </div> 
+    </div>
    </div>
+   <AdminMessageInput />
   </div>
 </template>
 <script>
+import AdminMessageInput from '@/components/AdminMessageInput.vue'
+
   export default {
     name: 'Admin',
     components: {
-
+      AdminMessageInput
     },
     methods: {
       submit: function (event) {
@@ -36,7 +39,7 @@
         if (process.env.VUE_APP_ENVIRONMENT==="production"){
         backendUrl='194.47.206.226:3000'
         }
-        request.post({ url: 'http://'+backendUrl+'/admin', 
+        request.post({ url: 'http://'+backendUrl+'/admin',
           form:{ cclass: document.getElementById("cclass").value }}, function(err, response, body) {
           let data = JSON.parse(body)
             if (err||response.statusCode!==200){
