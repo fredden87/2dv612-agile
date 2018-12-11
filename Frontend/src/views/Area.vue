@@ -76,30 +76,31 @@ import router from '../router'
 const request = require('request')
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='194.47.206.226:3000'
-  }
-  let selectorData= function(){
+  backendUrl='194.47.206.226:3000'
+}
+let selectorData= function(){
   request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
-  let data=JSON.parse(body)
-  let area=document.getElementById('areaOpt')
-  while (area.childNodes.length>1){
-area.removeChild(area.lastChild)
-  }
+    let data=JSON.parse(body)
+    let area=document.getElementById('areaOpt')
+    while (area.childNodes.length>1){
+      area.removeChild(area.lastChild)
+    }
 
-  data.forEach(function(item){
-   let opt = document.createElement('option')
-   opt.value=item.name
-   opt.lat=item.area.lat
-   opt.long=item.area.long
-   opt.timezones=item.area.timezones
-   opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
-   area.appendChild(opt)
-  })
+    data.forEach(function(item){
+      let opt = document.createElement('option')
+      opt.value=item.name
+      opt.lat=item.area.lat
+      opt.long=item.area.long
+      opt.timezones=item.area.timezones
+      opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
+      area.appendChild(opt)
+    })
 
 
  M.FormSelect.init(document.getElementById('areaOpt'))
   })
   }
+
 export default {
   mounted(){
 selectorData()
@@ -143,6 +144,52 @@ selectorData()
           }
         })
     },
+    editArea: function(event){
+      event.preventDefault()
+      let backendUrl = "127.0.0.1:3000";
+      if (process.env.VUE_APP_ENVIRONMENT === "production") {
+        backendUrl = "194.47.206.226:3000";
+      }
+
+      const areaNameUpd = document.getElementById("aname").value
+      const areaLongUpd = document.getElementById("long").value
+      const areaLatUpd = document.getElementById("lat").value
+      const areaTimezonesUpd = {}
+      for (let i=0; i< 24; i++){
+        areaTimezonesUpd.i=undefined
+      }
+      let instance = document.getElementById('areaOpt')
+      let selected=instance.options[instance.selectedIndex]
+      console.log(selected.value)
+
+      const user = JSON.parse(localStorage.getItem('user'))
+      const data = {email: user.email, name: areaNameUpd, long: areaLongUpd, lat: areaLatUpd, timezones: areaTimezonesUpd}
+
+      fetch("http://" + backendUrl + "/area", {
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)})
+        .then((response) => {
+          if (response.status === 200) {
+            // Display success message
+            selectorData()
+            window.M.toast({
+              html: "Area was edited",
+              classes: 'green darken-1'
+            })
+          } else {
+            // Display error message
+            window.M.toast({
+              html: "Area could not be edited",
+              classes: 'deep-orange accent-4 black-text',
+              displayLength: 6000
+            })
+          }
+        })
+    },
     addArea: function(event) {
       event.preventDefault()
       const areaLong = document.getElementById("long").value
@@ -151,9 +198,9 @@ selectorData()
       const user = JSON.parse(localStorage.getItem('user'))
       // input actual timezones here
       const areaTimezones = {}
-for (let i=0; i< 24; i++){
-  areaTimezones.i=undefined
-}
+      for (let i=0; i< 24; i++){
+        areaTimezones.i=undefined
+      }
 
       if (user !== null) {
         const userEmail = user.email
