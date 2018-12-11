@@ -41,8 +41,8 @@ let router = new Router({
       name: 'usersettings',
       component: UserSettings,
       meta: {
-        requiresAuth: true,
-        requiresSession: true
+        // requiresAuth: true,
+        // requiresSession: true
       }
     },
     {
