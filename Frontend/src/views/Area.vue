@@ -2,6 +2,8 @@
  <div class="register-wrapper">
     <div class="row">
       <form class="col s8">
+        <div id='timezonesview' class='timezonesview'>
+        </div>
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
@@ -198,14 +200,154 @@ for (let i=0; i< 24; i++){
         newRow.class="row"
         renderView.appendChild(newRow)
         for (let j=0; j < selected.long; j++){
-          let newCol= document.createElement('td')
-          newCol.class="col"
-          newCol.textContent=(j+1)
-          newRow.appendChild(newCol)
+          let newCell= document.createElement('td')
+          newCell.class="col"
+          newCell.textContent=(j+1)
+          newRow.appendChild(newCell)
         }
       }
       //render here
       console.log(selected.timezones)
+      let timezonesview=document.getElementById('timezonesview')
+      while (timezonesview.childNodes.length>0){
+        timezonesview.removeChild(timezonesview.lastChild)
+      }
+      let timetable=document.createElement('table')
+      timetable.setAttribute('class','comicGreen')
+      timezonesview.appendChild(timetable)
+            for (let i=0; i<4; i++){
+        let newRow=document.createElement('tr')
+        newRow.setAttribute('id', 'row'+(i+1))
+timetable.appendChild(newRow)
+        for (let j=0; j<6; j++){
+let newCell = document.createElement('td')
+newCell.setAttribute('id', 'row'+(i+1)+'cell'+(j+1))
+let hour = document.createElement('div')
+hour.setAttribute('id', 'row'+(i+1)+'hour'+(j+1))
+let edit = document.createElement('input')
+edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
+edit.type='number'
+
+let label = document.createElement('label')
+label.for='id', 'row'+(i+1)+'edit'+(j+1)
+label.textContent="rate: "
+newRow.appendChild(newCell)
+
+newCell.appendChild(hour)
+label.appendChild(edit)
+newCell.appendChild(label)
+        }
+      }
+
+      for (let timezone in selected.timezones){
+        // console.log(timezone)
+        // console.log(selected.timezones[timezone])
+        // console.log('_____')
+        let value = selected.timezones[timezone]
+switch(timezone){
+
+  case '6':
+    document.getElementById('row1hour1').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row1edit1').value=value
+    break
+  case '7':
+    document.getElementById('row1hour2').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row1edit2').value=value
+    break
+  case '8':
+    document.getElementById('row1hour3').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row1edit3').value=value
+    break
+  case '9':
+    document.getElementById('row1hour4').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row1edit4').value=value
+    break
+  case '10':
+    document.getElementById('row1hour5').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row1edit5').value=value
+    break
+  case '11':
+    document.getElementById('row1hour6').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row1edit6').value=value
+    break
+  case '12':
+    document.getElementById('row2hour1').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row2edit1').value=value
+    break
+  case '13':
+    document.getElementById('row2hour2').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row2edit2').value=value
+    break
+  case '14':
+    document.getElementById('row2hour3').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row2edit3').value=value
+    break
+  case '15':
+    document.getElementById('row2hour4').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row2edit4').value=value
+    break
+  case '16':
+    document.getElementById('row2hour5').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row2edit5').value=value
+    break
+  case '17':
+    document.getElementById('row2hour6').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row2edit6').value=value
+    break
+  case '18':
+    document.getElementById('row3hour1').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row3edit1').value=value
+    break
+  case '19':
+    document.getElementById('row3hour2').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row3edit2').value=value
+    break
+  case '20':
+    document.getElementById('row3hour3').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row3edit3').value=value
+    break
+  case '21':
+    document.getElementById('row3hour4').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row3edit4').value=value
+    break
+  case '22':
+    document.getElementById('row3hour5').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row3edit5').value=value
+    break
+  case '23':
+    document.getElementById('row3hour6').textContent=timezone+':00-'+timezone+':59'
+    document.getElementById('row3edit6').value=value
+    break
+  case '0':
+    document.getElementById('row4hour1').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit1').value=value
+    break
+  case '1':
+    document.getElementById('row4hour2').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit2').value=value
+    break
+  case '2':
+    document.getElementById('row4hour3').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit3').value=value
+    break
+  case '3':
+    document.getElementById('row4hour4').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit4').value=value
+    break
+  case '4':
+    document.getElementById('row4hour5').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit5').value=value
+    break
+  case '5':
+    document.getElementById('row4hour6').textContent='0'+timezone+':00-0'+timezone+':59'
+    document.getElementById('row4edit6').value=value
+    break
+
+  default:
+    break
+}
+      }
+
       window.M.toast({
       html: selected.value ,
       classes: 'green darken-1',
@@ -217,6 +359,10 @@ for (let i=0; i< 24; i++){
 </script>
 
 <style>
+label {
+  display: flex;
+  padding: 2px;
+}
   .login-wrapper {
     width: 50%;
     margin: 0 auto;
@@ -225,6 +371,9 @@ for (let i=0; i< 24; i++){
     padding: 5px;
     margin: 5px;
   }
+  .timezonesview {
+float: right;
+  }
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
   border: 2px solid #4F7849;
@@ -232,6 +381,7 @@ table.comicGreen {
   width: 100%;
   text-align: center;
   border-collapse: collapse;
+  font-size: 9px;
 }
 table.comicGreen td, table.comicGreen th {
   border: 1px solid #4F7849;
