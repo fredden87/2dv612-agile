@@ -49,6 +49,16 @@
           waves-effect waves-light"
           type="submit"
           name="action"
+          v-on:click="editArea">
+          <i class="material-icons left">
+            Edit
+          </i>
+        </button>
+        <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
           v-on:click="removeArea">
           <i class="material-icons left">
           Remove
@@ -57,7 +67,7 @@
     </div>
   </div>
   <div id="parkview">
-  </div> 
+  </div>
   </div>
 </template>
 
@@ -75,7 +85,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
   while (area.childNodes.length>1){
 area.removeChild(area.lastChild)
   }
- 
+
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.name
@@ -85,7 +95,7 @@ area.removeChild(area.lastChild)
    opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
- 
+
 
  M.FormSelect.init(document.getElementById('areaOpt'))
   })
@@ -109,7 +119,7 @@ selectorData()
       const user = JSON.parse(localStorage.getItem('user'))
       const data = {email: user.email, name: areaName}
       fetch("http://" + backendUrl + "/area/remove", {
-          method: 'POST', 
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -144,7 +154,7 @@ selectorData()
 for (let i=0; i< 24; i++){
   areaTimezones.i=undefined
 }
-      
+
       if (user !== null) {
         const userEmail = user.email
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
@@ -153,7 +163,7 @@ for (let i=0; i< 24; i++){
           backendUrl = "194.47.206.226:3000";
         }
         fetch("http://" + backendUrl + "/area", {
-          method: 'PATCH', 
+          method: 'PATCH',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
