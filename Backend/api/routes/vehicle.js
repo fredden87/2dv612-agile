@@ -31,10 +31,11 @@ router.patch('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   connectDB(res)
-  User.find({ email: req.body.email })
+  console.log(req.body.email)
+  User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
-      return res.status(200).send(user)
+      return res.status(200).json(user)
     })
     .catch(err => {
       console.log(err)
@@ -58,7 +59,7 @@ router.post('/remove', (req, res, next) => {
   })
 })
 
-function checkDuplicates (cars, car) {
+function checkDuplicates(cars, car) {
   if (cars.length === 0) {
     return true
   }
@@ -70,7 +71,7 @@ function checkDuplicates (cars, car) {
   return true
 }
 
-function connectDB (res) {
+function connectDB(res) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
     useNewUrlParser: true
