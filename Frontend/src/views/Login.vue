@@ -40,8 +40,8 @@
       login: function (event) {
         event.preventDefault()
 
-        // Testing setting message
-        this.setMessage({ message: 'Hej hopp', viewed_by: []})
+        // Old hack, but it works
+        const that = this
 
         const request=require('request')
         let backendUrl = '127.0.0.1:3000'
@@ -59,6 +59,33 @@
              displayLength: 6000
              })
             } else {
+              // User logged in, check for new messages.
+              fetch('http://'+backendUrl+'/message', {
+                method: 'GET',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+              .then((result) => {
+                return result.json()
+              })
+              .then((data) => {
+                // Send this to MessageNotification component!
+                console.log(data.message)
+                const emailList = data.viewed_by
+                const email = JSON.parse(localStorage.getItem('email'))
+
+                if (emailList.includes(email)) {
+                  // Set admin message to empty string
+                } else {
+                  // Set message
+                  console.log(this)
+                  // THIS is bound to the request object
+                  this.setMessage(data) // Does not exist
+                }
+              })
+
                window.M.toast({
                html: data.message,
                classes: 'green darken-1'
