@@ -7,17 +7,17 @@
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
-            <label class="active" for="aname">Area Name</label>
+            <label for="aname">Area Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
             <input id="long" type="number" class="validate">
-            <label class="active" for="long">Longitude</label>
+            <label for="long">Longitude</label>
           </div>
           <div class="input-field col s6">
             <input id="lat" type="number" class="validate">
-            <label class="active" for="lat">Latitude</label>
+            <label for="lat">Latitude</label>
           </div>
         </div>
         <button
@@ -211,12 +211,13 @@ selectorData()
       }
     },
     viewArea: function(event){
-       M.updateTextFields()
+      
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
       document.getElementById("long").value = selected.long
       document.getElementById("lat").value = selected.lat
       document.getElementById("aname").value = selected.value
+       M.updateTextFields()
       while (document.getElementById('parkview').childNodes.length>0){
         document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
       }
