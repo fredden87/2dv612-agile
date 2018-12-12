@@ -75,15 +75,8 @@
                 console.log(data.message)
                 const emailList = data.viewed_by
                 const email = JSON.parse(localStorage.getItem('email'))
+                that.setMessage(data)
 
-                if (emailList.includes(email)) {
-                  // Set admin message to empty string
-                } else {
-                  // Set message
-                  console.log(this)
-                  // THIS is bound to the request object
-                  this.setMessage(data) // Does not exist
-                }
               })
 
                window.M.toast({
