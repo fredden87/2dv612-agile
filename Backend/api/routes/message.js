@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
       })
     }
 
-    Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
+    Messagemodel.findOne({stringId: 'admin_message'}, function (err, result) {
       if (err) {
         console.log(err)
       } else {
@@ -62,7 +62,7 @@ router.post('/', (req, res, next) => {
       })
     }
     // Updates the message in database, creates if not exists
-    let query = { stringId: 'admin_message' }
+    let query = {stringId: "admin_message"}
     let update = { message: req.body.message, viewed_by: [], stringId: 'admin_message' }
     let options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
@@ -99,7 +99,7 @@ router.patch('/', (req, res, next) => {
       })
     }
 
-    Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
+    Messagemodel.findOne({stringId: 'admin_message'}, function (err, result) {
       if (err) {
         console.log(err)
       } else {
@@ -112,22 +112,22 @@ router.patch('/', (req, res, next) => {
         })
       }
     })
-      .then(data => {
-        data.viewed_by.push(req.body.email)
-        console.log(data)
+    .then(data => {
+      data.viewed_by.push(req.body.email)
+      console.log(data)
 
-        Messagemodel.findByIdAndUpdate(
-          data._id,
-          data,
-          { new: true },
-          (err, message) => {
-            if (err) {
-              return res.status(500).send(err)
-            }
-            return res.status(200).json(message)
+      Messagemodel.findByIdAndUpdate(
+        data._id,
+        data,
+        { new: true },
+        (err, message) => {
+          if (err) {
+            return res.status(500).send(err)
           }
-        )
-      })
+          return res.status(200).json(message)
+        }
+      )
+    })
   })
 })
 
