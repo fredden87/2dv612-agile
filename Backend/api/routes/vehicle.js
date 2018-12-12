@@ -31,11 +31,11 @@ router.patch('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   connectDB(res)
-  console.log(req.body.email)
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
-      return res.status(200).json(user)
+      console.log(user)
+      return res.status(200).send(user)
     })
     .catch(err => {
       console.log(err)
@@ -59,19 +59,19 @@ router.post('/remove', (req, res, next) => {
   })
 })
 
-function checkDuplicates(cars, car) {
+function checkDuplicates (cars, car) {
   if (cars.length === 0) {
     return true
   }
   for (let i = 0; i < cars.length; i++) {
-    if (cars[i] === car) {
+    if (cars[i] === car.toUpperCase()) {
       return false
     }
   }
   return true
 }
 
-function connectDB(res) {
+function connectDB (res) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
     useNewUrlParser: true
