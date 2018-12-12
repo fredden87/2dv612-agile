@@ -88,7 +88,7 @@ area.removeChild(area.lastChild)
    area.appendChild(opt)
   })
  
-
+M.updateTextFields()
  M.FormSelect.init(document.getElementById('areaOpt'))
   })
   }
