@@ -231,7 +231,7 @@ for (let i=0; i< 24; i++){
       
       if (user !== null) {
         const userEmail = user.email
-        console.log('sending timezones: '+JSON.parse(areaTimezones))
+        console.log(areaTimezones)
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
