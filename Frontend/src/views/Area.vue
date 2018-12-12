@@ -6,17 +6,17 @@
         </div>
         <div class="row">
           <div class="input-field col s6">
-            <input id="aname" type="text" class="validate">
+            <input placeholder=" " id="aname" type="text" class="validate">
             <label for="aname">Area Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            <input id="long" type="number" class="validate">
+            <input placeholder=" " id="long" type="number" class="validate">
             <label for="long">Longitude</label>
           </div>
           <div class="input-field col s6">
-            <input id="lat" type="number" class="validate">
+            <input placeholder=" " id="lat" type="number" class="validate">
             <label for="lat">Latitude</label>
           </div>
         </div>
@@ -414,7 +414,7 @@ table.comicGreen td, table.comicGreen th {
   padding: 3px 2px;
 }
 table.comicGreen tbody td {
-  font-size: 5px;
+  font-size: 9px;
   font-weight: bold;
   color: #4F7849;
 }
@@ -422,7 +422,7 @@ table.comicGreen tr:nth-child(even) {
   background: #CEE0CC;
 }
 table.comicGreen tfoot {
-  font-size: 5px;
+  font-size: 9px;
   font-weight: bold;
   color: #FFFFFF;
   background: #4F7849;
