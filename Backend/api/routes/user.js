@@ -142,5 +142,32 @@ router.post('/delete/:id', (req, res, next) => {
       })
     })
 })
+router.post('/remove', (req, res, next) => {
+  connect(res)
+  User.findOne({ email: req.body.email })
+    .exec()
+    .then(user => {
+      bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
+        if (err) {
+          console.log('fail')
+          mongoose.connection.close()
+          return res.status(401).json({
+            message: 'Password change failed'
+          })
+        }
+        if (result) {
+          console.log('success')
+        }
+      })
+      mongoose.connection.close()
+    })
+    .catch(err => {
+      console.log(err)
+      mongoose.connection.close()
+      res.status(500).json({
+        error: err
+      })
+    })
+})
 
 module.exports = router
