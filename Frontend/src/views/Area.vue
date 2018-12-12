@@ -211,6 +211,7 @@ selectorData()
       }
     },
     viewArea: function(event){
+       M.updateTextFields()
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
       document.getElementById("long").value = selected.long
