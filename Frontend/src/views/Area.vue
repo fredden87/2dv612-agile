@@ -144,11 +144,94 @@ selectorData()
       // input actual timezones here
       const areaTimezones = {}
 for (let i=0; i< 24; i++){
-  areaTimezones.i=undefined
+  let query = function(i){
+    let value
+    switch(i.toString()){
+
+  case '6':
+    value= document.getElementById('row1edit1').value
+    break
+  case '7':
+    value= document.getElementById('row1edit2').value
+    break
+  case '8':
+    value= document.getElementById('row1edit3').value
+    break
+  case '9':
+    value= document.getElementById('row1edit4').value
+    break
+  case '10':
+    value= document.getElementById('row1edit5').value
+    break
+  case '11':
+    value= document.getElementById('row1edit6').value
+    break
+  case '12':
+    value= document.getElementById('row2edit1').value
+    break
+  case '13':
+    value= document.getElementById('row2edit2').value
+    break
+  case '14':
+    value= document.getElementById('row2edit3').value
+    break
+  case '15':
+    value= document.getElementById('row2edit4').value
+    break
+  case '16':
+    value= document.getElementById('row2edit5').value
+    break
+  case '17':
+    value= document.getElementById('row2edit6').value
+    break
+  case '18':
+    value= document.getElementById('row3edit1').value
+    break
+  case '19':
+    value= document.getElementById('row3edit2').value
+    break
+  case '20':
+    value= document.getElementById('row3edit3').value
+    break
+  case '21':
+    value= document.getElementById('row3edit4').value
+    break
+  case '22':
+    value= document.getElementById('row3edit5').value
+    break
+  case '23':
+    value= document.getElementById('row3edit6').value
+    break
+  case '0':
+    value= document.getElementById('row4edit1').value
+    break
+  case '1':
+    value= document.getElementById('row4edit2').value
+    break
+  case '2':
+    value= document.getElementById('row4edit3').value
+    break
+  case '3':
+    value= document.getElementById('row4edit4').value
+    break
+  case '4':
+    value= document.getElementById('row4edit5').value
+    break
+  case '5':
+    value= document.getElementById('row4edit6').value
+    break
+
+  default:
+    break
+}
+return value
+  }
+  areaTimezones.i=query()
 }
       
       if (user !== null) {
         const userEmail = user.email
+        console.log('sending timezones: '+areaTimezones)
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
