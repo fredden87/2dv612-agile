@@ -146,7 +146,7 @@ selectorData()
 for (let i=0; i< 24; i++){
   let query = function(i){
     let value
-    switch(i.toString()){
+    switch(toString(i)){
 
   case '6':
     value= document.getElementById('row1edit1').value
