@@ -5,6 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    adminMessage: {
+      message: 'Default message goes here', // Should be empty string as default
+      viewed_by: []
+    },
     navbarLinks: [
       {
         id: 0,
