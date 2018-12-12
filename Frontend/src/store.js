@@ -43,9 +43,14 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
-
+    SET_MESSAGE: (state, messageObj) => {
+      state.adminMessage.message = messageObj.message
+      state.adminMessage.viewed_by = messageObj.viewed_by
+    }
   },
   actions: {
-
+    setMessage: (context, messageObj) => {
+      context.commit('SET_MESSAGE', messageObj)
+    }
   }
 })
