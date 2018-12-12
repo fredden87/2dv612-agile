@@ -27,22 +27,29 @@
 
 <script>
   import router from '../router'
-  
+  import { mapMutations, mapActions } from 'vuex'
+
   export default {
     name: 'Login',
     components: {
 
     },
     methods: {
+      ...mapMutations(['SET_MESSAGE']),
+      ...mapActions(['setMessage']),
       login: function (event) {
         event.preventDefault()
+
+        // Testing setting message
+        this.setMessage({ message: 'Hej hopp', viewed_by: []})
+
         const request=require('request')
         let backendUrl = '127.0.0.1:3000'
         if (process.env.VUE_APP_ENVIRONMENT==="production"){
           backendUrl='194.47.206.226:3000'
         }
-        request.post({ url: 'http://'+backendUrl+'/login', 
-          form:{ password: document.getElementById("password").value, 
+        request.post({ url: 'http://'+backendUrl+'/login',
+          form:{ password: document.getElementById("password").value,
             email: document.getElementById("email").value }}, function(err, response, body) {
           let data = JSON.parse(body)
             if (err||response.statusCode!==200){
@@ -60,9 +67,9 @@
           let isAdmin = data.user.is_admin
           localStorage.setItem('user', JSON.stringify(data.user))
           localStorage.setItem('jwt', JSON.stringify(data.token))
-          sessionStorage.setItem('email', JSON.stringify(data.user.email))  
-          sessionStorage.setItem('jwt', JSON.stringify(data.token))    
-          // the checks are done in router.js, but we need to initiate the route by pushing to a page                        
+          sessionStorage.setItem('email', JSON.stringify(data.user.email))
+          sessionStorage.setItem('jwt', JSON.stringify(data.token))
+          // the checks are done in router.js, but we need to initiate the route by pushing to a page
           if (localStorage.getItem('jwt') != null){
             if(isAdmin === 1){
               router.push({ name: 'admin'})
@@ -75,8 +82,8 @@
             } else {
              router.push({ name: 'welcome'})
             }
-                            
-                        }  
+
+                        }
         })
       }
     }
