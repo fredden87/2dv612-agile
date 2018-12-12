@@ -386,7 +386,7 @@ switch(timezone){
 
 <style>
 label {
-  display: flex;
+  display: inline-flex;
   padding: 2px;
 }
   .login-wrapper {
