@@ -142,91 +142,31 @@ selectorData()
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
       // input actual timezones here
-      const areaTimezones = {}
-for (let i=0; i< 24; i++){
-  let query = function(i){
-    let value
-    switch(toString(i)){
-
-  case '6':
-    return document.getElementById('row1edit1').value
-    break
-  case '7':
-    return document.getElementById('row1edit2').value
-    break
-  case '8':
-    return document.getElementById('row1edit3').value
-    break
-  case '9':
-    return document.getElementById('row1edit4').value
-    break
-  case '10':
-    return document.getElementById('row1edit5').value
-    break
-  case '11':
-    return document.getElementById('row1edit6').value
-    break
-  case '12':
-    return document.getElementById('row2edit1').value
-    break
-  case '13':
-    return document.getElementById('row2edit2').value
-    break
-  case '14':
-    return document.getElementById('row2edit3').value
-    break
-  case '15':
-    return document.getElementById('row2edit4').value
-    break
-  case '16':
-    return document.getElementById('row2edit5').value
-    break
-  case '17':
-    return document.getElementById('row2edit6').value
-    break
-  case '18':
-    return document.getElementById('row3edit1').value
-    break
-  case '19':
-    return document.getElementById('row3edit2').value
-    break
-  case '20':
-    return document.getElementById('row3edit3').value
-    break
-  case '21':
-    return document.getElementById('row3edit4').value
-    break
-  case '22':
-    return document.getElementById('row3edit5').value
-    break
-  case '23':
-    return document.getElementById('row3edit6').value
-    break
-  case '0':
-    return document.getElementById('row4edit1').value
-    break
-  case '1':
-    return document.getElementById('row4edit2').value
-    break
-  case '2':
-    return document.getElementById('row4edit3').value
-    break
-  case '3':
-    return document.getElementById('row4edit4').value
-    break
-  case '4':
-    return document.getElementById('row4edit5').value
-    break
-  case '5':
-    return document.getElementById('row4edit6').value
-    break
-
-  default:
-    break
-}
-
-  }
-  areaTimezones.i=query()
+      const areaTimezones = {
+        0: document.getElementById('row4edit1').value,
+        1: document.getElementById('row4edit2').value,
+        2: document.getElementById('row4edit3').value,
+        3: document.getElementById('row4edit4').value,
+        4: document.getElementById('row4edit5').value,
+        5: document.getElementById('row4edit6').value,
+        6: document.getElementById('row1edit1').value,
+        7: document.getElementById('row1edit2').value,
+        8: document.getElementById('row1edit3').value,
+        9: document.getElementById('row1edit4').value,     
+        10: document.getElementById('row1edit5').value,
+        11: document.getElementById('row1edit6').value,
+        12: document.getElementById('row2edit1').value,
+        13: document.getElementById('row2edit2').value,
+        14: document.getElementById('row2edit3').value,
+        15: document.getElementById('row2edit4').value,
+        16: document.getElementById('row2edit5').value,
+        17: document.getElementById('row2edit6').value,
+        18: document.getElementById('row3edit1').value,
+        19: document.getElementById('row3edit2').value,
+        20: document.getElementById('row3edit3').value,
+        21: document.getElementById('row3edit4').value,
+        22: document.getElementById('row3edit5').value,
+        23: document.getElementById('row3edit6').value
 }
       
       if (user !== null) {
