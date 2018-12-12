@@ -6,17 +6,17 @@
         </div>
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder=" " id="aname" type="text" class="validate">
+            <input id="aname" type="text" class="validate">
             <label for="aname">Area Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            <input placeholder=" " id="long" type="number" class="validate">
+            <input id="long" type="number" class="validate">
             <label for="long">Longitude</label>
           </div>
           <div class="input-field col s6">
-            <input placeholder=" " id="lat" type="number" class="validate">
+            <input id="lat" type="number" class="validate">
             <label for="lat">Latitude</label>
           </div>
         </div>
