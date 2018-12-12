@@ -16,6 +16,7 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT === 'production') {
   backendUrl = '194.47.206.226:3000'
 }
+
 function connect (response) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
@@ -27,6 +28,7 @@ function connect (response) {
     })
   })
 }
+
 router.get('/verify/:auth', function (req, res) {
   connect(res)
   let authToken = req.params.auth
@@ -156,7 +158,13 @@ router.post('/remove', (req, res, next) => {
           })
         }
         if (result) {
+          bcrypt.hash(req.body.newPassword, saltRounds).then(function (hash) {
+            user.password = hash
+            user.save()
+          })
           console.log('success')
+        } else {
+          console.log('fail')
         }
       })
       mongoose.connection.close()
