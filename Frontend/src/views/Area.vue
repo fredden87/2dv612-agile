@@ -7,17 +7,17 @@
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
-            <label for="aname">Area Name</label>
+            <label class="active" for="aname">Area Name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
             <input id="long" type="number" class="validate">
-            <label for="long">Longitude</label>
+            <label class="active" for="long">Longitude</label>
           </div>
           <div class="input-field col s6">
             <input id="lat" type="number" class="validate">
-            <label for="lat">Latitude</label>
+            <label class="active" for="lat">Latitude</label>
           </div>
         </div>
         <button
