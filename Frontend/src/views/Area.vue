@@ -71,6 +71,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
   let selectorData= function(){
+    M.updateTextFields()
   request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   let area=document.getElementById('areaOpt')
@@ -88,7 +89,7 @@ area.removeChild(area.lastChild)
    area.appendChild(opt)
   })
  
-M.updateTextFields()
+
  M.FormSelect.init(document.getElementById('areaOpt'))
   })
   }
