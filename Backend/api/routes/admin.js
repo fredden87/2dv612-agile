@@ -13,10 +13,12 @@ router.post('/typedata', (req, res, next) => {
     }
     Typemodel.find((err, types) => {
       if (err) {
+        mongoose.connection.close()
         res.status(500).json({
           message: 'unable to find any Customer Classes'
         })
       } else {
+        mongoose.connection.close()
         res.status(200).send(types)
       }
     })
@@ -24,9 +26,9 @@ router.post('/typedata', (req, res, next) => {
 })
 // router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
-// need to control the API access somehow, currently admin checks are only on frontend
+  // need to control the API access somehow, currently admin checks are only on frontend
   if (true) {
-  // if(req.body.name === 'admin' && req.body.password === 'secret' && req.body.type) { // TODO DO NOT STORE PASSWORD AND USERNAME HERE
+    // if(req.body.name === 'admin' && req.body.password === 'secret' && req.body.type) { // TODO DO NOT STORE PASSWORD AND USERNAME HERE
     const mongoose = require('mongoose')
     // you will need to have a PASS=mongoDBpassword environment variable to connect!
     mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
@@ -40,6 +42,7 @@ router.post('/', (req, res, next) => {
       let typedata = new Typemodel({ customerClass: input })
       Typemodel.find({ customerClass: input }).exec(function (err, docs) {
         if (err || docs.length !== 0) {
+          mongoose.connection.close()
           res.status(400).json({
             message: 'Customer Class: ' + input + ' Already Exists'
           })
@@ -48,10 +51,12 @@ router.post('/', (req, res, next) => {
 
           typedata.save(function (err) {
             if (err) {
+              mongoose.connection.close()
               res.status(500).json({
                 message: 'unable to create database object'
               })
             } else {
+              mongoose.connection.close()
               res.status(200).json({
                 message: 'saved new Customer Class: ' + input
               })

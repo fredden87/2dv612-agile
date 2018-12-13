@@ -17,11 +17,13 @@ router.patch('/', (req, res, next) => {
           area: { long: req.body.long, lat: req.body.lat, timezones: req.body.timezones }
         })
         area.save().then(data => {
+          mongoose.connection.close()
           res.status(200).json({
             message: 'New Area added'
           })
         }).catch(err => {
           console.log(err)
+          mongoose.connection.close()
           res.status(500).json({
             error: err
           })
@@ -29,10 +31,12 @@ router.patch('/', (req, res, next) => {
       } else {
         Area.update({ email: req.body.email, name: req.body.name }, { $set: { area: { long: req.body.long, lat: req.body.lat, timezones: req.body.timezones } } }, function (err, user) {
           if (err) {
+            mongoose.connection.close()
             res.status(500).json({
               error: err
             })
           }
+          mongoose.connection.close()
           res.status(200).json({
             message: 'Area updated'
           })
@@ -40,6 +44,7 @@ router.patch('/', (req, res, next) => {
       }
     })
     .catch(err => {
+      mongoose.connection.close()
       console.log(err)
       res.status(500).json({
         error: err
@@ -52,10 +57,12 @@ router.post('/', (req, res, next) => {
   Area.find({ email: req.body.email })
     .exec()
     .then(area => {
+      mongoose.connection.close()
       return res.status(200).send(area)
     })
     .catch(err => {
       console.log(err)
+      mongoose.connection.close()
       res.status(500).json({
         error: err
       })
@@ -68,10 +75,12 @@ router.post('/remove', (req, res, next) => {
     .exec()
     .then(area => {
       console.log(area)
+      mongoose.connection.close()
       return res.status(200).json({ message: JSON.stringify(req.body.name) + ' removed' })
     })
     .catch(err => {
       console.log(err)
+      mongoose.connection.close()
       res.status(500).json({
         error: err
       })

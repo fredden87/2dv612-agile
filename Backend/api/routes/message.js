@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
       })
     }
 
-    Messagemodel.findOne({stringId: 'admin_message'}, function (err, result) {
+    Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
       if (err) {
         console.log(err)
       } else {
@@ -62,13 +62,14 @@ router.post('/', (req, res, next) => {
       })
     }
     // Updates the message in database, creates if not exists
-    let query = {stringId: "admin_message"}
+    let query = { stringId: 'admin_message' }
     let update = { message: req.body.message, viewed_by: [], stringId: 'admin_message' }
     let options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
     Messagemodel.findOneAndUpdate(query, update, options, function (err, response) {
       if (err) {
         console.log(err)
+        mongoose.connection.close()
         res.status(400).json({ message: 'Message could not be updated!' })
       } else {
         mongoose.connection.close()
@@ -99,35 +100,35 @@ router.patch('/', (req, res, next) => {
       })
     }
 
-    Messagemodel.findOne({stringId: 'admin_message'}, function (err, result) {
+    Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
       if (err) {
         console.log(err)
       } else {
         result.save((err) => {
           if (err) {
             console.log(err)
-          } else {
-            console.log('You saved!')
           }
         })
       }
     })
-    .then(data => {
-      data.viewed_by.push(req.body.email)
-      console.log(data)
+      .then(data => {
+        data.viewed_by.push(req.body.email)
+        console.log(data)
 
-      Messagemodel.findByIdAndUpdate(
-        data._id,
-        data,
-        { new: true },
-        (err, message) => {
-          if (err) {
-            return res.status(500).send(err)
+        Messagemodel.findByIdAndUpdate(
+          data._id,
+          data,
+          { new: true },
+          (err, message) => {
+            if (err) {
+              mongoose.connection.close()
+              return res.status(500).send(err)
+            }
+            mongoose.connection.close()
+            return res.status(200).json(message)
           }
-          return res.status(200).json(message)
-        }
-      )
-    })
+        )
+      })
   })
 })
 

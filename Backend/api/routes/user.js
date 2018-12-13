@@ -16,6 +16,7 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT === 'production') {
   backendUrl = '194.47.206.226:3000'
 }
+
 function connect (response) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
@@ -27,6 +28,7 @@ function connect (response) {
     })
   })
 }
+
 router.get('/verify/:auth', function (req, res) {
   connect(res)
   let authToken = req.params.auth
@@ -34,16 +36,19 @@ router.get('/verify/:auth', function (req, res) {
     .exec()
     .then(user => {
       if (user.length !== 1) {
+        mongoose.connection.close()
         return res.status(404).json({
           message: 'Email Verification Failed'
         })
       } else {
         User.update({ token: authToken }, { $set: { verified: true } }, function (err, user) {
           if (err) {
+            mongoose.connection.close()
             res.status(500).json({
               error: err
             })
           }
+          mongoose.connection.close()
           res.status(200).json({
             message: 'Email verified'
           })
@@ -60,6 +65,7 @@ router.get('/verify/:auth', function (req, res) {
 router.post('/signup', (req, res, next) => {
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
     if (err) {
+      mongoose.connection.close()
       return res.status(500).json({
         error: err
       })
@@ -86,11 +92,13 @@ router.post('/signup', (req, res, next) => {
             return console.log('Error: ' + error)
           }
         })
+        mongoose.connection.close()
         res.status(200).json({
           message: 'New user added'
         })
       }).catch(err => {
         console.log(err)
+        mongoose.connection.close()
         res.status(500).json({
           error: err
         })
@@ -104,10 +112,12 @@ router.post('/', (req, res, next) => {
   User.find({ _id: req.params.id, email: req.body.email })
     .exec()
     .then(user => {
+      mongoose.connection.close()
       return res.status(200).send(user)
     })
     .catch(err => {
       console.log(err)
+      mongoose.connection.close()
       res.status(500).json({
         error: err
       })
@@ -126,14 +136,51 @@ router.post('/delete/:id', (req, res, next) => {
         .exec()
         .then(user => {
           console.log(user)
+          mongoose.connection.close()
           return res.status(200).json({ message: JSON.stringify(req.body.email) + ' removed' })
         })
         .catch(err => {
           console.log(err)
+          mongoose.connection.close()
           res.status(500).json({
             error: err
           })
         })
+    })
+    .catch(err => {
+      console.log(err)
+      mongoose.connection.close()
+      res.status(500).json({
+        error: err
+      })
+    })
+})
+router.post('/changepw', (req, res, next) => {
+  connect(res)
+  User.findOne({ email: req.body.email })
+    .exec()
+    .then(user => {
+      bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            message: 'Password change failed'
+          })
+        }
+        if (result) {
+          bcrypt.hash(req.body.newPassword, saltRounds).then(function (hash) {
+            user.password = hash
+            user.save()
+            return res.status(200).json({
+              message: 'Password change succeeded'
+            })
+          })
+        } else {
+          return res.status(401).json({
+            message: 'Password change failed'
+          })
+        }
+      })
+      mongoose.connection.close()
     })
     .catch(err => {
       console.log(err)
