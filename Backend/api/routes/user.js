@@ -151,7 +151,6 @@ router.post('/changepw', (req, res, next) => {
     .then(user => {
       bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
         if (err) {
-          console.log('fail')
           return res.status(401).json({
             message: 'Password change failed'
           })
@@ -160,9 +159,9 @@ router.post('/changepw', (req, res, next) => {
           bcrypt.hash(req.body.newPassword, saltRounds).then(function (hash) {
             user.password = hash
             user.save()
-          })
-          return res.status(200).json({
-            message: 'Password change succeeded'
+            return res.status(200).json({
+              message: 'Password change succeeded'
+            })
           })
         } else {
           return res.status(401).json({
@@ -174,7 +173,6 @@ router.post('/changepw', (req, res, next) => {
     })
     .catch(err => {
       console.log(err)
-      mongoose.connection.close()
       res.status(500).json({
         error: err
       })
