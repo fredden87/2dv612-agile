@@ -71,6 +71,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
   let selectorData= function(){
+    M.updateTextFields()
   request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   let area=document.getElementById('areaOpt')
@@ -142,13 +143,36 @@ selectorData()
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
       // input actual timezones here
-      const areaTimezones = {}
-for (let i=0; i< 24; i++){
-  areaTimezones.i=undefined
+      const areaTimezones = {
+        0: document.getElementById('row4edit1').value,
+        1: document.getElementById('row4edit2').value,
+        2: document.getElementById('row4edit3').value,
+        3: document.getElementById('row4edit4').value,
+        4: document.getElementById('row4edit5').value,
+        5: document.getElementById('row4edit6').value,
+        6: document.getElementById('row1edit1').value,
+        7: document.getElementById('row1edit2').value,
+        8: document.getElementById('row1edit3').value,
+        9: document.getElementById('row1edit4').value,     
+        10: document.getElementById('row1edit5').value,
+        11: document.getElementById('row1edit6').value,
+        12: document.getElementById('row2edit1').value,
+        13: document.getElementById('row2edit2').value,
+        14: document.getElementById('row2edit3').value,
+        15: document.getElementById('row2edit4').value,
+        16: document.getElementById('row2edit5').value,
+        17: document.getElementById('row2edit6').value,
+        18: document.getElementById('row3edit1').value,
+        19: document.getElementById('row3edit2').value,
+        20: document.getElementById('row3edit3').value,
+        21: document.getElementById('row3edit4').value,
+        22: document.getElementById('row3edit5').value,
+        23: document.getElementById('row3edit6').value
 }
       
       if (user !== null) {
         const userEmail = user.email
+        console.log(areaTimezones)
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
@@ -187,8 +211,13 @@ for (let i=0; i< 24; i++){
       }
     },
     viewArea: function(event){
+      
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
+      document.getElementById("long").value = selected.long
+      document.getElementById("lat").value = selected.lat
+      document.getElementById("aname").value = selected.value
+       M.updateTextFields()
       while (document.getElementById('parkview').childNodes.length>0){
         document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
       }
@@ -360,7 +389,7 @@ switch(timezone){
 
 <style>
 label {
-  display: flex;
+  display: inline-flex;
   padding: 2px;
 }
   .login-wrapper {
@@ -388,7 +417,7 @@ table.comicGreen td, table.comicGreen th {
   padding: 3px 2px;
 }
 table.comicGreen tbody td {
-  font-size: 5px;
+  font-size: 9px;
   font-weight: bold;
   color: #4F7849;
 }
@@ -396,7 +425,7 @@ table.comicGreen tr:nth-child(even) {
   background: #CEE0CC;
 }
 table.comicGreen tfoot {
-  font-size: 5px;
+  font-size: 9px;
   font-weight: bold;
   color: #FFFFFF;
   background: #4F7849;
