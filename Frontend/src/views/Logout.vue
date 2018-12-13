@@ -19,7 +19,7 @@ import router from '../router'
 export default {
   name: 'Logout',
   components: {
-  
+
   },
   methods: {
     logout: function (event) {
@@ -29,11 +29,11 @@ export default {
       if (process.env.VUE_APP_ENVIRONMENT==="production"){
         backendUrl='194.47.206.226:3000'
       }
-      request.get({ uri: 'http://'+backendUrl+'/login/logout'}, 
+      request.get({ uri: 'http://'+backendUrl+'/login/logout'},
         function(err, response, body) {
           let data = JSON.parse(body)
           console.log(data)
-          
+
           if (err||response.statusCode!==200){
             window.M.toast({
             html: data.message,
@@ -41,10 +41,20 @@ export default {
             displayLength: 6000
             })
           } else {
-             window.M.toast({
-             html: data.message,
-             classes: 'green darken-1'
-             })
+              window.M.toast({
+              html: data.message,
+              classes: 'green darken-1'
+              })
+
+              // Simple hiding of admin notification on log out.
+              const notificationElement = document.getElementById('infoMessageContainer')
+              if (!notificationElement.classList.contains('hidden')) {
+                notificationElement.classList.add('hidden')
+              }
+              const cardElement = document.getElementById('infoCard')
+              if (!cardElement.classList.contains('hidden')) {
+                cardElement.classList.add('hidden')
+              }
           }
           sessionStorage.removeItem('email')
           sessionStorage.removeItem('jwt')
