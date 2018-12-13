@@ -69,6 +69,7 @@ router.post('/', (req, res, next) => {
     Messagemodel.findOneAndUpdate(query, update, options, function (err, response) {
       if (err) {
         console.log(err)
+        mongoose.connection.close()
         res.status(400).json({ message: 'Message could not be updated!' })
       } else {
         mongoose.connection.close()
@@ -106,8 +107,6 @@ router.patch('/', (req, res, next) => {
         result.save((err) => {
           if (err) {
             console.log(err)
-          } else {
-            console.log('You saved!')
           }
         })
       }
@@ -122,8 +121,10 @@ router.patch('/', (req, res, next) => {
           { new: true },
           (err, message) => {
             if (err) {
+              mongoose.connection.close()
               return res.status(500).send(err)
             }
+            mongoose.connection.close()
             return res.status(200).json(message)
           }
         )

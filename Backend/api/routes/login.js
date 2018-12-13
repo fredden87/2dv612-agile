@@ -13,6 +13,7 @@ router.post('/', (req, res, next) => {
     .exec()
     .then(user => {
       if (user.length < 1) {
+        mongoose.connection.close()
         return res.status(401).json({
           message: 'Authorization failed'
         })
@@ -29,6 +30,7 @@ router.post('/', (req, res, next) => {
           req.session.email = req.body.email
           req.session.password = req.body.password
           req.session.save()
+          mongoose.connection.close()
           let token = jwt.sign({ id: user.id }, process.env.PASS, { expiresIn: 86400 })
           res.status(200).json({ message: 'Welcome: ' + user[0].firstname + ' ' + user[0].lastname, auth: true, token: token, user: user[0] })
         } else {
