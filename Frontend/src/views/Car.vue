@@ -25,22 +25,22 @@
           v-on:click="addVehicle">
           Add Vehicle
         </button>
-        <button
+        <!-- <button
           class="btn
           waves-effect waves-light"
           type="submit"
           name="action"
           v-on:click="viewVehicle">
           View Vehicle(s)
-        </button>
-        <!-- <button
+        </button> -->
+        <button
           class="btn
           waves-effect waves-light"
           type="submit"
           name="action"
           v-on:click="removeVehicle">
           Remove Vehicle
-        </button> -->
+        </button>
       </form>
     </div>
   </div>
