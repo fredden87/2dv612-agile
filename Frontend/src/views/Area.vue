@@ -143,31 +143,32 @@ selectorData()
       // input actual timezones here
       
       const areaTimezones = {
-        0: document.getElementById('row4edit1').value,
-        1: document.getElementById('row4edit2').value,
-        2: document.getElementById('row4edit3').value,
-        3: document.getElementById('row4edit4').value,
-        4: document.getElementById('row4edit5').value,
-        5: document.getElementById('row4edit6').value,
-        6: document.getElementById('row1edit1').value,
-        7: document.getElementById('row1edit2').value,
-        8: document.getElementById('row1edit3').value,
-        9: document.getElementById('row1edit4').value,     
-        10: document.getElementById('row1edit5').value,
-        11: document.getElementById('row1edit6').value,
-        12: document.getElementById('row2edit1').value,
-        13: document.getElementById('row2edit2').value,
-        14: document.getElementById('row2edit3').value,
-        15: document.getElementById('row2edit4').value,
-        16: document.getElementById('row2edit5').value,
-        17: document.getElementById('row2edit6').value,
-        18: document.getElementById('row3edit1').value,
-        19: document.getElementById('row3edit2').value,
-        20: document.getElementById('row3edit3').value,
-        21: document.getElementById('row3edit4').value,
-        22: document.getElementById('row3edit5').value,
-        23: document.getElementById('row3edit6').value
-} || {0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0,17:0,18:0,19:0,20:0,21:0,22:0,23:0 }
+        0: document.getElementById('row4edit1').value || 0,
+        1: document.getElementById('row4edit2').value || 0,
+        2: document.getElementById('row4edit3').value || 0,
+        3: document.getElementById('row4edit4').value || 0,
+        4: document.getElementById('row4edit5').value || 0
+        5: document.getElementById('row4edit6').value || 0,
+        6: document.getElementById('row1edit1').value || 0,
+        7: document.getElementById('row1edit2').value || 0,
+        8: document.getElementById('row1edit3').value || 0,
+        9: document.getElementById('row1edit4').value || 0,     
+        10: document.getElementById('row1edit5').value || 0,
+        11: document.getElementById('row1edit6').value || 0,
+        12: document.getElementById('row2edit1').value || 0,
+        13: document.getElementById('row2edit2').value || 0,
+        14: document.getElementById('row2edit3').value || 0,
+        15: document.getElementById('row2edit4').value || 0,
+        16: document.getElementById('row2edit5').value || 0,
+        18: document.getElementById('row3edit1').value || 0,
+        17: document.getElementById('row2edit6').value || 0,
+        18: document.getElementById('row3edit1').value || 0,
+        19: document.getElementById('row3edit2').value || 0,
+        20: document.getElementById('row3edit3').value || 0,
+        21: document.getElementById('row3edit4').value || 0,
+        22: document.getElementById('row3edit5').value || 0,
+        23: document.getElementById('row3edit6').value || 0
+}
       
       if (user !== null) {
         const userEmail = user.email
