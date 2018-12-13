@@ -147,7 +147,7 @@ selectorData()
         1: document.getElementById('row4edit2').value || 0,
         2: document.getElementById('row4edit3').value || 0,
         3: document.getElementById('row4edit4').value || 0,
-        4: document.getElementById('row4edit5').value || 0
+        4: document.getElementById('row4edit5').value || 0,
         5: document.getElementById('row4edit6').value || 0,
         6: document.getElementById('row1edit1').value || 0,
         7: document.getElementById('row1edit2').value || 0,
