@@ -108,7 +108,7 @@ export default {
           oldPassword,
           newPassword
         };
-        fetch("http://" + backendUrl + "/user/remove", {
+        fetch("http://" + backendUrl + "/user/changepw", {
           method: "POST",
           headers: {
             Accept: "application/json",
