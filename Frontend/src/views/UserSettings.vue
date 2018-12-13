@@ -117,16 +117,19 @@ export default {
           body: JSON.stringify(data)
         }).then(response => {
           if (response.status === 200) {
-            console.log(response);
-            // Display success message
+            window.M.toast({
+              html: "Password changed",
+              classes: "green darken-1",
+              displayLength: 6000
+            });
+          } else {
+            window.M.toast({
+              html: "Password changed failed",
+              classes: "deep-orange accent-4 black-text",
+              displayLength: 6000
+            });
           }
         });
-
-        /*window.M.toast({
-          html: "Password changed",
-          classes: "green darken-1",
-          displayLength: 6000
-        });*/
       }
     }
   }

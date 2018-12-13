@@ -17,7 +17,7 @@ if (process.env.VUE_APP_ENVIRONMENT === 'production') {
   backendUrl = '194.47.206.226:3000'
 }
 
-function connect(response) {
+function connect (response) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
     useNewUrlParser: true
@@ -161,12 +161,10 @@ router.post('/changepw', (req, res, next) => {
             user.password = hash
             user.save()
           })
-          console.log('success')
           return res.status(200).json({
             message: 'Password change succeeded'
           })
         } else {
-          console.log('fail')
           return res.status(401).json({
             message: 'Password change failed'
           })
