@@ -34,7 +34,7 @@ router.patch('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   connectDB(res)
-  User.findOne({ email: req.body.email })
+  User.find({ email: req.body.email })
     .exec()
     .then(user => {
       console.log(user)
