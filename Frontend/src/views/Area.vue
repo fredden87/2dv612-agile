@@ -42,7 +42,6 @@
           type="submit"
           name="action"
           v-on:click="viewArea">
-          <i class="material-icons left">
           View
           </i>
         </button>
@@ -52,7 +51,6 @@
           type="submit"
           name="action"
           v-on:click="removeArea">
-          <i class="material-icons left">
           Remove
           </i>
         </button>
@@ -96,6 +94,33 @@ area.removeChild(area.lastChild)
 export default {
   mounted(){
 selectorData()
+
+      let timetable=document.createElement('table')
+      timetable.setAttribute('class','comicGreen')
+      timezonesview.appendChild(timetable)
+            for (let i=0; i<4; i++){
+        let newRow=document.createElement('tr')
+        newRow.setAttribute('id', 'row'+(i+1))
+timetable.appendChild(newRow)
+        for (let j=0; j<6; j++){
+let newCell = document.createElement('td')
+newCell.setAttribute('id', 'row'+(i+1)+'cell'+(j+1))
+let hour = document.createElement('div')
+hour.setAttribute('id', 'row'+(i+1)+'hour'+(j+1))
+let edit = document.createElement('input')
+edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
+edit.type='number'
+edit.value=0
+let label = document.createElement('label')
+label.for='id', 'row'+(i+1)+'edit'+(j+1)
+label.textContent="rate: "
+newRow.appendChild(newCell)
+
+newCell.appendChild(hour)
+label.appendChild(edit)
+newCell.appendChild(label)
+        }
+      }
   },
   name: "Area",
   methods: {
@@ -143,6 +168,7 @@ selectorData()
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
       // input actual timezones here
+      
       const areaTimezones = {
         0: document.getElementById('row4edit1').value,
         1: document.getElementById('row4edit2').value,
@@ -256,7 +282,7 @@ hour.setAttribute('id', 'row'+(i+1)+'hour'+(j+1))
 let edit = document.createElement('input')
 edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
 edit.type='number'
-
+edit.value=0
 let label = document.createElement('label')
 label.for='id', 'row'+(i+1)+'edit'+(j+1)
 label.textContent="rate: "
