@@ -42,7 +42,6 @@
           type="submit"
           name="action"
           v-on:click="viewArea">
-          <i class="material-icons left">
           View
           </i>
         </button>
@@ -52,7 +51,6 @@
           type="submit"
           name="action"
           v-on:click="removeArea">
-          <i class="material-icons left">
           Remove
           </i>
         </button>
