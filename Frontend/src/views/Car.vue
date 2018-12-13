@@ -33,23 +33,15 @@
           v-on:click="viewVehicle">
           View Vehicle(s)
         </button>
-        <button
+        <!-- <button
           class="btn
           waves-effect waves-light"
           type="submit"
           name="action"
           v-on:click="removeVehicle">
           Remove Vehicle
-        </button>
+        </button> -->
       </form>
-    </div>
-    <div class="row">
-      <div class="col s6">
-        <h5>Registered vehicles</h5>
-        <ul class="collection" id="vehicleList">
-
-        </ul>
-      </div>
     </div>
   </div>
 </template>
@@ -168,18 +160,9 @@
         }
       },
       viewVehicle: function(event){
-        let instance = document.getElementById('vehicleOpt')
-        let ul = document.getElementById('vehicleList')
-        while (ul.childNodes.length>0){
-          ul.removeChild(ul.lastChild)
-        }
-        for (let i=1; i < instance.childNodes.length; i++){
-          let li = document.createElement("li");
-
-          li.appendChild(document.createTextNode(instance.childNodes[i].outerText));
-
-          ul.appendChild(li);
-        }
+        event.preventDefault()
+//disabled.
+ 
       }
     }
   }
