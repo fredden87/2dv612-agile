@@ -147,7 +147,7 @@ newCell.appendChild(label)
   name: "Area",
   methods: {
     initMap() {
-	let myMap = new google.maps.Map(
+    new google.maps.Map(
 			document.getElementById('map'),
 			{	center: {lat:56.6634447, lng:16.356779},
 				zoom: 14,
