@@ -146,7 +146,7 @@ newCell.appendChild(label)
   },
   name: "Area",
   methods: {
-    initMap() {
+    initMap: function(event) {
 	myMap = new google.maps.Map(
 			document.getElementById('map'),
 			{	center: {lat:56.6634447, lng:16.356779},
@@ -157,7 +157,7 @@ newCell.appendChild(label)
 				]
 			}
 		);
-function getCoords(event){
+function getCoords(e){
   let	latitude = e.latLng.lat().toFixed(6);
 	let longitude = e.latLng.lng().toFixed(6);
   console.log(latitude+ " : "+longitude)
