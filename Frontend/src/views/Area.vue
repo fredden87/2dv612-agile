@@ -146,8 +146,8 @@ newCell.appendChild(label)
   },
   name: "Area",
   methods: {
-    initMap: function(event) {
-	myMap = new google.maps.Map(
+    initMap() {
+	let myMap = new google.maps.Map(
 			document.getElementById('map'),
 			{	center: {lat:56.6634447, lng:16.356779},
 				zoom: 14,
@@ -156,13 +156,13 @@ newCell.appendChild(label)
 					{featureType:"transit.station",stylers: [{visibility:"off"}]}  // Turn off bus stations, etc.
 				]
 			}
-		);
-function getCoords(e){
-  let	latitude = e.latLng.lat().toFixed(6);
-	let longitude = e.latLng.lng().toFixed(6);
-  console.log(latitude+ " : "+longitude)
-}
-	google.maps.event.addListener(myMap,"click", getCoords(e));
+		)
+// function getCoords(e){
+//   let	latitude = e.latLng.lat().toFixed(6);
+// 	let longitude = e.latLng.lng().toFixed(6);
+//   console.log(latitude+ " : "+longitude)
+// }
+// 	google.maps.event.addListener(myMap,"click", getCoords(e));
 } ,
     removeArea: function(event){
       event.preventDefault()
