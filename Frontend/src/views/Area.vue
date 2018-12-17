@@ -75,7 +75,7 @@ const request = require('request')
       let GMap = document.createElement('script');
 
       GMap.setAttribute('src',
-     'https://maps.googleapis.com/maps/api/js?key='+process.env.VUE_APP_GOOGLE_MAPS_KEY+'&callback=initMap');
+     'https://maps.googleapis.com/maps/api/js?key='+process.env.VUE_APP_GOOGLE_MAPS_KEY+'&callback=GoogleMapsInit&region=IN');
 
       document.body.appendChild(GMap); 
 })
