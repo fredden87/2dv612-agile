@@ -460,10 +460,10 @@ switch(timezone){
 
 <style>
 #map {
-  width: 35%;
+  width: 200px;
+  height: 150px;
   margin: 0 auto;
   padding: 5px;
-  position: relative;
   float: right;
 }
 label {
@@ -483,7 +483,7 @@ width: 60%;
 margin: 0 auto;
 padding: 5px;
 position: relative;
-float: right;
+float: left;
   }
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
