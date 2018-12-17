@@ -62,8 +62,9 @@
   </div> 
   </div>
 </template>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key="+ process.env.VUE_GOOGLE_MAPS_KEY +"&callback=initMap"
-  type="text/javascript">
+  <script src="https://maps.googleapis.com/maps/api/js?key="+ process.env.VUE_GOOGLE_MAPS_KEY +"&callback=initMap"
+  type="text/javascript"></script>
+<script>
 import router from '../router'
 const request = require('request')
 let backendUrl = '127.0.0.1:3000'
