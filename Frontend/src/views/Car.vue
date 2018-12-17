@@ -96,6 +96,7 @@ whereami.lat=position.coords.latitude
   export default {
     name: "UserSettings",
     mounted(){
+      refreshCoords()
       selectorData()
     },
     methods: {
