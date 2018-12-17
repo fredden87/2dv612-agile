@@ -63,18 +63,7 @@
   </div>
 </template>
 <script>
-const googleKey=process.env.VUE_GOOGLE_MAPS_KEY
- const loadedGoogleMapsAPI = new Promise( (resolve,reject) => {
 
-      window['GoogleMapsInit'] = resolve;
-
-      let GMap = document.createElement('script');
-
-      GMap.setAttribute('src',
-     'https://maps.googleapis.com/maps/api/js?key='+googleKey+'&callback=initMap');
-
-      document.body.appendChild(GMap); 
-})
 import router from '../router'
 const request = require('request')
 let backendUrl = '127.0.0.1:3000'
@@ -108,6 +97,18 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
+    const googleKey=process.env.VUE_GOOGLE_MAPS_KEY
+ const loadedGoogleMapsAPI = new Promise( (resolve,reject) => {
+
+      window['GoogleMapsInit'] = resolve;
+
+      let GMap = document.createElement('script');
+
+      GMap.setAttribute('src',
+     'https://maps.googleapis.com/maps/api/js?key='+googleKey+'&callback=initMap');
+
+      document.body.appendChild(GMap); 
+})
         loadedGoogleMapsAPI.then(()=>{
          this.initMap()
        })
