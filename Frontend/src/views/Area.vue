@@ -63,6 +63,7 @@
   </div>
 </template>
 <script>
+const googleKey=process.env.VUE_GOOGLE_MAPS_KEY
  const loadedGoogleMapsAPI = new Promise( (resolve,reject) => {
 
       window['GoogleMapsInit'] = resolve;
@@ -70,7 +71,7 @@
       let GMap = document.createElement('script');
 
       GMap.setAttribute('src',
-     `https://maps.googleapis.com/maps/api/js?key=${process.env.VUE_GOOGLE_MAPS_KEY}&callback=initMap`);
+     'https://maps.googleapis.com/maps/api/js?key='+googleKey+'&callback=initMap');
 
       document.body.appendChild(GMap); 
 })
