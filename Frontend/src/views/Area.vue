@@ -66,7 +66,8 @@
 
 import router from '../router'
 const request = require('request')
- console.log(process.env.VUE_GOOGLE_MAPS_KEY)
+ console.log(process.env.VUE_APP_GOOGLE_MAPS_KEY)
+ let googleKey=process.env.VUE_APP_GOOGLE_MAPS_KEY
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
