@@ -97,7 +97,7 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
-  
+  console.log(process.env.VUE_GOOGLE_MAPS_KEY)
  let loadedGoogleMapsAPI= function(googleKey){ return new Promise( (resolve,reject) => {
 
       window['GoogleMapsInit'] = resolve;
@@ -109,7 +109,7 @@ export default {
 
       document.body.appendChild(GMap); 
 })}
-        loadedGoogleMapsAPI(process.env.VUE_GOOGLE_MAPS_KEY).then(()=>{
+        loadedGoogleMapsAPI().then(()=>{
          this.initMap()
        })
   
