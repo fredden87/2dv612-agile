@@ -148,7 +148,7 @@ newCell.appendChild(label)
   name: "Area",
   methods: {
     initMap() {
-    new google.maps.Map(
+    let myMap=new google.maps.Map(
 			document.getElementById('map'),
 			{	center: {lat:56.6634447, lng:16.356779},
 				zoom: 14,
@@ -460,11 +460,12 @@ switch(timezone){
 
 <style>
 #map {
-  width: 30%;
+  width: 40%;
   height: 300px;
   margin: 0 auto;
   padding: 5px;
   float: right;
+  border-style: solid;
 }
 label {
   display: inline-flex;
