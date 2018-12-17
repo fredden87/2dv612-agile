@@ -62,36 +62,25 @@
   </div> 
   </div>
 </template>
-  <script src="https://maps.googleapis.com/maps/api/js?key="+ process.env.VUE_GOOGLE_MAPS_KEY +"&callback=initMap"
-  type="text/javascript"></script>
 <script>
+ const loadedGoogleMapsAPI = new Promise( (resolve,reject) => {
+
+      window['GoogleMapsInit'] = resolve;
+
+      let GMap = document.createElement('script');
+
+      GMap.setAttribute('src',
+     'https://maps.googleapis.com/maps/api/js?key='+ process.env.VUE_GOOGLE_MAPS_KEY +'&callback=initMap');
+
+      document.body.appendChild(GMap); 
+})
 import router from '../router'
 const request = require('request')
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
-function getCoords(event){
-  let	latitude = e.latLng.lat().toFixed(6);
-	let longitude = e.latLng.lng().toFixed(6);
-  console.log(latitude+ " : "+longitude)
-}
-// credit to Maria Jäderlund for initmap
-function initMap() {
-  initWindow = new google.maps
-	myMap = initWindow.Map(
-			document.getElementById('map'),
-			{	center: {lat:56.6634447, lng:16.356779},
-				zoom: 14,
-				styles: [
-					{featureType:"poi", stylers: [{visibility:"off"}]},  // Turn off points of interest.
-					{featureType:"transit.station",stylers: [{visibility:"off"}]}  // Turn off bus stations, etc.
-				]
-			}
-		);
 
-	myMap.event.addListener(myMap,"click", getCoords(e));
-} 
 
   let selectorData= function(){
     M.updateTextFields()
@@ -118,7 +107,10 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
-    initMap()
+        loadedGoogleMapsAPI.then(()=>{
+         this.initMap()
+       })
+  
 selectorData()
 
       let timetable=document.createElement('table')
@@ -150,6 +142,24 @@ newCell.appendChild(label)
   },
   name: "Area",
   methods: {
+    initMap() {
+	myMap = new google.maps.Map(
+			document.getElementById('map'),
+			{	center: {lat:56.6634447, lng:16.356779},
+				zoom: 14,
+				styles: [
+					{featureType:"poi", stylers: [{visibility:"off"}]},  // Turn off points of interest.
+					{featureType:"transit.station",stylers: [{visibility:"off"}]}  // Turn off bus stations, etc.
+				]
+			}
+		);
+function getCoords(event){
+  let	latitude = e.latLng.lat().toFixed(6);
+	let longitude = e.latLng.lng().toFixed(6);
+  console.log(latitude+ " : "+longitude)
+}
+	google.maps.event.addListener(myMap,"click", getCoords(e));
+} ,
     removeArea: function(event){
       event.preventDefault()
       let backendUrl = "127.0.0.1:3000";
