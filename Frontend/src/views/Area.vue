@@ -68,7 +68,7 @@
 import router from '../router'
 const request = require('request')
 
-
+/** credit to https://stackoverflow.com/a/49841565 */
  const loadedGoogleMapsAPI=  new Promise( (resolve,reject) => {
 
       window['GoogleMapsInit'] = resolve;
@@ -149,6 +149,7 @@ newCell.appendChild(label)
   name: "Area",
   methods: {
     initMap(obj) {
+      // credit to team member Maria Jäderlund for original solution 
     let myMap=new google.maps.Map(
 			document.getElementById('map'),
 			{	center: obj,
