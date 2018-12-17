@@ -113,7 +113,8 @@ area.removeChild(area.lastChild)
 export default {
   mounted(){
         loadedGoogleMapsAPI.then(()=>{
-         this.initMap()
+          let kalmar={lat:56.6634447, lng:16.356779}
+         this.initMap(kalmar)
        })
   
 selectorData()
@@ -147,10 +148,10 @@ newCell.appendChild(label)
   },
   name: "Area",
   methods: {
-    initMap() {
+    initMap(obj) {
     let myMap=new google.maps.Map(
 			document.getElementById('map'),
-			{	center: {lat:56.6634447, lng:16.356779},
+			{	center: obj,
 				zoom: 14,
 				styles: [
 					{featureType:"poi", stylers: [{visibility:"off"}]},  // Turn off points of interest.
@@ -160,7 +161,9 @@ newCell.appendChild(label)
 		)
 function getCoords(e){
   let	latitude = e.latLng.lat().toFixed(6);
-	let longitude = e.latLng.lng().toFixed(6);
+  let longitude = e.latLng.lng().toFixed(6);
+  document.getElementById('long').value=longitude
+  document.getElementById('lat').value=latitude
   console.log(latitude+ " : "+longitude)
 }
 	google.maps.event.addListener(myMap,"click", getCoords);
@@ -285,7 +288,7 @@ function getCoords(e){
       document.getElementById("lat").value = selected.lat
       document.getElementById("aname").value = selected.value
        M.updateTextFields()
-
+        this.initMap({lat:selected.lat, lng:selected.long})
 // table not required in current implementation
 
       // while (document.getElementById('parkview').childNodes.length>0){
