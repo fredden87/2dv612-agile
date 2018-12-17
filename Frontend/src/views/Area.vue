@@ -67,19 +67,18 @@
 import router from '../router'
 const request = require('request')
 
- let googleKey=process.env.VUE_APP_GOOGLE_MAPS_KEY
- console.log(googleKey)
- let loadedGoogleMapsAPI= function(googleKey){ return new Promise( (resolve,reject) => {
+
+ const loadedGoogleMapsAPI=  new Promise( (resolve,reject) => {
 
       window['GoogleMapsInit'] = resolve;
 
       let GMap = document.createElement('script');
 
       GMap.setAttribute('src',
-     'https://maps.googleapis.com/maps/api/js?key='+googleKey+'&callback=initMap');
+     'https://maps.googleapis.com/maps/api/js?key='+process.env.VUE_APP_GOOGLE_MAPS_KEY+'&callback=initMap');
 
       document.body.appendChild(GMap); 
-})}
+})
 
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
