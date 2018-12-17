@@ -163,7 +163,7 @@ function getCoords(e){
 	let longitude = e.latLng.lng().toFixed(6);
   console.log(latitude+ " : "+longitude)
 }
-	google.maps.event.addListener(myMap,"click", getCoords(e));
+	google.maps.event.addListener(myMap,"click", getCoords);
 } ,
     removeArea: function(event){
       event.preventDefault()
