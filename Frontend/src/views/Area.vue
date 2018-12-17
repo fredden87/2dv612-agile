@@ -164,6 +164,7 @@ function getCoords(e){
   let longitude = e.latLng.lng().toFixed(6);
   document.getElementById('long').value=longitude
   document.getElementById('lat').value=latitude
+  M.updateTextFields()
   console.log(latitude+ " : "+longitude)
 }
 	google.maps.event.addListener(myMap,"click", getCoords);
