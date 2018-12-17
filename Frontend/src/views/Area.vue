@@ -111,7 +111,7 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
-        loadedGoogleMapsAPI().then(()=>{
+        loadedGoogleMapsAPI.then(()=>{
          this.initMap()
        })
   
