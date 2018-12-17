@@ -463,7 +463,7 @@ switch(timezone){
   margin: 0 auto;
   padding: 5px;
   position: relative;
-  float: right:
+  float: right;
 }
 label {
   display: inline-flex;
