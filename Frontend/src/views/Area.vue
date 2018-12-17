@@ -1,11 +1,11 @@
 <template>
  <div class="register-wrapper">
     <div class="row">
-      <form class="col s8">
         <div id='timezonesview' class='timezonesview'>
         </div>
-          <div id="map">
-          </div>
+        <div id="map">
+        </div>
+      <form class="col s8">
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
@@ -460,8 +460,8 @@ switch(timezone){
 
 <style>
 #map {
-  width: 200px;
-  height: 150px;
+  width: 30%;
+  height: 300px;
   margin: 0 auto;
   padding: 5px;
   float: right;
