@@ -66,6 +66,7 @@
 
 import router from '../router'
 const request = require('request')
+ console.log(process.env.VUE_GOOGLE_MAPS_KEY)
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
@@ -97,7 +98,7 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
-  console.log(process.env.VUE_GOOGLE_MAPS_KEY)
+ 
  let loadedGoogleMapsAPI= function(googleKey){ return new Promise( (resolve,reject) => {
 
       window['GoogleMapsInit'] = resolve;
