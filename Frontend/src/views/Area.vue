@@ -78,7 +78,8 @@ function getCoords(event){
 }
 // credit to Maria Jäderlund for initmap
 function initMap() {
-	myMap = new google.maps.Map(
+  initWindow = new google.maps
+	myMap = initWindow.Map(
 			document.getElementById('map'),
 			{	center: {lat:56.6634447, lng:16.356779},
 				zoom: 14,
@@ -89,7 +90,7 @@ function initMap() {
 			}
 		);
 
-	google.maps.event.addListener(myMap,"click", getCoords(e));
+	myMap.event.addListener(myMap,"click", getCoords(e));
 } 
 
   let selectorData= function(){
