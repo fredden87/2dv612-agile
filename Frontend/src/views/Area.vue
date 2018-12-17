@@ -19,6 +19,8 @@
             <input id="lat" type="number" class="validate">
             <label for="lat">Latitude</label>
           </div>
+          <div id="map">
+          </div>
         </div>
         <button
           class="btn
@@ -60,7 +62,8 @@
   </div> 
   </div>
 </template>
-
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key="+ process.env.VUE_GOOGLE_MAPS_KEY +"&callback=initMap"
+  type="text/javascript"></script>
 <script>
 import router from '../router'
 const request = require('request')
@@ -68,6 +71,27 @@ let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
+function getCoords(event){
+  let	latitude = e.latLng.lat().toFixed(6);
+	let longitude = e.latLng.lng().toFixed(6);
+  console.log(latitude+ " : "+longitude)
+}
+// credit to Maria Jäderlund for initmap
+function initMap() {
+	myMap = new google.maps.Map(
+			document.getElementById('map'),
+			{	center: {lat:56.6634447, lng:16.356779},
+				zoom: 14,
+				styles: [
+					{featureType:"poi", stylers: [{visibility:"off"}]},  // Turn off points of interest.
+					{featureType:"transit.station",stylers: [{visibility:"off"}]}  // Turn off bus stations, etc.
+				]
+			}
+		);
+
+	google.maps.event.addListener(myMap,"click", getCoords(e));
+} 
+
   let selectorData= function(){
     M.updateTextFields()
   request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
@@ -93,6 +117,7 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
+    initMap()
 selectorData()
 
       let timetable=document.createElement('table')
@@ -244,23 +269,27 @@ newCell.appendChild(label)
       document.getElementById("lat").value = selected.lat
       document.getElementById("aname").value = selected.value
        M.updateTextFields()
-      while (document.getElementById('parkview').childNodes.length>0){
-        document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
-      }
-      let renderView= document.createElement('table')
-      renderView.setAttribute('class','comicGreen')
-      document.getElementById('parkview').appendChild(renderView)
-      for (let i=0; i < selected.lat; i++){
-        let newRow= document.createElement('tr')
-        newRow.class="row"
-        renderView.appendChild(newRow)
-        for (let j=0; j < selected.long; j++){
-          let newCell= document.createElement('td')
-          newCell.class="col"
-          newCell.textContent=(j+1)
-          newRow.appendChild(newCell)
-        }
-      }
+
+// table not required in current implementation
+
+      // while (document.getElementById('parkview').childNodes.length>0){
+      //   document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
+      // }
+      // let renderView= document.createElement('table')
+      // renderView.setAttribute('class','comicGreen')
+      // document.getElementById('parkview').appendChild(renderView)
+      // for (let i=0; i < selected.lat; i++){
+      //   let newRow= document.createElement('tr')
+      //   newRow.class="row"
+      //   renderView.appendChild(newRow)
+      //   for (let j=0; j < selected.long; j++){
+      //     let newCell= document.createElement('td')
+      //     newCell.class="col"
+      //     newCell.textContent=(j+1)
+      //     newRow.appendChild(newCell)
+      //   }
+      // }
+
       //render here
       console.log(selected.timezones)
       let timezonesview=document.getElementById('timezonesview')
