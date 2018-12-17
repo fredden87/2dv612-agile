@@ -1,5 +1,7 @@
 <template>
   <div class="register-wrapper">
+    <div id="whereami">
+    </div>
     <div class="row">
       <form class="col s12">
         <h5>Register new vehicle</h5>
@@ -53,6 +55,26 @@
   if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
+// watchPosition() can be used here https://stackoverflow.com/a/3305305
+let whereami=document.getElementById("whereami")
+let refreshCoords= function(){
+  if (!navigator.geolocation){
+          window.M.toast({
+            html: "Your device does not support geolocation service",
+            classes: 'deep-orange accent-4 black-text',
+            displayLength: 6000
+          })
+  } else {
+    navigator.geolocation.getCurrentPosition(function(position){
+      console.log(position.coords.latitude+" : "+position.coords.longitude)    
+whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
+whereami.long=position.coords.longitude
+whereami.lat=position.coords.latitude
+    })
+    setTimeout(refreshCoords, 5000)
+  }
+}
+
   let selectorData= function(){
     request.post({uri: 'http://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
       let data=JSON.parse(body)
