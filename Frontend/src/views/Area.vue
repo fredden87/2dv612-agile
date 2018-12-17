@@ -4,6 +4,8 @@
       <form class="col s8">
         <div id='timezonesview' class='timezonesview'>
         </div>
+          <div id="map">
+          </div>
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
@@ -19,8 +21,7 @@
             <input id="lat" type="number" class="validate">
             <label for="lat">Latitude</label>
           </div>
-          <div id="map">
-          </div>
+
         </div>
         <button
           class="btn
@@ -459,7 +460,7 @@ switch(timezone){
 
 <style>
 #map {
-  width: 25%;
+  width: 35%;
   margin: 0 auto;
   padding: 5px;
   position: relative;
@@ -478,6 +479,10 @@ label {
     margin: 5px;
   }
   .timezonesview {
+width: 60%;
+margin: 0 auto;
+padding: 5px;
+position: relative;
 float: right;
   }
 table.comicGreen {
