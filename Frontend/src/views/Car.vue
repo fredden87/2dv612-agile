@@ -108,6 +108,10 @@ const watcher={}
   // return Distance in km
   return earthRadius * c 
     }
+
+import { mapState, mapMutations, mapActions } from 'vuex'
+
+
   export default {
     name: "UserSettings",
     mounted(){
@@ -115,6 +119,8 @@ const watcher={}
       selectorData()
     },
     methods: {
+      ...mapMutations(['SET_GPS_MESSAGE']),
+      ...mapActions(['setGPSMessage']),
       park: function(event){
       event.preventDefault()
       
@@ -134,11 +140,17 @@ const watcher={}
       whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
       whereami.long=position.coords.longitude
       whereami.lat=position.coords.latitude
-      // Test comparison block.
+      // Test comparison block. Use area here instead of London, Remember it is "fågelvägen"-"as the bird flies", google maps will give you driving distance instead, accounting for hills.
       const london={}
       london.lat=	51.508530
       london.long= -0.076132
       whereami.firstChild.textContent=compareCoords(whereami, london)+" km"
+      const kalmar={}
+      kalmar.lat=56.661570
+      kalmar.long=16.361630
+      if (compareCoords(whereami, kalmar)>20){
+      this.setGPSMessage('You are over 20km away from your parked vehicle')
+      }
       })
       document.getElementById("toggle_off").textContent="Unpark"
       }
