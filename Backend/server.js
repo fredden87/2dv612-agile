@@ -8,8 +8,8 @@ const mailModel = require('./mail')
 const port = process.env.PORT || 3000
 // http.createServer(app).listen(port)
 // console.log('server running on port: ' + port)
-var privateKey = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/fullchain.pem')
-var certificate = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/privkey.pem')
+var privateKey = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/fullchain.pem', 'utf8')
+var certificate = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/privkey.pem', 'utf8')
 
 // - Congratulations! Your certificate and chain have been saved at:
 // /etc/letsencrypt/live/cscloud482.lnu.se/fullchain.pem
