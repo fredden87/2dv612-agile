@@ -107,11 +107,11 @@ const watcher={}
       whereami.long=position.coords.longitude
       whereami.lat=position.coords.latitude
       })
-      document.getElementById("toggle_park").textContent="Unpark"
+      document.getElementById("toggle_off").textContent="Unpark"
       }
       } else {
+      document.getElementById("toggle_off").id="toggle_park"
       document.getElementById("toggle_park").textContent="Park"
-      document.getElementById("toggle_park").id="toggle_park"
       navigator.geolocation.clearWatch(watcher.id)
       }
 
