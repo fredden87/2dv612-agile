@@ -64,7 +64,7 @@
     backendUrl='cscloud482.lnu.se'
   }
 // watchPosition() can be used here https://stackoverflow.com/a/3305305
-
+const watcher={}
   let selectorData= function(){
     request.post({uri: 'https://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
       let data=JSON.parse(body)
@@ -86,7 +86,7 @@
   export default {
     name: "UserSettings",
     mounted(){
-const watcher={}
+
       selectorData()
     },
     methods: {
