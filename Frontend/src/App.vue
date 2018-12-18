@@ -28,4 +28,18 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+/* ----------- iPhone 6, 6S, 7 and 8: Portrait and Landscape ----------- */
+@media only screen and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  #app{margin:0; padding:0; width: 100%;}
+}
+
+/* ----------- Galaxy S6: Portrait and Landscape ----------- */
+@media screen and (device-width: 360px)
+and (device-height: 640px)
+and (-webkit-device-pixel-ratio: 3) {
+  #app{margin:0; padding:0; width: 100%;}
+}
 </style>

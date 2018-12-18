@@ -51,13 +51,16 @@ export default {
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+  white-space: nowrap;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 
-.spacing { 
-  margin-right: 10px; 
-} 
+.spacing {
+  margin-right: 10px;
+}
+
+
 </style>
