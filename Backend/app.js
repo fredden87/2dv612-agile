@@ -14,6 +14,8 @@ const cors = require('cors')
 app.options('*', cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+// serve serve bot challenge https://flaviocopes.com/express-letsencrypt-ssl/
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }))
 app.use(session({
   secret: '447ru5768gjsdfbnll34556978dfgjkfdjk45654343l',
   resave: false,
