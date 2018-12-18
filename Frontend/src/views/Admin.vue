@@ -37,9 +37,9 @@ import AdminMessageInput from '@/components/AdminMessageInput.vue'
         const request=require('request')
         let backendUrl = '127.0.0.1:3000'
         if (process.env.VUE_APP_ENVIRONMENT==="production"){
-        backendUrl='194.47.206.226:3000'
+        backendUrl='cscloud482.lnu.se'
         }
-        request.post({ url: 'http://'+backendUrl+'/admin',
+        request.post({ url: 'https://'+backendUrl+'/admin',
           form:{ cclass: document.getElementById("cclass").value }}, function(err, response, body) {
           let data = JSON.parse(body)
             if (err||response.statusCode!==200){

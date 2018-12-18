@@ -83,13 +83,13 @@ const request = require('request')
 
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='194.47.206.226:3000'
+    backendUrl='cscloud482.lnu.se'
   }
 
 
   let selectorData= function(){
     M.updateTextFields()
-  request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+  request.post({uri: 'https://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   let area=document.getElementById('areaOpt')
   while (area.childNodes.length>1){
@@ -174,7 +174,7 @@ function getCoords(e){
       event.preventDefault()
       let backendUrl = "127.0.0.1:3000";
       if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "194.47.206.226:3000";
+        backendUrl = "cscloud482.lnu.se";
       }
 
       let instance = document.getElementById('areaOpt')
@@ -182,7 +182,7 @@ function getCoords(e){
       const areaName = selected.value
       const user = JSON.parse(localStorage.getItem('user'))
       const data = {email: user.email, name: areaName}
-      fetch("http://" + backendUrl + "/area/remove", {
+      fetch("https://" + backendUrl + "/area/remove", {
           method: 'POST', 
           headers: {
             'Accept': 'application/json',
@@ -248,9 +248,9 @@ function getCoords(e){
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
-          backendUrl = "194.47.206.226:3000";
+          backendUrl = "cscloud482.lnu.se";
         }
-        fetch("http://" + backendUrl + "/area", {
+        fetch("https://" + backendUrl + "/area", {
           method: 'PATCH', 
           headers: {
             'Accept': 'application/json',

@@ -48,13 +48,13 @@ export default {
       event.preventDefault();
       let backendUrl = "127.0.0.1:3000";
       if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "194.47.206.226:3000";
+        backendUrl = "cscloud482.lnu.se";
       }
 
       const user = JSON.parse(localStorage.getItem("user"));
       const data = { _id: user._id, email: user.email };
 
-      fetch("http://" + backendUrl + "/user/delete/" + user._id, {
+      fetch("https://" + backendUrl + "/user/delete/" + user._id, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -87,7 +87,7 @@ export default {
       event.preventDefault();
       let backendUrl = "127.0.0.1:3000";
       if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "194.47.206.226:3000";
+        backendUrl = "cscloud482.lnu.se";
       }
       if (
         document.getElementById("password2").value !==
@@ -108,7 +108,7 @@ export default {
           oldPassword,
           newPassword
         };
-        fetch("http://" + backendUrl + "/user/changepw", {
+        fetch("https://" + backendUrl + "/user/changepw", {
           method: "POST",
           headers: {
             Accept: "application/json",

@@ -53,11 +53,12 @@
   const request = require('request')
   let backendUrl = '127.0.0.1:3000'
   if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='194.47.206.226:3000'
+    backendUrl='cscloud482.lnu.se'
   }
 // watchPosition() can be used here https://stackoverflow.com/a/3305305
-let whereami=document.getElementById("whereami")
+
 let refreshCoords= function(){
+  let whereami=document.getElementById("whereami")
   if (!navigator.geolocation){
           window.M.toast({
             html: "Your device does not support geolocation service",
@@ -71,12 +72,12 @@ whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
 whereami.long=position.coords.longitude
 whereami.lat=position.coords.latitude
     })
-    setTimeout(refreshCoords, 5000)
+    setTimeout(refreshCoords, 1000)
   }
 }
 
   let selectorData= function(){
-    request.post({uri: 'http://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+    request.post({uri: 'https://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
       let data=JSON.parse(body)
       let vehicle=document.getElementById('vehicleOpt')
       while (vehicle.childNodes.length>1){
@@ -104,14 +105,14 @@ whereami.lat=position.coords.latitude
         event.preventDefault()
         let backendUrl = "127.0.0.1:3000";
         if (process.env.VUE_APP_ENVIRONMENT === "production") {
-          backendUrl = "194.47.206.226:3000";
+          backendUrl = "cscloud482.lnu.se";
         }
         let instance = document.getElementById('vehicleOpt')
         let selected=instance.options[instance.selectedIndex]
         const vehicleNum = selected.value
         const user = JSON.parse(localStorage.getItem('user'))
         const data = {email: user.email, vehicle: vehicleNum}
-        fetch("http://" + backendUrl + "/vehicle/remove", {
+        fetch("https://" + backendUrl + "/vehicle/remove", {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -147,10 +148,10 @@ whereami.lat=position.coords.latitude
 
           let backendUrl = "127.0.0.1:3000";
           if (process.env.VUE_APP_ENVIRONMENT === "production") {
-            backendUrl = "194.47.206.226:3000";
+            backendUrl = "cscloud482.lnu.se";
           }
 
-          fetch("http://" + backendUrl + "/vehicle", {
+          fetch("https://" + backendUrl + "/vehicle", {
             method: 'PATCH',
             headers: {
               'Accept': 'application/json',
