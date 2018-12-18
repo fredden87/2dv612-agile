@@ -138,7 +138,7 @@ const watcher={}
       const london={}
       london.lat=	51.508530
       london.long= -0.076132
-      whereami.firstChild.textContent=compareCoords(whereami, london)+" km"
+      whereami.firstChild.textContent=this.compareCoords(whereami, london)+" km"
       })
       document.getElementById("toggle_off").textContent="Unpark"
       }
