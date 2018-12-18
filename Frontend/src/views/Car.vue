@@ -64,27 +64,7 @@
     backendUrl='cscloud482.lnu.se'
   }
 // watchPosition() can be used here https://stackoverflow.com/a/3305305
-let watcher
-let toggle=0
-let refreshCoords= function(){
-  let whereami=document.getElementById("whereami")
-  if (!navigator.geolocation){
-          window.M.toast({
-            html: "Your device does not support geolocation service",
-            classes: 'deep-orange accent-4 black-text',
-            displayLength: 6000
-          })
-  } else {
-watcher = navigator.geolocation.watchPosition(function(position){
-      console.log(position.coords.latitude+" : "+position.coords.longitude)    
-whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
-whereami.long=position.coords.longitude
-whereami.lat=position.coords.latitude
-})
-
-  }
-}
-
+const watcher={}
   let selectorData= function(){
     request.post({uri: 'https://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
       let data=JSON.parse(body)
@@ -112,14 +92,28 @@ whereami.lat=position.coords.latitude
     methods: {
       park: function(event){
       event.preventDefault()
-      if (toggle===0){
-      refreshCoords()
+      
+      let whereami=document.getElementById("whereami")
+      if (document.getElementById("toggle_park").textContent==="Park"){
+       
+  if (!navigator.geolocation){
+          window.M.toast({
+            html: "Your device does not support geolocation service",
+            classes: 'deep-orange accent-4 black-text',
+            displayLength: 6000
+          })
+  } else {
+      watcher.id = navigator.geolocation.watchPosition(function(position){
+      console.log(position.coords.latitude+" : "+position.coords.longitude)    
+      whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
+      whereami.long=position.coords.longitude
+      whereami.lat=position.coords.latitude
+      })
       document.getElementById("toggle_park").textContent="Unpark"
-      toggle=1
+      }
       } else {
       document.getElementById("toggle_park").textContent="Park"
-      navigator.geolocation.clearWatch(watcher)
-      toggle=0
+      navigator.geolocation.clearWatch(watcher.id)
       }
 
       },
