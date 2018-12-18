@@ -1,18 +1,18 @@
 <template>
  <div class="register-wrapper">
-    <div class="row">
+    <div class="row arearow">
         <div id='timezonesview' class='timezonesview'>
         </div>
         <div id="map">
         </div>
       <form class="col s8">
-        <div class="row">
+        <div class="row areainput">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
             <label for="aname">Area Name</label>
           </div>
         </div>
-        <div class="row">
+        <div class="row areainput">
           <div class="input-field col s6">
             <input id="long" type="number" class="validate">
             <label for="long">Longitude</label>
@@ -526,4 +526,53 @@ table.comicGreen tfoot td {
   font-size: 5px;
 }
 
+
+/* ----------- Galaxy S6: Portrait and Landscape ----------- */
+@media screen and (max-width: 360px)
+and (device-height: 640px)
+and (-webkit-device-pixel-ratio: 3) {
+  .arearow label  {
+    font-size: 12px;
+  }
+
+  #timezonesview, #map {
+    width: 100%;
+    margin: 0 auto;
+
+  }
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 568px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .arearow label  {
+    font-size: 11.5px;
+  }
+
+  #timezonesview, #map {
+    width: 100%;
+    margin: 0 auto;
+
+  }
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8: Portrait and Landscape ----------- */
+@media only screen and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .arearow label  {
+    font-size: 12px;
+  }
+
+  #timezonesview, #map {
+    width: 100%;
+    margin: 0 auto;
+
+  }
+  
+}
 </style>
