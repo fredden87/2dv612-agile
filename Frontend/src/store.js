@@ -9,6 +9,7 @@ export default new Vuex.Store({
       message: '', // Should be empty string as default
       viewed_by: []
     },
+    GPSmessage: '',
     navbarLinks: [
       {
         id: 0,
@@ -46,11 +47,17 @@ export default new Vuex.Store({
     SET_MESSAGE: (state, messageObj) => {
       state.adminMessage.message = messageObj.message
       state.adminMessage.viewed_by = messageObj.viewed_by
+    },
+    SET_GPS_MESSAGE: (state, gpsMessage) => {
+      state.GPSmessage = gpsMessage
     }
   },
   actions: {
     setMessage: (context, messageObj) => {
       context.commit('SET_MESSAGE', messageObj)
+    },
+    setGPSMessage: (context, message) => {
+      context.commit('SET_GPS_MESSAGE', message)
     }
   }
 })

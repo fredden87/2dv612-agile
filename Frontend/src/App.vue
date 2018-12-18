@@ -2,6 +2,7 @@
   <div id="app">
     <NavBar/>
     <MessageNotification />
+    <GPSNotifications />
     <router-view/>
   </div>
 </template>
@@ -10,12 +11,14 @@
 /* eslint-disable */
 import NavBar from '@/components/NavBar.vue'
 import MessageNotification from '@/components/MessageNotification.vue'
+import GPSNotifications from '@/components/GPSNotifications.vue'
 
 export default {
   name: 'app',
   components: {
     NavBar,
-    MessageNotification
+    MessageNotification,
+    GPSNotifications
   }
 }
 </script>
