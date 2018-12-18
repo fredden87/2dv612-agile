@@ -123,7 +123,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       ...mapActions(['setGPSMessage']),
       park: function(event){
       event.preventDefault()
-      
+       const that = this
       let whereami=document.getElementById("whereami")
       if (document.getElementById("toggle_park")){
        
@@ -149,7 +149,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       kalmar.lat=56.661570
       kalmar.long=16.361630
       if (compareCoords(whereami, kalmar)>20){
-      this.setGPSMessage('You are over 20km away from your parked vehicle')
+      that.setGPSMessage('You are over 20km away from your parked vehicle')
       }
       })
       document.getElementById("toggle_off").textContent="Unpark"
