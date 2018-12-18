@@ -122,7 +122,7 @@ whereami.lat=position.coords.latitude
       toggle=0
       }
 
-      }),
+      },
       removeVehicle: function(event){
         event.preventDefault()
         let backendUrl = "127.0.0.1:3000";
