@@ -46,9 +46,9 @@
         const request=require('request')
         let backendUrl = '127.0.0.1:3000'
         if (process.env.VUE_APP_ENVIRONMENT==="production"){
-          backendUrl='http://cscloud482.lnu.se'
+          backendUrl='cscloud482.lnu.se'
         }
-        request.post({ url: 'http://'+backendUrl+'/login',
+        request.post({ url: 'https://'+backendUrl+'/login',
           form:{ password: document.getElementById("password").value,
             email: document.getElementById("email").value }}, function(err, response, body) {
           let data = JSON.parse(body)
@@ -60,7 +60,7 @@
              })
             } else {
               // User logged in, check for new messages.
-              fetch('http://'+backendUrl+'/message', {
+              fetch('https://'+backendUrl+'/message', {
                 method: 'GET',
                 headers: {
                   'Accept': 'application/json',
