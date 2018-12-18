@@ -81,14 +81,7 @@ const watcher={}
       M.FormSelect.init(document.getElementById('vehicleOpt'))
     })
   }
-  export default {
-    name: "UserSettings",
-    mounted(){
-
-      selectorData()
-    },
-    methods: {
-      /**
+/**
  * compare two coordinate objects
  * code from https://stackoverflow.com/a/27943
  * @param {Object} userC - User coordinates
@@ -99,7 +92,7 @@ const watcher={}
  * @param {Object} areaC.long - Area Longitude
  * @return {integer} distance in km, do a true/false elsewhere
  */
-    compareCoords(userC, areaC){
+   function compareCoords(userC, areaC){
       // full credit to https://stackoverflow.com/a/27943 , http://en.wikipedia.org/wiki/Haversine_formula
   let earthRadius = 6371; // Radius of the earth in km
   // lat and long are angles, to measure length we have to get respective degree
@@ -114,7 +107,14 @@ const watcher={}
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
   // return Distance in km
   return earthRadius * c 
+    }
+  export default {
+    name: "UserSettings",
+    mounted(){
+
+      selectorData()
     },
+    methods: {
       park: function(event){
       event.preventDefault()
       
@@ -138,7 +138,7 @@ const watcher={}
       const london={}
       london.lat=	51.508530
       london.long= -0.076132
-      whereami.firstChild.textContent=this.compareCoords(whereami, london)+" km"
+      whereami.firstChild.textContent=compareCoords(whereami, london)+" km"
       })
       document.getElementById("toggle_off").textContent="Unpark"
       }
