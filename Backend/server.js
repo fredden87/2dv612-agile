@@ -18,5 +18,6 @@ var chain = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/chain.pem',
 
 https.createServer({
   key: privateKey,
-  cert: certificate
+  cert: certificate,
+  ca: [chain]
 }, app).listen(port)
