@@ -40,8 +40,9 @@ export default {
 
     // Used in another component to set the message
     this.setGPSMessage('This is my new message.')
-    let lastMessage = this.GPSmessage
     */
+
+    let lastMessage = this.GPSmessage
 
     setInterval(() => {
       // Check if message has been updated
