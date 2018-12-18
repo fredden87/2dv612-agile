@@ -28,7 +28,7 @@
 <script>
   import router from '../router'
   import { mapMutations, mapActions } from 'vuex'
- const backendUrl=import backendURL from '../backendURL.js'
+  import backendUrl from '../backendURL.js'
  console.log(backendUrl)
   export default {
     name: 'Login',
