@@ -91,7 +91,7 @@ const watcher={}
       event.preventDefault()
       
       let whereami=document.getElementById("whereami")
-      if (document.getElementById("toggle_park").textContent==="Park"){
+      if (document.getElementById("toggle_park")){
        
   if (!navigator.geolocation){
           window.M.toast({
@@ -100,6 +100,7 @@ const watcher={}
             displayLength: 6000
           })
   } else {
+      document.getElementById("toggle_park").id="toggle_off"
       watcher.id = navigator.geolocation.watchPosition(function(position){
       console.log(position.coords.latitude+" : "+position.coords.longitude)    
       whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
@@ -110,6 +111,7 @@ const watcher={}
       }
       } else {
       document.getElementById("toggle_park").textContent="Park"
+      document.getElementById("toggle_park").id="toggle_park"
       navigator.geolocation.clearWatch(watcher.id)
       }
 
