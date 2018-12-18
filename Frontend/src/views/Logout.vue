@@ -15,7 +15,7 @@
 
 <script>
 import router from '../router'
-
+import { backendUrl } from '../backendURL.js'
 export default {
   name: 'Logout',
   components: {
@@ -25,11 +25,7 @@ export default {
     logout: function (event) {
       event.preventDefault()
       const request=require('request')
-      let backendUrl = '127.0.0.1:3000'
-      if (process.env.VUE_APP_ENVIRONMENT==="production"){
-        backendUrl='194.47.206.226:3000'
-      }
-      request.get({ uri: 'http://'+backendUrl+'/login/logout'},
+      request.get({ uri: backendUrl+'/login/logout'},
         function(err, response, body) {
           let data = JSON.parse(body)
           console.log(data)

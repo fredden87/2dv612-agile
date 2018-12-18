@@ -40,21 +40,17 @@
 
 <script>
 import router from "../router";
+import { backendUrl } from '../backendURL.js'
 export default {
   name: "UserSettings",
   mounted() {},
   methods: {
     removeAccount: function(event) {
       event.preventDefault();
-      let backendUrl = "127.0.0.1:3000";
-      if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "194.47.206.226:3000";
-      }
-
       const user = JSON.parse(localStorage.getItem("user"));
       const data = { _id: user._id, email: user.email };
 
-      fetch("http://" + backendUrl + "/user/delete/" + user._id, {
+      fetch(backendUrl + "/user/delete/" + user._id, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -85,10 +81,6 @@ export default {
     },
     changePassword: function(event) {
       event.preventDefault();
-      let backendUrl = "127.0.0.1:3000";
-      if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "194.47.206.226:3000";
-      }
       if (
         document.getElementById("password2").value !==
         document.getElementById("password3").value
@@ -108,7 +100,7 @@ export default {
           oldPassword,
           newPassword
         };
-        fetch("http://" + backendUrl + "/user/changepw", {
+        fetch(backendUrl + "/user/changepw", {
           method: "POST",
           headers: {
             Accept: "application/json",

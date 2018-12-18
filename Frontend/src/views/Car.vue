@@ -1,5 +1,7 @@
 <template>
   <div class="register-wrapper">
+    <div id="whereami">
+    </div>
     <div class="row">
       <form class="col s12">
         <h5>Register new vehicle</h5>
@@ -41,6 +43,14 @@
           v-on:click="removeVehicle">
           Remove Vehicle
         </button>
+        <button id="toggle_park"
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="park">
+          Park
+        </button>
       </form>
     </div>
   </div>
@@ -48,13 +58,12 @@
 
 <script>
   import router from '../router'
+  import { backendUrl } from '../backendURL.js'
   const request = require('request')
-  let backendUrl = '127.0.0.1:3000'
-  if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='194.47.206.226:3000'
-  }
+// watchPosition() can be used here https://stackoverflow.com/a/3305305
+const watcher={}
   let selectorData= function(){
-    request.post({uri: 'http://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+    request.post({uri: backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
       let data=JSON.parse(body)
       let vehicle=document.getElementById('vehicleOpt')
       while (vehicle.childNodes.length>1){
@@ -74,21 +83,47 @@
   export default {
     name: "UserSettings",
     mounted(){
+
       selectorData()
     },
     methods: {
+      park: function(event){
+      event.preventDefault()
+      
+      let whereami=document.getElementById("whereami")
+      if (document.getElementById("toggle_park")){
+       
+  if (!navigator.geolocation){
+          window.M.toast({
+            html: "Your device does not support geolocation service",
+            classes: 'deep-orange accent-4 black-text',
+            displayLength: 6000
+          })
+  } else {
+      document.getElementById("toggle_park").id="toggle_off"
+      watcher.id = navigator.geolocation.watchPosition(function(position){
+      console.log(position.coords.latitude+" : "+position.coords.longitude)    
+      whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
+      whereami.long=position.coords.longitude
+      whereami.lat=position.coords.latitude
+      })
+      document.getElementById("toggle_off").textContent="Unpark"
+      }
+      } else {
+      document.getElementById("toggle_off").id="toggle_park"
+      document.getElementById("toggle_park").textContent="Park"
+      navigator.geolocation.clearWatch(watcher.id)
+      }
+
+      },
       removeVehicle: function(event){
         event.preventDefault()
-        let backendUrl = "127.0.0.1:3000";
-        if (process.env.VUE_APP_ENVIRONMENT === "production") {
-          backendUrl = "194.47.206.226:3000";
-        }
         let instance = document.getElementById('vehicleOpt')
         let selected=instance.options[instance.selectedIndex]
         const vehicleNum = selected.value
         const user = JSON.parse(localStorage.getItem('user'))
         const data = {email: user.email, vehicle: vehicleNum}
-        fetch("http://" + backendUrl + "/vehicle/remove", {
+        fetch(backendUrl + "/vehicle/remove", {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -121,13 +156,7 @@
         if (user !== null) {
           const userEmail = user.email
           const data = {email: userEmail, vehicle: carRegistration}
-
-          let backendUrl = "127.0.0.1:3000";
-          if (process.env.VUE_APP_ENVIRONMENT === "production") {
-            backendUrl = "194.47.206.226:3000";
-          }
-
-          fetch("http://" + backendUrl + "/vehicle", {
+          fetch(backendUrl + "/vehicle", {
             method: 'PATCH',
             headers: {
               'Accept': 'application/json',

@@ -50,14 +50,10 @@
 <script>
 import router from '../router'
 const request = require('request')
-let backendUrl = '127.0.0.1:3000'
-if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='194.47.206.226:3000'
-  }
-
+import { backendUrl } from '../backendURL.js'
 export default {
   mounted(){
-  request.post({uri: 'http://'+backendUrl+'/admin/typedata', form: {}}, function(err,response,body){
+  request.post({uri: backendUrl+'/admin/typedata', form: {}}, function(err,response,body){
   let data=JSON.parse(body)
   data.forEach(function(item){
    let opt = document.createElement('option')
@@ -85,9 +81,9 @@ export default {
         displayLength: 6000
        })
         } else {
-      let instance = document.getElementById('cClass')
-      console.log(instance.options[instance.selectedIndex].value)
-      request.post({ uri: 'http://'+backendUrl+'/user/signup',
+      let instance = document.getElementById('cClass')  
+      console.log(instance.options[instance.selectedIndex].value)  
+      request.post({ uri: backendUrl+'/user/signup',
         form: {
           password: document.getElementById('password1').value,
           email: document.getElementById('email').value,

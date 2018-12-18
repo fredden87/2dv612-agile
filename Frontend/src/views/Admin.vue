@@ -25,7 +25,7 @@
 </template>
 <script>
 import AdminMessageInput from '@/components/AdminMessageInput.vue'
-
+  import { backendUrl } from '../backendURL.js'
   export default {
     name: 'Admin',
     components: {
@@ -35,11 +35,7 @@ import AdminMessageInput from '@/components/AdminMessageInput.vue'
       submit: function (event) {
         event.preventDefault()
         const request=require('request')
-        let backendUrl = '127.0.0.1:3000'
-        if (process.env.VUE_APP_ENVIRONMENT==="production"){
-        backendUrl='194.47.206.226:3000'
-        }
-        request.post({ url: 'http://'+backendUrl+'/admin',
+        request.post({ url: backendUrl+'/admin',
           form:{ cclass: document.getElementById("cclass").value }}, function(err, response, body) {
           let data = JSON.parse(body)
             if (err||response.statusCode!==200){

@@ -20,11 +20,8 @@
 </template>
 
 <script>
+  import { backendUrl } from '../backendURL.js'
 const request = require('request')
-let backendUrl = '127.0.0.1:3000'
-if (process.env.VUE_APP_ENVIRONMENT==="production"){
-  backendUrl='194.47.206.226:3000'
-}
 
 export default {
   methods: {
@@ -34,14 +31,14 @@ export default {
 
       // PATCH /message
       /* request.post({
-        uri: 'http://'+backendUrl+'/message',
+        uri: 'backendUrl+'/message',
         form: { message: textArea.value },
         function(err, response, body) {
           console.log('hej')
         }
       }) */
 
-      fetch('http://'+backendUrl+'/message', {
+      fetch(backendUrl+'/message', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
