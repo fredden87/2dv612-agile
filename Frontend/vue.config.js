@@ -11,6 +11,6 @@ module.exports = {
     },
       baseUrl: process.env.NODE_ENV === 'production'
         ? 'https://194.47.206.229:8080/'
-        : 'https://127.0.0.1:8080/'
+        : 'https://0.0.0.0:8080/'
     
   }
