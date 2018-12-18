@@ -5,12 +5,12 @@ module.exports = {
      // host: '0.0.0.0',
       port: 8080,
       https: process.env.NODE_ENV === 'production'
-      ? false
-      : true,
+      ? true
+      : false,
       hotOnly: false,
     },
       baseUrl: process.env.NODE_ENV === 'production'
-        ? 'http:/127.0.0.1:8080/'
-        : 'https://194.47.206.229:8080/'
+        ? 'https://194.47.206.229:8080/'
+        : 'https://127.0.0.1:8080/'
     
   }
