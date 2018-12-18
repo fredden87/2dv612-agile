@@ -28,8 +28,8 @@
 <script>
   import router from '../router'
   import { mapMutations, mapActions } from 'vuex'
-  import backendUrl from '../backendURL.js'
- console.log(backendUrl)
+  import { backendUrl } from '../backendURL.js'
+  console.log(backendUrl)
   export default {
     name: 'Login',
     components: {
