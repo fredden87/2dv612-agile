@@ -2,7 +2,7 @@ module.exports = {
  // will probably need to adapt this to production...
     devServer: {
       open: process.platform === 'darwin',
-      host: '0.0.0.0',
+     // host: '0.0.0.0',
       port: 8080,
       https: process.env.NODE_ENV === 'production'
       ? false
