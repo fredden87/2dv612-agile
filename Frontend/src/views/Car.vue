@@ -43,6 +43,14 @@
           v-on:click="removeVehicle">
           Remove Vehicle
         </button>
+        <button id="toggle_park"
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="park">
+          Park
+        </button>
       </form>
     </div>
   </div>
@@ -56,7 +64,7 @@
     backendUrl='cscloud482.lnu.se'
   }
 // watchPosition() can be used here https://stackoverflow.com/a/3305305
-
+let watcher
 let refreshCoords= function(){
   let whereami=document.getElementById("whereami")
   if (!navigator.geolocation){
@@ -66,13 +74,13 @@ let refreshCoords= function(){
             displayLength: 6000
           })
   } else {
-    navigator.geolocation.getCurrentPosition(function(position){
+watcher = navigator.geolocation.watchPosition(function(position)){
       console.log(position.coords.latitude+" : "+position.coords.longitude)    
 whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
 whereami.long=position.coords.longitude
 whereami.lat=position.coords.latitude
-    })
-    setTimeout(refreshCoords, 1000)
+}
+
   }
 }
 
@@ -97,10 +105,24 @@ whereami.lat=position.coords.latitude
   export default {
     name: "UserSettings",
     mounted(){
-      refreshCoords()
+
       selectorData()
     },
     methods: {
+      park: function(event){
+      event.preventDefault()
+      refreshCoords()
+      document.getElementById("toggle_park").textContent="Unpark"
+      document.getElementById("toggle_park").v-on:click="unpark"
+
+      }),
+      unpark: function(event){
+      event.preventDefault()
+      refreshCoords()
+      document.getElementById("toggle_park").textContent="Park"
+      document.getElementById("toggle_park").v-on:click="park"
+      navigator.geolocation.clearWatch(watcher);
+      }),
       removeVehicle: function(event){
         event.preventDefault()
         let backendUrl = "127.0.0.1:3000";
