@@ -15,9 +15,16 @@ var chain = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/chain.pem',
 // /etc/letsencrypt/live/cscloud482.lnu.se/fullchain.pem
 // Your key file has been saved at:
 // /etc/letsencrypt/live/cscloud482.lnu.se/privkey.pem
-
-https.createServer({
-  key: privateKey,
-  cert: certificate,
-  ca: [chain]
-}, app).listen(port)
+if (process.env.VUE_APP_ENVIRONMENT === 'production') {
+  https.createServer({
+    key: privateKey,
+    cert: certificate,
+    ca: [chain]
+  }, app).listen(port)
+} else {
+  https.createServer({
+    key: privateKey,
+    cert: certificate,
+    ca: [chain]
+  }, app).listen(3000)
+}

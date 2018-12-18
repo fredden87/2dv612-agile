@@ -28,7 +28,8 @@
 <script>
   import router from '../router'
   import { mapMutations, mapActions } from 'vuex'
-
+ const backendUrl=import backendURL from '../backendURL.js'
+ console.log(backendUrl)
   export default {
     name: 'Login',
     components: {
@@ -42,13 +43,8 @@
 
         // Old hack, but it works
         const that = this
-
-        const request=require('request')
-        let backendUrl = '127.0.0.1:3000'
-        if (process.env.VUE_APP_ENVIRONMENT==="production"){
-          backendUrl='cscloud482.lnu.se'
-        }
-        request.post({ url: 'https://'+backendUrl+'/login',
+        const request=require('request')  
+        request.post({ url: backendUrl+'/login',
           form:{ password: document.getElementById("password").value,
             email: document.getElementById("email").value }}, function(err, response, body) {
           let data = JSON.parse(body)
@@ -60,7 +56,7 @@
              })
             } else {
               // User logged in, check for new messages.
-              fetch('https://'+backendUrl+'/message', {
+              fetch(backendUrl+'/message', {
                 method: 'GET',
                 headers: {
                   'Accept': 'application/json',
