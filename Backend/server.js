@@ -5,7 +5,7 @@ const http = require('http')
 const app = require('./app')
 const mailModel = require('./mail')
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 443
 // http.createServer(app).listen(port)
 // console.log('server running on port: ' + port)
 var privateKey = fs.readFileSync('/etc/letsencrypt/live/cscloud482.lnu.se/privkey.pem', 'utf8')
