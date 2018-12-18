@@ -65,6 +65,7 @@
   }
 // watchPosition() can be used here https://stackoverflow.com/a/3305305
 let watcher
+let toggle=0
 let refreshCoords= function(){
   let whereami=document.getElementById("whereami")
   if (!navigator.geolocation){
@@ -111,17 +112,16 @@ whereami.lat=position.coords.latitude
     methods: {
       park: function(event){
       event.preventDefault()
+      if (toggle===0){
       refreshCoords()
       document.getElementById("toggle_park").textContent="Unpark"
-      document.getElementById("toggle_park").v-on:click="unpark"
-
-      }),
-      unpark: function(event){
-      event.preventDefault()
-      refreshCoords()
+      toggle=1
+      } else {
       document.getElementById("toggle_park").textContent="Park"
-      document.getElementById("toggle_park").v-on:click="park"
-      navigator.geolocation.clearWatch(watcher);
+      navigator.geolocation.clearWatch(watcher)
+      toggle=0
+      }
+
       }),
       removeVehicle: function(event){
         event.preventDefault()
