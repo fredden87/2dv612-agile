@@ -30,7 +30,7 @@
         </div>
   <div class="input-field col s12">
     <select id="cClass">
-      <option value="" disabled selected>Choose your service profile</option>
+      <option value="" disabled selected>Choose your profile</option>
     </select>
     <label>Customer profile selection</label>
   </div>
@@ -85,8 +85,8 @@ export default {
         displayLength: 6000
        })
         } else {
-      let instance = document.getElementById('cClass')  
-      console.log(instance.options[instance.selectedIndex].value)  
+      let instance = document.getElementById('cClass')
+      console.log(instance.options[instance.selectedIndex].value)
       request.post({ uri: 'http://'+backendUrl+'/user/signup',
         form: {
           password: document.getElementById('password1').value,
@@ -116,9 +116,39 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .register-wrapper {
   width: 60%;
   margin: 0 auto;
+}
+
+/* ----------- Galaxy S6: Portrait and Landscape ----------- */
+@media screen and (max-width: 360px)
+and (device-height: 640px)
+and (-webkit-device-pixel-ratio: 3) {
+  .row label  {
+    font-size: 11.5px;
+  }
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 568px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .row label  {
+    font-size: 11.5px;
+  }
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8: Portrait and Landscape ----------- */
+@media only screen and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .row label  {
+    font-size: 11.5px;
+  }
 }
 </style>

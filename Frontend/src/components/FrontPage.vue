@@ -51,4 +51,18 @@ and (-webkit-min-device-pixel-ratio: 2) {
     text-align: center;
   }
 }
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 568px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  html,body,div,header,nav,main,footer,section{margin:0; padding:0;}
+  .hello h1 {
+    font-size: 22px;
+    text-align: center;
+  }
+}
 </style>

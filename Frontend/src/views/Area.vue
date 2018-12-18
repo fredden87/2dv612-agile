@@ -60,7 +60,7 @@
     </div>
   </div>
   <div id="parkview">
-  </div> 
+  </div>
   </div>
 </template>
 <script>
@@ -78,7 +78,7 @@ const request = require('request')
       GMap.setAttribute('src',
      'https://maps.googleapis.com/maps/api/js?key='+process.env.VUE_APP_GOOGLE_MAPS_KEY+'&callback=GoogleMapsInit&region=IN');
 
-      document.body.appendChild(GMap); 
+      document.body.appendChild(GMap);
 })
 
 let backendUrl = '127.0.0.1:3000'
@@ -95,7 +95,7 @@ if (process.env.VUE_APP_ENVIRONMENT==="production"){
   while (area.childNodes.length>1){
 area.removeChild(area.lastChild)
   }
- 
+
   data.forEach(function(item){
    let opt = document.createElement('option')
    opt.value=item.name
@@ -105,7 +105,7 @@ area.removeChild(area.lastChild)
    opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
    area.appendChild(opt)
   })
- 
+
 
  M.FormSelect.init(document.getElementById('areaOpt'))
   })
@@ -116,7 +116,7 @@ export default {
           let kalmar={lat:56.6634447, lng:16.356779}
          this.initMap(kalmar)
        })
-  
+
 selectorData()
 
       let timetable=document.createElement('table')
@@ -149,7 +149,7 @@ newCell.appendChild(label)
   name: "Area",
   methods: {
     initMap(obj) {
-      // credit to team member Maria Jäderlund for original solution 
+      // credit to team member Maria Jäderlund for original solution
     let myMap=new google.maps.Map(
 			document.getElementById('map'),
 			{	center: obj,
@@ -183,7 +183,7 @@ function getCoords(e){
       const user = JSON.parse(localStorage.getItem('user'))
       const data = {email: user.email, name: areaName}
       fetch("http://" + backendUrl + "/area/remove", {
-          method: 'POST', 
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -214,7 +214,7 @@ function getCoords(e){
       const areaName = document.getElementById("aname").value
       const user = JSON.parse(localStorage.getItem('user'))
       // input actual timezones here
-      
+
       const areaTimezones = {
         0: document.getElementById('row4edit1').value,
         1: document.getElementById('row4edit2').value,
@@ -225,7 +225,7 @@ function getCoords(e){
         6: document.getElementById('row1edit1').value,
         7: document.getElementById('row1edit2').value,
         8: document.getElementById('row1edit3').value,
-        9: document.getElementById('row1edit4').value,     
+        9: document.getElementById('row1edit4').value,
         10: document.getElementById('row1edit5').value,
         11: document.getElementById('row1edit6').value,
         12: document.getElementById('row2edit1').value,
@@ -241,7 +241,7 @@ function getCoords(e){
         22: document.getElementById('row3edit5').value,
         23: document.getElementById('row3edit6').value
 }
-      
+
       if (user !== null) {
         const userEmail = user.email
         console.log(areaTimezones)
@@ -251,7 +251,7 @@ function getCoords(e){
           backendUrl = "194.47.206.226:3000";
         }
         fetch("http://" + backendUrl + "/area", {
-          method: 'PATCH', 
+          method: 'PATCH',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -283,7 +283,7 @@ function getCoords(e){
       }
     },
     viewArea: function(event){
-      
+
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
       document.getElementById("long").value = selected.long
@@ -525,4 +525,5 @@ table.comicGreen tfoot {
 table.comicGreen tfoot td {
   font-size: 5px;
 }
+
 </style>
