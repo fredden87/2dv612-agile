@@ -74,12 +74,12 @@ let refreshCoords= function(){
             displayLength: 6000
           })
   } else {
-watcher = navigator.geolocation.watchPosition(function(position)){
+watcher = navigator.geolocation.watchPosition(function(position){
       console.log(position.coords.latitude+" : "+position.coords.longitude)    
 whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
 whereami.long=position.coords.longitude
 whereami.lat=position.coords.latitude
-}
+})
 
   }
 }
