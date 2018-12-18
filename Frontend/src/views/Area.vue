@@ -1,9 +1,11 @@
 <template>
  <div class="register-wrapper">
     <div class="row">
-      <form class="col s8">
         <div id='timezonesview' class='timezonesview'>
         </div>
+        <div id="map">
+        </div>
+      <form class="col s8">
         <div class="row">
           <div class="input-field col s6">
             <input id="aname" type="text" class="validate">
@@ -19,6 +21,7 @@
             <input id="lat" type="number" class="validate">
             <label for="lat">Latitude</label>
           </div>
+
         </div>
         <button
           class="btn
@@ -60,14 +63,30 @@
   </div> 
   </div>
 </template>
-
 <script>
+
 import router from '../router'
 const request = require('request')
+
+/** credit to https://stackoverflow.com/a/49841565 */
+ const loadedGoogleMapsAPI=  new Promise( (resolve,reject) => {
+
+      window['GoogleMapsInit'] = resolve;
+
+      let GMap = document.createElement('script');
+
+      GMap.setAttribute('src',
+     'https://maps.googleapis.com/maps/api/js?key='+process.env.VUE_APP_GOOGLE_MAPS_KEY+'&callback=GoogleMapsInit&region=IN');
+
+      document.body.appendChild(GMap); 
+})
+
 let backendUrl = '127.0.0.1:3000'
 if (process.env.VUE_APP_ENVIRONMENT==="production"){
     backendUrl='194.47.206.226:3000'
   }
+
+
   let selectorData= function(){
     M.updateTextFields()
   request.post({uri: 'http://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
@@ -93,6 +112,11 @@ area.removeChild(area.lastChild)
   }
 export default {
   mounted(){
+        loadedGoogleMapsAPI.then(()=>{
+          let kalmar={lat:56.6634447, lng:16.356779}
+         this.initMap(kalmar)
+       })
+  
 selectorData()
 
       let timetable=document.createElement('table')
@@ -124,6 +148,28 @@ newCell.appendChild(label)
   },
   name: "Area",
   methods: {
+    initMap(obj) {
+      // credit to team member Maria Jäderlund for original solution 
+    let myMap=new google.maps.Map(
+			document.getElementById('map'),
+			{	center: obj,
+				zoom: 14,
+				styles: [
+					{featureType:"poi", stylers: [{visibility:"off"}]},  // Turn off points of interest.
+					{featureType:"transit.station",stylers: [{visibility:"off"}]}  // Turn off bus stations, etc.
+				]
+			}
+		)
+function getCoords(e){
+  let	latitude = e.latLng.lat().toFixed(6);
+  let longitude = e.latLng.lng().toFixed(6);
+  document.getElementById('long').value=longitude
+  document.getElementById('lat').value=latitude
+  M.updateTextFields()
+  console.log(latitude+ " : "+longitude)
+}
+	google.maps.event.addListener(myMap,"click", getCoords);
+} ,
     removeArea: function(event){
       event.preventDefault()
       let backendUrl = "127.0.0.1:3000";
@@ -244,23 +290,27 @@ newCell.appendChild(label)
       document.getElementById("lat").value = selected.lat
       document.getElementById("aname").value = selected.value
        M.updateTextFields()
-      while (document.getElementById('parkview').childNodes.length>0){
-        document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
-      }
-      let renderView= document.createElement('table')
-      renderView.setAttribute('class','comicGreen')
-      document.getElementById('parkview').appendChild(renderView)
-      for (let i=0; i < selected.lat; i++){
-        let newRow= document.createElement('tr')
-        newRow.class="row"
-        renderView.appendChild(newRow)
-        for (let j=0; j < selected.long; j++){
-          let newCell= document.createElement('td')
-          newCell.class="col"
-          newCell.textContent=(j+1)
-          newRow.appendChild(newCell)
-        }
-      }
+        this.initMap({lat:selected.lat, lng:selected.long})
+// table not required in current implementation
+
+      // while (document.getElementById('parkview').childNodes.length>0){
+      //   document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
+      // }
+      // let renderView= document.createElement('table')
+      // renderView.setAttribute('class','comicGreen')
+      // document.getElementById('parkview').appendChild(renderView)
+      // for (let i=0; i < selected.lat; i++){
+      //   let newRow= document.createElement('tr')
+      //   newRow.class="row"
+      //   renderView.appendChild(newRow)
+      //   for (let j=0; j < selected.long; j++){
+      //     let newCell= document.createElement('td')
+      //     newCell.class="col"
+      //     newCell.textContent=(j+1)
+      //     newRow.appendChild(newCell)
+      //   }
+      // }
+
       //render here
       console.log(selected.timezones)
       let timezonesview=document.getElementById('timezonesview')
@@ -414,6 +464,14 @@ switch(timezone){
 </script>
 
 <style>
+#map {
+  width: 40%;
+  height: 300px;
+  margin: 0 auto;
+  padding: 5px;
+  float: right;
+  border-style: solid;
+}
 label {
   display: inline-flex;
   padding: 2px;
@@ -427,7 +485,11 @@ label {
     margin: 5px;
   }
   .timezonesview {
-float: right;
+width: 60%;
+margin: 0 auto;
+padding: 5px;
+position: relative;
+float: left;
   }
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
