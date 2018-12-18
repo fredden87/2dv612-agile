@@ -27,7 +27,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-
+import { backendUrl } from '../backendURL.js'
 export default {
   mounted() {
     // Create an interval check if adminMessage is empty
@@ -64,14 +64,11 @@ export default {
     },
 
     dismissMessage: function() {
-      let backendUrl = '127.0.0.1:3000'
-      if (process.env.VUE_APP_ENVIRONMENT==="production"){
-        backendUrl='194.47.206.226:3000'
-      }
+
 
       const user = JSON.parse(localStorage.getItem('user'))
 
-      fetch('http://'+backendUrl+'/message', {
+      fetch(backendUrl+'/message', {
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',

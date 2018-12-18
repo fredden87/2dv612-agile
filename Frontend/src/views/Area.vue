@@ -67,7 +67,7 @@
 
 import router from '../router'
 const request = require('request')
-
+import { backendUrl } from '../backendURL.js'
 /** credit to https://stackoverflow.com/a/49841565 */
  const loadedGoogleMapsAPI=  new Promise( (resolve,reject) => {
 
@@ -81,15 +81,9 @@ const request = require('request')
       document.body.appendChild(GMap); 
 })
 
-let backendUrl = '127.0.0.1:3000'
-if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='cscloud482.lnu.se'
-  }
-
-
   let selectorData= function(){
     M.updateTextFields()
-  request.post({uri: 'https://'+backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+  request.post({uri: backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
   let data=JSON.parse(body)
   let area=document.getElementById('areaOpt')
   while (area.childNodes.length>1){
@@ -172,17 +166,12 @@ function getCoords(e){
 } ,
     removeArea: function(event){
       event.preventDefault()
-      let backendUrl = "127.0.0.1:3000";
-      if (process.env.VUE_APP_ENVIRONMENT === "production") {
-        backendUrl = "cscloud482.lnu.se";
-      }
-
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
       const areaName = selected.value
       const user = JSON.parse(localStorage.getItem('user'))
       const data = {email: user.email, name: areaName}
-      fetch("https://" + backendUrl + "/area/remove", {
+      fetch(backendUrl + "/area/remove", {
           method: 'POST', 
           headers: {
             'Accept': 'application/json',
@@ -246,11 +235,7 @@ function getCoords(e){
         const userEmail = user.email
         console.log(areaTimezones)
         const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
-        let backendUrl = "127.0.0.1:3000";
-        if (process.env.VUE_APP_ENVIRONMENT === "production") {
-          backendUrl = "cscloud482.lnu.se";
-        }
-        fetch("https://" + backendUrl + "/area", {
+        fetch(backendUrl + "/area", {
           method: 'PATCH', 
           headers: {
             'Accept': 'application/json',

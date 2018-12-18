@@ -58,15 +58,12 @@
 
 <script>
   import router from '../router'
+  import { backendUrl } from '../backendURL.js'
   const request = require('request')
-  let backendUrl = '127.0.0.1:3000'
-  if (process.env.VUE_APP_ENVIRONMENT==="production"){
-    backendUrl='cscloud482.lnu.se'
-  }
 // watchPosition() can be used here https://stackoverflow.com/a/3305305
 const watcher={}
   let selectorData= function(){
-    request.post({uri: 'https://'+backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
+    request.post({uri: backendUrl+'/vehicle', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
       let data=JSON.parse(body)
       let vehicle=document.getElementById('vehicleOpt')
       while (vehicle.childNodes.length>1){
@@ -119,16 +116,12 @@ const watcher={}
       },
       removeVehicle: function(event){
         event.preventDefault()
-        let backendUrl = "127.0.0.1:3000";
-        if (process.env.VUE_APP_ENVIRONMENT === "production") {
-          backendUrl = "cscloud482.lnu.se";
-        }
         let instance = document.getElementById('vehicleOpt')
         let selected=instance.options[instance.selectedIndex]
         const vehicleNum = selected.value
         const user = JSON.parse(localStorage.getItem('user'))
         const data = {email: user.email, vehicle: vehicleNum}
-        fetch("https://" + backendUrl + "/vehicle/remove", {
+        fetch(backendUrl + "/vehicle/remove", {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -161,13 +154,7 @@ const watcher={}
         if (user !== null) {
           const userEmail = user.email
           const data = {email: userEmail, vehicle: carRegistration}
-
-          let backendUrl = "127.0.0.1:3000";
-          if (process.env.VUE_APP_ENVIRONMENT === "production") {
-            backendUrl = "cscloud482.lnu.se";
-          }
-
-          fetch("https://" + backendUrl + "/vehicle", {
+          fetch(backendUrl + "/vehicle", {
             method: 'PATCH',
             headers: {
               'Accept': 'application/json',
