@@ -20,6 +20,14 @@
             <label>View Registered Vehicles</label>
           </div>
         </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <select id="areaOpt">
+              <option value="" disabled selected>Select Area</option>
+            </select>
+            <label>View Available Areas</label>
+          </div>
+        </div>
         <button
           class="btn
           waves-effect waves-light"
@@ -81,6 +89,26 @@ const watcher={}
       M.FormSelect.init(document.getElementById('vehicleOpt'))
     })
   }
+
+  let selectorDataArea= function(){
+    request.post({uri: backendUrl+'/car/park', form: {}}, function(err,response,body){
+      let data=JSON.parse(body)
+      let area=document.getElementById('areaOpt')
+      while (area.childNodes.length>1){
+        area.removeChild(area.lastChild)
+      }
+      //console.log(body)
+      data.forEach(function(item){
+        let opt = document.createElement('option')
+        opt.value=item.name
+        opt.textContent=opt.value
+        opt.area=item.area
+        area.appendChild(opt)
+      })
+
+      M.FormSelect.init(document.getElementById('areaOpt'))
+    })
+  }
 /**
  * compare two coordinate objects
  * code from https://stackoverflow.com/a/27943
@@ -97,16 +125,16 @@ const watcher={}
   let earthRadius = 6371; // Radius of the earth in km
   // lat and long are angles, to measure length we have to get respective degree
   let degLat = (userC.lat-areaC.lat)*(Math.PI/180);  // deg2rad below
-  let degLong = (userC.long-areaC.long)*(Math.PI/180); 
+  let degLong = (userC.long-areaC.long)*(Math.PI/180);
   // see https://en.wikipedia.org/wiki/Haversine_formula#The_law_of_haversines
-    let a = 
+    let a =
     Math.sin(degLat/2) * Math.sin(degLat/2) +
-    Math.cos((userC.lat)*(Math.PI/180)) * Math.cos((areaC.lat)*(Math.PI/180)) * 
+    Math.cos((userC.lat)*(Math.PI/180)) * Math.cos((areaC.lat)*(Math.PI/180)) *
     Math.sin(degLong/2) * Math.sin(degLong/2)
-    
+
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
   // return Distance in km
-  return earthRadius * c 
+  return earthRadius * c
     }
 
 import { mapState, mapMutations, mapActions } from 'vuex'
@@ -117,6 +145,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
     mounted(){
 
       selectorData()
+      selectorDataArea()
     },
     methods: {
       ...mapMutations(['SET_GPS_MESSAGE']),
@@ -126,7 +155,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
        const that = this
       let whereami=document.getElementById("whereami")
       if (document.getElementById("toggle_park")){
-       
+
   if (!navigator.geolocation){
           window.M.toast({
             html: "Your device does not support geolocation service",
@@ -136,19 +165,17 @@ import { mapState, mapMutations, mapActions } from 'vuex'
   } else {
       document.getElementById("toggle_park").id="toggle_off"
       watcher.id = navigator.geolocation.watchPosition(function(position){
-      console.log(position.coords.latitude+" : "+position.coords.longitude)    
+      console.log(position.coords.latitude+" : "+position.coords.longitude)
       whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
       whereami.long=position.coords.longitude
       whereami.lat=position.coords.latitude
       // Test comparison block. Use area here instead of London, Remember it is "fågelvägen"-"as the bird flies", google maps will give you driving distance instead, accounting for hills.
-      const london={}
-      london.lat=	51.508530
-      london.long= -0.076132
-      whereami.firstChild.textContent=compareCoords(whereami, london)+" km"
-      const kalmar={}
-      kalmar.lat=56.661570
-      kalmar.long=16.361630
-      if (compareCoords(whereami, kalmar)>20){
+
+      let instance = document.getElementById('areaOpt')
+      let selected=instance.options[instance.selectedIndex]
+
+      whereami.firstChild.textContent=compareCoords(whereami, selected.area)+" km"
+      if (compareCoords(whereami, selected.area)>20){
       that.setGPSMessage('You are over 20km away from your parked vehicle')
       }
       })
@@ -179,6 +206,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
             if (response.status === 200) {
               // Display success message
               selectorData()
+              selectorDataArea()
               window.M.toast({
                 html: "Vehicle was removed",
                 classes: 'green darken-1'
@@ -212,6 +240,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
               if (response.status === 200) {
                 // Display success message
                 selectorData()
+                selectorDataArea()
                 window.M.toast({
                   html: "Vehicle was added",
                   classes: 'green darken-1'
@@ -236,7 +265,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       viewVehicle: function(event){
         event.preventDefault()
 //disabled.
- 
+
       }
     }
   }
