@@ -7,29 +7,12 @@
       <form class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <select id="vehicleOpt">
-              <option value="" disabled selected>Select Vehicle</option>
-            </select>
-            <label>View Registered Vehicles</label>
-          </div>
-        </div>
-          <button
-          class="btn
-          waves-effect waves-light"
-          type="submit"
-          name="action"
-          v-on:click="removeVehicle">
-          Remove Vehicle
-        </button>
-        <div class="row">
-          <div class="input-field col s12">
             <select id="areaOpt">
               <option value="" disabled selected>Select Area</option>
             </select>
             <label>View Available Areas</label>
           </div>
         </div>
-
         <button id="toggle_park"
           class="btn
           waves-effect waves-light"
@@ -51,6 +34,22 @@
           name="action"
           v-on:click="addVehicle">
           Add Vehicle
+        </button>
+                <div class="row">
+          <div class="input-field col s12">
+            <select id="vehicleOpt">
+              <option value="" disabled selected>Select Vehicle</option>
+            </select>
+            <label>View Registered Vehicles</label>
+          </div>
+        </div>
+          <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeVehicle">
+          Remove Vehicle
         </button>
       </form>
     </div>
