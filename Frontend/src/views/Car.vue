@@ -175,8 +175,9 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       let selected=instance.options[instance.selectedIndex]
 
       whereami.firstChild.textContent=compareCoords(whereami, selected.area)+" km"
-      if (compareCoords(whereami, selected.area)>20){
-      that.setGPSMessage('You are over 20km away from your parked vehicle')
+      let tracker=compareCoords(whereami, selected.area)
+      if (tracker>20){
+      that.setGPSMessage('You are '+tracker+'km away from your parked vehicle')
       }
       })
       document.getElementById("toggle_off").textContent="Unpark"
