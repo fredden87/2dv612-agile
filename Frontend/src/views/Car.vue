@@ -5,13 +5,6 @@
     </div>
     <div class="row">
       <form class="col s12">
-        <h5>Register new vehicle</h5>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="car_reg" type="text" class="validate">
-            <label for="car_reg">Vehicle registration number</label>
-          </div>
-        </div>
         <div class="row">
           <div class="input-field col s12">
             <select id="vehicleOpt">
@@ -20,12 +13,36 @@
             <label>View Registered Vehicles</label>
           </div>
         </div>
+          <button
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeVehicle">
+          Remove Vehicle
+        </button>
         <div class="row">
           <div class="input-field col s12">
             <select id="areaOpt">
               <option value="" disabled selected>Select Area</option>
             </select>
             <label>View Available Areas</label>
+          </div>
+        </div>
+
+        <button id="toggle_park"
+          class="btn
+          waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="park">
+          Park
+        </button>
+        <h5>Register new vehicle</h5>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="car_reg" type="text" class="validate">
+            <label for="car_reg">Vehicle registration number</label>
           </div>
         </div>
         <button
@@ -35,30 +52,6 @@
           name="action"
           v-on:click="addVehicle">
           Add Vehicle
-        </button>
-        <!-- <button
-          class="btn
-          waves-effect waves-light"
-          type="submit"
-          name="action"
-          v-on:click="viewVehicle">
-          View Vehicle(s)
-        </button> -->
-        <button
-          class="btn
-          waves-effect waves-light"
-          type="submit"
-          name="action"
-          v-on:click="removeVehicle">
-          Remove Vehicle
-        </button>
-        <button id="toggle_park"
-          class="btn
-          waves-effect waves-light"
-          type="submit"
-          name="action"
-          v-on:click="park">
-          Park
         </button>
       </form>
     </div>
@@ -166,7 +159,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       document.getElementById("toggle_park").id="toggle_off"
       watcher.id = navigator.geolocation.watchPosition(function(position){
       console.log(position.coords.latitude+" : "+position.coords.longitude)
-      whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
+     // whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
       whereami.long=position.coords.longitude
       whereami.lat=position.coords.latitude
       // Test comparison block. Use area here instead of London, Remember it is "fågelvägen"-"as the bird flies", google maps will give you driving distance instead, accounting for hills.
@@ -174,7 +167,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       let instance = document.getElementById('areaOpt')
       let selected=instance.options[instance.selectedIndex]
 
-      whereami.firstChild.textContent=compareCoords(whereami, selected.area)+" km"
+      //whereami.firstChild.textContent=compareCoords(whereami, selected.area)+" km"
       let tracker=compareCoords(whereami, selected.area)
       if (tracker>20){
       that.setGPSMessage('You are '+tracker+'km away from your parked vehicle')
@@ -274,7 +267,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
 <style>
   .register-wrapper {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
   }
 </style>
