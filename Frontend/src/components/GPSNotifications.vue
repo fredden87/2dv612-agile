@@ -92,16 +92,16 @@ export default {
 <style>
 .gps-infomessage-button {
   position: absolute;
-  right: 80px;
+  right: 20px;
   top: 20px;
   z-index: 99;
 }
 .gps-infomessage-card {
-  width: 80%;
+  width: 90%;
   max-width: 500px;
   position: absolute;
-  right: 120px;
-  top: 50px;
+  right: 15px;
+  top: 15px;
   z-index: 99;
 }
 .hidden {
