@@ -1,6 +1,7 @@
 <template>
   <div class="register-wrapper">
     <div id="whereami">
+      <div id="compare_remove_later"></div>
     </div>
     <div class="row">
       <form class="col s12">
@@ -80,6 +81,37 @@ const watcher={}
       M.FormSelect.init(document.getElementById('vehicleOpt'))
     })
   }
+/**
+ * compare two coordinate objects
+ * code from https://stackoverflow.com/a/27943
+ * @param {Object} userC - User coordinates
+ * @param {Object} userC.lat - Users Latitude
+ * @param {Object} userC.long - Users Longitude
+ * @param {Object} areaC - Area coordinates
+ * @param {Object} areaC.lat - Area Latitude
+ * @param {Object} areaC.long - Area Longitude
+ * @return {integer} distance in km, do a true/false elsewhere
+ */
+   function compareCoords(userC, areaC){
+      // full credit to https://stackoverflow.com/a/27943 , http://en.wikipedia.org/wiki/Haversine_formula
+  let earthRadius = 6371; // Radius of the earth in km
+  // lat and long are angles, to measure length we have to get respective degree
+  let degLat = (userC.lat-areaC.lat)*(Math.PI/180);  // deg2rad below
+  let degLong = (userC.long-areaC.long)*(Math.PI/180); 
+  // see https://en.wikipedia.org/wiki/Haversine_formula#The_law_of_haversines
+    let a = 
+    Math.sin(degLat/2) * Math.sin(degLat/2) +
+    Math.cos((userC.lat)*(Math.PI/180)) * Math.cos((areaC.lat)*(Math.PI/180)) * 
+    Math.sin(degLong/2) * Math.sin(degLong/2)
+    
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  // return Distance in km
+  return earthRadius * c 
+    }
+
+import { mapState, mapMutations, mapActions } from 'vuex'
+
+
   export default {
     name: "UserSettings",
     mounted(){
@@ -87,9 +119,11 @@ const watcher={}
       selectorData()
     },
     methods: {
+      ...mapMutations(['SET_GPS_MESSAGE']),
+      ...mapActions(['setGPSMessage']),
       park: function(event){
       event.preventDefault()
-      
+       const that = this
       let whereami=document.getElementById("whereami")
       if (document.getElementById("toggle_park")){
        
@@ -106,6 +140,17 @@ const watcher={}
       whereami.textContent=position.coords.latitude+" : "+position.coords.longitude
       whereami.long=position.coords.longitude
       whereami.lat=position.coords.latitude
+      // Test comparison block. Use area here instead of London, Remember it is "fågelvägen"-"as the bird flies", google maps will give you driving distance instead, accounting for hills.
+      const london={}
+      london.lat=	51.508530
+      london.long= -0.076132
+      whereami.firstChild.textContent=compareCoords(whereami, london)+" km"
+      const kalmar={}
+      kalmar.lat=56.661570
+      kalmar.long=16.361630
+      if (compareCoords(whereami, kalmar)>20){
+      that.setGPSMessage('You are over 20km away from your parked vehicle')
+      }
       })
       document.getElementById("toggle_off").textContent="Unpark"
       }
