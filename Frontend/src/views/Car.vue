@@ -91,7 +91,7 @@ const watcher={}
   }
 
   let selectorDataArea= function(){
-    request.post({uri: backendUrl+'/car/park', form: {}}, function(err,response,body){
+    request.post({uri: backendUrl+'/vehicle/park', form: {}}, function(err,response,body){
       let data=JSON.parse(body)
       let area=document.getElementById('areaOpt')
       while (area.childNodes.length>1){
