@@ -38,7 +38,6 @@
           v-on:click="park">
           Park
         </button>
-        <h5>Register new vehicle</h5>
         <div class="row">
           <div class="input-field col s12">
             <input id="car_reg" type="text" class="validate">
