@@ -9,14 +9,14 @@ const userSchema = new Schema({
   firstname: {
     type: String,
     required: true,
-    match: /^[A-Za-z-]+$/,
+    match: /^[A-ZÅÄÖa-zåäö-]+$/,
     minlength: 3,
     maxlength: 20
   },
   lastname: {
     type: String,
     required: true,
-    match: /^[A-Za-z-]+$/,
+    match: /^[A-ZÅÄÖa-zåäö-]+$/,
     minlength: 3,
     maxlength: 20
   },
