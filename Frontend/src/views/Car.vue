@@ -270,7 +270,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
     width: 80%;
     margin: 0 auto;
   }
-  div {
-    padding: 20px;
-  }
+ #whereami {
+   display: hidden;
+ }
 </style>
