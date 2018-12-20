@@ -17,7 +17,7 @@ if (process.env.VUE_APP_ENVIRONMENT === 'production') {
   backendUrl = '194.47.206.226:3000'
 }
 
-function connect(response) {
+function connect (response) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
     useNewUrlParser: true
