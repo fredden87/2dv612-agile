@@ -201,6 +201,11 @@ router.post('/changeemail', (req, res, next) => {
           return res.status(200).json({
             message: 'Email change succeeded'
           })
+        }).catch(err => {
+          console.log(err)
+          res.status(500).json({
+            error: err
+          })
         })
       } else {
         return res.status(401).json({
