@@ -197,8 +197,8 @@ router.post('/changeemail', (req, res, next) => {
     .then(user => {
       if (req.body.email === user.email) {
         user.email = req.body.newEmail
-        user.save().then(() => {
-          Area.update({ email: req.body.email }, { $set: { email: req.body.newEmail } }).then(() => { console.log() }).catch(err => { console.log(err) })
+        user.save().then(user => {
+          Area.update({ email: req.body.email }, { $set: { email: req.body.newEmail } }).then(area => { console.log(area) }).catch(err => { console.log(err) })
         }).catch(err => {
           console.log(err)
           res.status(500).json({
