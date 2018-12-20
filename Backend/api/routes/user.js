@@ -17,7 +17,7 @@ if (process.env.VUE_APP_ENVIRONMENT === 'production') {
   backendUrl = '194.47.206.226:3000'
 }
 
-function connect (response) {
+function connect(response) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
     useNewUrlParser: true
@@ -188,6 +188,32 @@ router.post('/changepw', (req, res, next) => {
         error: err
       })
     })
+})
+
+router.post('/changeemail', (req, res, next) => {
+  connect(res)
+  User.findOne({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (req.body.email === user.email) {
+        user.email = req.body.newEmail
+        user.save()
+        return res.status(200).json({
+          message: 'Email change succeeded'
+        })
+      } else {
+        return res.status(401).json({
+          message: 'Email change failed'
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+  // mongoose.connection.close()
 })
 
 module.exports = router

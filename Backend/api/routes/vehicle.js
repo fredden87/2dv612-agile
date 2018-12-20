@@ -49,10 +49,10 @@ router.post('/park', (req, res, next) => {
 })
 router.post('/', (req, res, next) => {
   connectDB(res)
+  console.log(req.body.email)
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
-      console.log(user)
       mongoose.connection.close()
       return res.status(200).send(user)
     })
@@ -81,7 +81,7 @@ router.post('/remove', (req, res, next) => {
   })
 })
 
-function checkDuplicates (cars, car) {
+function checkDuplicates(cars, car) {
   if (cars.length === 0) {
     return true
   }
@@ -93,7 +93,7 @@ function checkDuplicates (cars, car) {
   return true
 }
 
-function connectDB (res) {
+function connectDB(res) {
   mongoose.connect(MONGODB_URL, {
     autoReconnect: true,
     useNewUrlParser: true
