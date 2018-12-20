@@ -197,9 +197,10 @@ router.post('/changeemail', (req, res, next) => {
     .then(user => {
       if (req.body.email === user.email) {
         user.email = req.body.newEmail
-        user.save()
-        return res.status(200).json({
-          message: 'Email change succeeded'
+        user.save().then(() => {
+          return res.status(200).json({
+            message: 'Email change succeeded'
+          })
         })
       } else {
         return res.status(401).json({

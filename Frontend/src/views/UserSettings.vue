@@ -165,6 +165,7 @@ export default {
             // Display success message
             //localStorage.removeItem("user");
             localStorageUser.email = newEmail;
+            sessionStorage.setItem("email", JSON.stringify(newEmail));
             localStorage.setItem("user", JSON.stringify(localStorageUser));
             window.M.toast({
               html: "Email has changed",

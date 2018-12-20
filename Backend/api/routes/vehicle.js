@@ -69,6 +69,7 @@ router.post('/remove', (req, res, next) => {
   connectDB(res)
   User.updateOne({ email: req.body.email }, { $pull: { vehicle: req.body.vehicle } }, (err) => {
     if (err) {
+      console.log(err)
       mongoose.connection.close()
       res.status(500).json({
         error: err
@@ -100,9 +101,6 @@ function connectDB (res) {
     useNewUrlParser: true
   }).catch(err => {
     console.log('Mongo connection error', err)
-    res.status(500).json({
-      error: err
-    })
   })
 }
 
