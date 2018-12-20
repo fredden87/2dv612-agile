@@ -24,6 +24,21 @@
       v-on:click="changePassword"
     >Save changes</button>
 
+    <h5>Change email</h5>
+    <div class="input-field col s6">
+      <input id="email" type="text" class="validate">
+      <label for="email">New email</label>
+    </div>
+
+    <button
+      class="btn waves-effect waves-light"
+      type="submit"
+      name="action"
+      v-on:click="changeEmail"
+    >Save changes</button>
+
+    <br>
+    <br>
     <div class="row">
       <div class="col s12">
         <h5>Remove account</h5>
@@ -40,7 +55,7 @@
 
 <script>
 import router from "../router";
-import { backendUrl } from '../backendURL.js'
+import { backendUrl } from "../backendURL.js";
 export default {
   name: "UserSettings",
   mounted() {},
@@ -121,6 +136,57 @@ export default {
               displayLength: 6000
             });
           }
+        });
+      }
+    },
+    changeEmail: function(event) {
+      event.preventDefault();
+
+      const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      let newEmail = document.getElementById("email").value;
+
+      if (regEx.test(newEmail)) {
+        const localStorageUser = JSON.parse(localStorage.getItem("user"));
+        const user = JSON.parse(localStorage.getItem("user"));
+        const data = {
+          _id: user._id,
+          email: user.email,
+          newEmail: newEmail
+        };
+        fetch(backendUrl + "/user/changeemail", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        }).then(response => {
+          if (response.status === 200) {
+            // Display success message
+            //localStorage.removeItem("user");
+            localStorageUser.email = newEmail;
+            sessionStorage.setItem("email", JSON.stringify(newEmail));
+            localStorage.setItem("user", JSON.stringify(localStorageUser));
+            window.M.toast({
+              html: "Email has changed",
+              classes: "green darken-1",
+              displayLength: 6000
+            });
+          } else {
+            // Display error message
+            window.M.toast({
+              html: "Email change failed",
+              classes: "deep-orange accent-4 black-text",
+              displayLength: 6000
+            });
+          }
+        });
+      } else {
+        // Display error message
+        window.M.toast({
+          html: newEmail + " is not valid!",
+          classes: "deep-orange accent-4 black-text",
+          displayLength: 6000
         });
       }
     }

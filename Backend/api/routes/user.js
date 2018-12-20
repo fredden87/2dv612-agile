@@ -190,4 +190,43 @@ router.post('/changepw', (req, res, next) => {
     })
 })
 
+router.post('/changeemail', (req, res, next) => {
+  connect(res)
+  User.findOne({ email: req.body.email })
+    .exec()
+    .then(user => {
+      if (req.body.email === user.email) {
+        user.email = req.body.newEmail
+        user.save().then(user => {
+          Area.updateMany({ email: req.body.email }, { $set: { email: req.body.newEmail } }).then(area => {
+            return res.status(200).json({
+              message: 'Email changed to:' + req.body.newEmail
+            })
+          }).catch(err => {
+            console.log(err)
+            res.status(500).json({
+              error: err
+            })
+          })
+        }).catch(err => {
+          console.log(err)
+          res.status(500).json({
+            error: err
+          })
+        })
+      } else {
+        return res.status(401).json({
+          message: 'Email change failed'
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        error: err
+      })
+    })
+  // mongoose.connection.close()
+})
+
 module.exports = router

@@ -9,6 +9,7 @@ router.patch('/', (req, res, next) => {
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
+      console.log(req.body.email)
       if (checkDuplicates(user.vehicle, req.body.vehicle)) {
         user.vehicle.push(req.body.vehicle)
         user.save()
@@ -52,7 +53,6 @@ router.post('/', (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
-      console.log(user)
       mongoose.connection.close()
       return res.status(200).send(user)
     })
@@ -69,15 +69,17 @@ router.post('/remove', (req, res, next) => {
   connectDB(res)
   User.updateOne({ email: req.body.email }, { $pull: { vehicle: req.body.vehicle } }, (err) => {
     if (err) {
+      console.log(err)
       mongoose.connection.close()
       res.status(500).json({
         error: err
       })
+    } else {
+      mongoose.connection.close()
+      res.status(200).json({
+        message: 'Vehicle removed'
+      })
     }
-    mongoose.connection.close()
-    res.status(200).json({
-      message: 'Vehicle removed'
-    })
   })
 })
 
@@ -99,9 +101,6 @@ function connectDB (res) {
     useNewUrlParser: true
   }).catch(err => {
     console.log('Mongo connection error', err)
-    res.status(500).json({
-      error: err
-    })
   })
 }
 
