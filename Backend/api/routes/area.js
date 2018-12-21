@@ -93,9 +93,9 @@ function connectDB (res) {
     useNewUrlParser: true
   }).catch(err => {
     console.log('Mongo connection error', err)
-    res.status(500).json({
-      error: err
-    })
+    // res.status(500).json({
+    //   error: err
+    // })
   })
 }
 
