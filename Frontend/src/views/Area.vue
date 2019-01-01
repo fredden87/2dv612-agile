@@ -210,7 +210,7 @@ export default {
       let countZones=0
       for (let i=1; i<5; i++) {
         for (let j=1; j<7; j++) {
-        areaTimezones[countZones]=document.getElementById("row"+i+"edit"+j).value;
+        areaTimezones[countZones]=document.getElementById("edit"+countZones).value;
         countZones++;
         }
       }
