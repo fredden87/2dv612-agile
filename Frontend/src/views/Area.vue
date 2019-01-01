@@ -265,7 +265,7 @@ export default {
       document.getElementById("aname").value = selected.value;
       M.updateTextFields();
       this.initMap({ lat: selected.lat, lng: selected.long });
-      countHours=0;
+      let countHours=0;
 
       for (let timezone in selected.timezones) {
         let value = selected.timezones[timezone];
