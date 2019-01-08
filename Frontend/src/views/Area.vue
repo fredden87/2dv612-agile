@@ -1,10 +1,8 @@
 <template>
- <div class="register-wrapper">
+  <div class="register-wrapper">
     <div class="row arearow">
-        <div id='timezonesview' class='timezonesview'>
-        </div>
-        <div id="map">
-        </div>
+      <div id="timezonesview" class="timezonesview"></div>
+      <div id="map"></div>
       <form class="col s8">
         <div class="row areainput">
           <div class="input-field col s6">
@@ -21,431 +19,268 @@
             <input id="lat" type="number" class="validate">
             <label for="lat">Latitude</label>
           </div>
-
         </div>
         <button
-          class="btn
-          waves-effect waves-light"
+          class="btn waves-effect waves-light"
           type="submit"
           name="action"
-          v-on:click="addArea">
-          Save
-        </button>
+          v-on:click="addArea"
+        >Save</button>
       </form>
     </div>
-      <div class="row">
+    <div class="row">
       <div class="input-field col s12">
-    <select id="areaOpt">
-      <option value="" disabled selected>Select Area</option>
-    </select>
-    <label>Select</label>
-          <button
-          class="btn
-          waves-effect waves-light"
-          type="submit"
-          name="action"
-          v-on:click="viewArea">
-          View
-          </i>
-        </button>
+        <select id="areaOpt">
+          <option value=" " disabled selected>Select Area</option>
+        </select>
+        <label>Select</label>
         <button
-          class="btn
-          waves-effect waves-light"
+          class="btn waves-effect waves-light"
           type="submit"
           name="action"
-          v-on:click="removeArea">
-          Remove
-          </i>
-        </button>
+          v-on:click="viewArea"
+        >View</button>
+        <button
+          class="btn waves-effect waves-light"
+          type="submit"
+          name="action"
+          v-on:click="removeArea"
+        >Remove</button>
+      </div>
     </div>
-  </div>
-  <div id="parkview">
-  </div>
+    <div id="parkview"></div>
   </div>
 </template>
 <script>
-
-import router from '../router'
-const request = require('request')
-import { backendUrl } from '../backendURL.js'
+import router from "../router";
+const request = require("request");
+import { backendUrl } from "../backendURL.js";
 /** credit to https://stackoverflow.com/a/49841565 */
- const loadedGoogleMapsAPI=  new Promise( (resolve,reject) => {
+const loadedGoogleMapsAPI = new Promise((resolve, reject) => {
+  window["GoogleMapsInit"] = resolve;
+  let GMap = document.createElement("script");
+  GMap.setAttribute(
+    "src",
+    "https://maps.googleapis.com/maps/api/js?key=" +
+      process.env.VUE_APP_GOOGLE_MAPS_KEY +
+      "&callback=GoogleMapsInit&region=IN"
+  );
+  document.body.appendChild(GMap);
+});
 
-      window['GoogleMapsInit'] = resolve;
-
-      let GMap = document.createElement('script');
-
-      GMap.setAttribute('src',
-     'https://maps.googleapis.com/maps/api/js?key='+process.env.VUE_APP_GOOGLE_MAPS_KEY+'&callback=GoogleMapsInit&region=IN');
-
-      document.body.appendChild(GMap);
-})
-
-  let selectorData= function(){
-    M.updateTextFields()
-  request.post({uri: backendUrl+'/area', form: {email: JSON.parse(sessionStorage.getItem('email'))}}, function(err,response,body){
-  let data=JSON.parse(body)
-  let area=document.getElementById('areaOpt')
-  while (area.childNodes.length>1){
-area.removeChild(area.lastChild)
-  }
-
-  data.forEach(function(item){
-   let opt = document.createElement('option')
-   opt.value=item.name
-   opt.lat=item.area.lat
-   opt.long=item.area.long
-   opt.timezones=item.area.timezones
-   opt.textContent=item.name + ' : ( ' + item.area.lat + ', ' + item.area.long + ')'
-   area.appendChild(opt)
-  })
-
-
- M.FormSelect.init(document.getElementById('areaOpt'))
-  })
-  }
-export default {
-  mounted(){
-        loadedGoogleMapsAPI.then(()=>{
-          let kalmar={lat:56.6634447, lng:16.356779}
-         this.initMap(kalmar)
-       })
-
-selectorData()
-
-      let timetable=document.createElement('table')
-      timetable.setAttribute('class','comicGreen')
-      timezonesview.appendChild(timetable)
-            for (let i=0; i<4; i++){
-        let newRow=document.createElement('tr')
-        newRow.setAttribute('id', 'row'+(i+1))
-timetable.appendChild(newRow)
-        for (let j=0; j<6; j++){
-let newCell = document.createElement('td')
-newCell.setAttribute('id', 'row'+(i+1)+'cell'+(j+1))
-let hour = document.createElement('div')
-hour.setAttribute('id', 'row'+(i+1)+'hour'+(j+1))
-let edit = document.createElement('input')
-edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
-edit.type='number'
-edit.value=0
-let label = document.createElement('label')
-label.for='id', 'row'+(i+1)+'edit'+(j+1)
-label.textContent="rate: "
-newRow.appendChild(newCell)
-
-newCell.appendChild(hour)
-label.appendChild(edit)
-newCell.appendChild(label)
-        }
+let selectorData = function() {
+  M.updateTextFields();
+  request.post(
+    {
+      uri: backendUrl + "/area",
+      form: { email: JSON.parse(sessionStorage.getItem("email")) }
+    },
+    function(err, response, body) {
+      let data = JSON.parse(body);
+      let area = document.getElementById("areaOpt");
+      while (area.childNodes.length > 1) {
+        area.removeChild(area.lastChild);
       }
+
+      data.forEach(function(item) {
+        let opt = document.createElement("option");
+        opt.value = item.name;
+        opt.lat = item.area.lat;
+        opt.long = item.area.long;
+        opt.timezones = item.area.timezones;
+        opt.textContent =
+          item.name + " : ( " + item.area.lat + ", " + item.area.long + ")";
+        area.appendChild(opt);
+      });
+
+      M.FormSelect.init(document.getElementById("areaOpt"));
+    }
+  );
+};
+export default {
+  mounted() {
+    loadedGoogleMapsAPI.then(() => {
+      const kalmar = { lat: 56.6634447, lng: 16.356779 };
+      this.initMap(kalmar);
+    }).catch((err)=>console.log(err));
+
+    selectorData();
+
+    let timetable = document.createElement("table");
+    let countHours=0;
+    timetable.setAttribute("class", "comicGreen");
+    timezonesview.appendChild(timetable);
+    for (let i = 1; i < 5; i++) {
+      let newRow = document.createElement("tr");
+      newRow.setAttribute("id", "row" + i);
+      timetable.appendChild(newRow);
+      for (let j = 1; j < 7; j++) {
+        let newCell = document.createElement("td");
+        newCell.setAttribute("id", "row" + i + "cell" + j);
+        let hour = document.createElement("div");
+        if (countHours<10){
+        hour.textContent="0" + countHours + ":00-0" + countHours + ":59"
+        } else {
+        hour.textContent= countHours + ":00-" + countHours + ":59"
+        }
+
+        hour.setAttribute("id", "row" + i + "hour" + j);
+        let edit = document.createElement("input");
+        edit.setAttribute("id", "edit" + countHours);
+        edit.type = "number";
+        edit.value = 0;
+        let label = document.createElement("label");
+        (label.for = "id"), "edit" + countHours;
+        label.textContent = "rate: ";
+        newRow.appendChild(newCell);
+        newCell.appendChild(hour);
+        label.appendChild(edit);
+        newCell.appendChild(label);
+        countHours++
+      }
+    }
+    // Swap timezones so that 0-5 are displayed last
+    let swapRow = document.getElementById("row1")
+    timetable.removeChild(swapRow)
+    timetable.appendChild(swapRow)
   },
   name: "Area",
   methods: {
     initMap(obj) {
       // credit to team member Maria Jäderlund for original solution
-    let myMap=new google.maps.Map(
-			document.getElementById('map'),
-			{	center: obj,
-				zoom: 14,
-				styles: [
-					{featureType:"poi", stylers: [{visibility:"off"}]},  // Turn off points of interest.
-					{featureType:"transit.station",stylers: [{visibility:"off"}]}  // Turn off bus stations, etc.
-				]
-			}
-		)
-function getCoords(e){
-  let	latitude = e.latLng.lat().toFixed(6);
-  let longitude = e.latLng.lng().toFixed(6);
-  document.getElementById('long').value=longitude
-  document.getElementById('lat').value=latitude
-  M.updateTextFields()
-  console.log(latitude+ " : "+longitude)
-}
-	google.maps.event.addListener(myMap,"click", getCoords);
-} ,
-    removeArea: function(event){
-      event.preventDefault()
-      let instance = document.getElementById('areaOpt')
-      let selected=instance.options[instance.selectedIndex]
-      const areaName = selected.value
-      const user = JSON.parse(localStorage.getItem('user'))
-      const data = {email: user.email, name: areaName}
+      let myMap = new google.maps.Map(document.getElementById("map"), {
+        center: obj,
+        zoom: 14,
+        styles: [
+          { featureType: "poi", stylers: [{ visibility: "off" }] }, // Turn off points of interest.
+          { featureType: "transit.station", stylers: [{ visibility: "off" }] } // Turn off bus stations, etc.
+        ]
+      });
+      function getCoords(e) {
+        let latitude = e.latLng.lat().toFixed(6);
+        let longitude = e.latLng.lng().toFixed(6);
+        document.getElementById("long").value = longitude;
+        document.getElementById("lat").value = latitude;
+        M.updateTextFields();
+        console.log(latitude + " : " + longitude);
+      }
+      google.maps.event.addListener(myMap, "click", getCoords);
+    },
+    removeArea: function(event) {
+      event.preventDefault();
+      let instance = document.getElementById("areaOpt");
+      let selected = instance.options[instance.selectedIndex];
+      const areaName = selected.value;
+      const user = JSON.parse(localStorage.getItem("user"));
+      const data = { email: user.email, name: areaName };
       fetch(backendUrl + "/area/remove", {
-          method: 'POST', 
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)})
-        .then((response) => {
-          if (response.status === 200) {
-            // Display success message
-            selectorData()
-            window.M.toast({
-              html: "Area was removed",
-              classes: 'green darken-1'
-            })
-          } else {
-            // Display error message
-            window.M.toast({
-              html: "Area could not be removed",
-              classes: 'deep-orange accent-4 black-text',
-              displayLength: 6000
-            })
-          }
-        })
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then(response => {
+        if (response.status === 200) {
+          // Display success message
+          selectorData();
+          window.M.toast({
+            html: "Area was removed",
+            classes: "green darken-1"
+          });
+        } else {
+          // Display error message
+          window.M.toast({
+            html: "Area could not be removed",
+            classes: "deep-orange accent-4 black-text",
+            displayLength: 6000
+          });
+        }
+      });
     },
     addArea: function(event) {
-      event.preventDefault()
-      const areaLong = document.getElementById("long").value
-      const areaLat = document.getElementById("lat").value
-      const areaName = document.getElementById("aname").value
-      const user = JSON.parse(localStorage.getItem('user'))
+      event.preventDefault();
+      const areaLong = document.getElementById("long").value;
+      const areaLat = document.getElementById("lat").value;
+      const areaName = document.getElementById("aname").value;
+      const user = JSON.parse(localStorage.getItem("user"));
       // input actual timezones here
 
-      const areaTimezones = {
-        0: document.getElementById('row4edit1').value,
-        1: document.getElementById('row4edit2').value,
-        2: document.getElementById('row4edit3').value,
-        3: document.getElementById('row4edit4').value,
-        4: document.getElementById('row4edit5').value,
-        5: document.getElementById('row4edit6').value,
-        6: document.getElementById('row1edit1').value,
-        7: document.getElementById('row1edit2').value,
-        8: document.getElementById('row1edit3').value,
-        9: document.getElementById('row1edit4').value,
-        10: document.getElementById('row1edit5').value,
-        11: document.getElementById('row1edit6').value,
-        12: document.getElementById('row2edit1').value,
-        13: document.getElementById('row2edit2').value,
-        14: document.getElementById('row2edit3').value,
-        15: document.getElementById('row2edit4').value,
-        16: document.getElementById('row2edit5').value,
-        17: document.getElementById('row2edit6').value,
-        18: document.getElementById('row3edit1').value,
-        19: document.getElementById('row3edit2').value,
-        20: document.getElementById('row3edit3').value,
-        21: document.getElementById('row3edit4').value,
-        22: document.getElementById('row3edit5').value,
-        23: document.getElementById('row3edit6').value
-}
+      const areaTimezones = {};
+      let countZones=0
+      for (let i=1; i<5; i++) {
+        for (let j=1; j<7; j++) {
+        areaTimezones[countZones]=document.getElementById("edit"+countZones).value;
+        countZones++;
+        }
+      }
 
       if (user !== null) {
-        const userEmail = user.email
-        console.log(areaTimezones)
-        const data = {email: userEmail, name: areaName, long: areaLong, lat: areaLat, timezones: areaTimezones }
+        const userEmail = user.email;
+        console.log(areaTimezones);
+        const data = {
+          email: userEmail,
+          name: areaName,
+          long: areaLong,
+          lat: areaLat,
+          timezones: areaTimezones
+        };
         fetch(backendUrl + "/area", {
-          method: 'PATCH', 
+          method: "PATCH",
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify(data)})
-        .then((response) => {
+          body: JSON.stringify(data)
+        }).then(response => {
           if (response.status === 200) {
             // Display success message
-            selectorData()
+            selectorData();
             window.M.toast({
               html: "Area saved",
-              classes: 'green darken-1'
-            })
+              classes: "green darken-1"
+            });
           } else {
             // Display error message
             window.M.toast({
               html: "Area could not be added",
-              classes: 'deep-orange accent-4 black-text',
+              classes: "deep-orange accent-4 black-text",
               displayLength: 6000
-            })
+            });
           }
-        })
+        });
       } else {
         window.M.toast({
           html: "Area could not be added, are you logged in?",
-          classes: 'deep-orange accent-4 black-text',
+          classes: "deep-orange accent-4 black-text",
           displayLength: 6000
-        })
+        });
       }
     },
-    viewArea: function(event){
+    viewArea: function(event) {
+      let instance = document.getElementById("areaOpt");
+      let selected = instance.options[instance.selectedIndex];
+      document.getElementById("long").value = selected.long;
+      document.getElementById("lat").value = selected.lat;
+      document.getElementById("aname").value = selected.value;
+      M.updateTextFields();
+      this.initMap({ lat: selected.lat, lng: selected.long });
+      let countHours=0;
 
-      let instance = document.getElementById('areaOpt')
-      let selected=instance.options[instance.selectedIndex]
-      document.getElementById("long").value = selected.long
-      document.getElementById("lat").value = selected.lat
-      document.getElementById("aname").value = selected.value
-       M.updateTextFields()
-        this.initMap({lat:selected.lat, lng:selected.long})
-// table not required in current implementation
-
-      // while (document.getElementById('parkview').childNodes.length>0){
-      //   document.getElementById('parkview').removeChild(document.getElementById('parkview').lastChild)
-      // }
-      // let renderView= document.createElement('table')
-      // renderView.setAttribute('class','comicGreen')
-      // document.getElementById('parkview').appendChild(renderView)
-      // for (let i=0; i < selected.lat; i++){
-      //   let newRow= document.createElement('tr')
-      //   newRow.class="row"
-      //   renderView.appendChild(newRow)
-      //   for (let j=0; j < selected.long; j++){
-      //     let newCell= document.createElement('td')
-      //     newCell.class="col"
-      //     newCell.textContent=(j+1)
-      //     newRow.appendChild(newCell)
-      //   }
-      // }
-
-      //render here
-      console.log(selected.timezones)
-      let timezonesview=document.getElementById('timezonesview')
-      while (timezonesview.childNodes.length>0){
-        timezonesview.removeChild(timezonesview.lastChild)
-      }
-      let timetable=document.createElement('table')
-      timetable.setAttribute('class','comicGreen')
-      timezonesview.appendChild(timetable)
-            for (let i=0; i<4; i++){
-        let newRow=document.createElement('tr')
-        newRow.setAttribute('id', 'row'+(i+1))
-timetable.appendChild(newRow)
-        for (let j=0; j<6; j++){
-let newCell = document.createElement('td')
-newCell.setAttribute('id', 'row'+(i+1)+'cell'+(j+1))
-let hour = document.createElement('div')
-hour.setAttribute('id', 'row'+(i+1)+'hour'+(j+1))
-let edit = document.createElement('input')
-edit.setAttribute('id', 'row'+(i+1)+'edit'+(j+1))
-edit.type='number'
-edit.value=0
-let label = document.createElement('label')
-label.for='id', 'row'+(i+1)+'edit'+(j+1)
-label.textContent="rate: "
-newRow.appendChild(newCell)
-
-newCell.appendChild(hour)
-label.appendChild(edit)
-newCell.appendChild(label)
-        }
-      }
-
-      for (let timezone in selected.timezones){
-        // console.log(timezone)
-        // console.log(selected.timezones[timezone])
-        // console.log('_____')
-        let value = selected.timezones[timezone]
-switch(timezone){
-
-  case '6':
-    document.getElementById('row1hour1').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row1edit1').value=value
-    break
-  case '7':
-    document.getElementById('row1hour2').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row1edit2').value=value
-    break
-  case '8':
-    document.getElementById('row1hour3').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row1edit3').value=value
-    break
-  case '9':
-    document.getElementById('row1hour4').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row1edit4').value=value
-    break
-  case '10':
-    document.getElementById('row1hour5').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row1edit5').value=value
-    break
-  case '11':
-    document.getElementById('row1hour6').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row1edit6').value=value
-    break
-  case '12':
-    document.getElementById('row2hour1').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row2edit1').value=value
-    break
-  case '13':
-    document.getElementById('row2hour2').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row2edit2').value=value
-    break
-  case '14':
-    document.getElementById('row2hour3').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row2edit3').value=value
-    break
-  case '15':
-    document.getElementById('row2hour4').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row2edit4').value=value
-    break
-  case '16':
-    document.getElementById('row2hour5').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row2edit5').value=value
-    break
-  case '17':
-    document.getElementById('row2hour6').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row2edit6').value=value
-    break
-  case '18':
-    document.getElementById('row3hour1').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row3edit1').value=value
-    break
-  case '19':
-    document.getElementById('row3hour2').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row3edit2').value=value
-    break
-  case '20':
-    document.getElementById('row3hour3').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row3edit3').value=value
-    break
-  case '21':
-    document.getElementById('row3hour4').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row3edit4').value=value
-    break
-  case '22':
-    document.getElementById('row3hour5').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row3edit5').value=value
-    break
-  case '23':
-    document.getElementById('row3hour6').textContent=timezone+':00-'+timezone+':59'
-    document.getElementById('row3edit6').value=value
-    break
-  case '0':
-    document.getElementById('row4hour1').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row4edit1').value=value
-    break
-  case '1':
-    document.getElementById('row4hour2').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row4edit2').value=value
-    break
-  case '2':
-    document.getElementById('row4hour3').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row4edit3').value=value
-    break
-  case '3':
-    document.getElementById('row4hour4').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row4edit4').value=value
-    break
-  case '4':
-    document.getElementById('row4hour5').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row4edit5').value=value
-    break
-  case '5':
-    document.getElementById('row4hour6').textContent='0'+timezone+':00-0'+timezone+':59'
-    document.getElementById('row4edit6').value=value
-    break
-
-  default:
-    break
-}
+      for (let timezone in selected.timezones) {
+        let value = selected.timezones[timezone];
+        document.getElementById("edit"+countHours).value = value;
+        countHours++
       }
 
       window.M.toast({
-      html: selected.value ,
-      classes: 'green darken-1',
-      displayLength: 6000
-      })
+        html: selected.value,
+        classes: "green darken-1",
+        displayLength: 6000
+      });
     }
   }
-}
+};
 </script>
 
 <style>
@@ -461,103 +296,100 @@ label {
   display: inline-flex;
   padding: 2px;
 }
-  .login-wrapper {
-    width: 50%;
-    margin: 0 auto;
-  }
-  button {
-    padding: 5px;
-    margin: 5px;
-  }
-  .timezonesview {
-width: 60%;
-margin: 0 auto;
-padding: 5px;
-position: relative;
-float: left;
-  }
+.login-wrapper {
+  width: 50%;
+  margin: 0 auto;
+}
+button {
+  padding: 5px;
+  margin: 5px;
+}
+.timezonesview {
+  width: 60%;
+  margin: 0 auto;
+  padding: 5px;
+  position: relative;
+  float: left;
+}
 table.comicGreen {
   font-family: "Comic Sans MS", cursive, sans-serif;
-  border: 2px solid #4F7849;
-  background-color: #EEEEEE;
+  border: 2px solid #4f7849;
+  background-color: #eeeeee;
   width: 100%;
   text-align: center;
   border-collapse: collapse;
   font-size: 9px;
 }
-table.comicGreen td, table.comicGreen th {
-  border: 1px solid #4F7849;
+table.comicGreen td,
+table.comicGreen th {
+  border: 1px solid #4f7849;
   padding: 3px 2px;
 }
 table.comicGreen tbody td {
   font-size: 9px;
   font-weight: bold;
-  color: #4F7849;
+  color: #4f7849;
 }
 table.comicGreen tr:nth-child(even) {
-  background: #CEE0CC;
+  background: #cee0cc;
 }
 table.comicGreen tfoot {
   font-size: 9px;
   font-weight: bold;
-  color: #FFFFFF;
-  background: #4F7849;
-  background: -moz-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
-  background: -webkit-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4F7849 100%);
-  background: linear-gradient(to bottom, #7b9a76 0%, #60855b 66%, #4F7849 100%);
+  color: #ffffff;
+  background: #4f7849;
+  background: -moz-linear-gradient(top, #7b9a76 0%, #60855b 66%, #4f7849 100%);
+  background: -webkit-linear-gradient(
+    top,
+    #7b9a76 0%,
+    #60855b 66%,
+    #4f7849 100%
+  );
+  background: linear-gradient(to bottom, #7b9a76 0%, #60855b 66%, #4f7849 100%);
   border-top: 1px solid #444444;
 }
 table.comicGreen tfoot td {
   font-size: 5px;
 }
 
-
 /* ----------- Galaxy S6: Portrait and Landscape ----------- */
-@media screen and (max-width: 360px)
-and (device-height: 640px)
-and (-webkit-device-pixel-ratio: 3) {
-  .arearow label  {
+@media screen and (max-width: 360px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) {
+  .arearow label {
     font-size: 12px;
   }
 
-  #timezonesview, #map {
+  #timezonesview,
+  #map {
     width: 100%;
     margin: 0 auto;
-
   }
 }
 
 /* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
 
 /* Portrait and Landscape */
-@media only screen
-and (min-device-width: 320px)
-and (max-device-width: 568px)
-and (-webkit-min-device-pixel-ratio: 2) {
-  .arearow label  {
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+  .arearow label {
     font-size: 11.5px;
   }
 
-  #timezonesview, #map {
+  #timezonesview,
+  #map {
     width: 100%;
     margin: 0 auto;
-
   }
 }
 
 /* ----------- iPhone 6, 6S, 7 and 8: Portrait and Landscape ----------- */
-@media only screen and (min-device-width: 375px)
-and (max-device-width: 667px)
-and (-webkit-min-device-pixel-ratio: 2) {
-  .arearow label  {
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+  .arearow label {
     font-size: 12px;
   }
 
-  #timezonesview, #map {
+  #timezonesview,
+  #map {
     width: 100%;
     margin: 0 auto;
-
   }
-  
 }
 </style>
