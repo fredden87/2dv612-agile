@@ -12,10 +12,8 @@ const crypto = require('crypto')
 const saltRounds = 10
 const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const mailModel = require('../../mail.js')
-let backendUrl = '127.0.0.1:3000'
-if (process.env.VUE_APP_ENVIRONMENT === 'production') {
-  backendUrl = '194.47.206.226:3000'
-}
+const frontendUrl = require ('../frontendURL.js');
+const backendUrl = require ('../backendURL.js');
 
 function connect (response) {
   mongoose.connect(MONGODB_URL, {
@@ -49,9 +47,7 @@ router.get('/verify/:auth', function (req, res) {
             })
           }
           mongoose.connection.close()
-          res.status(200).json({
-            message: 'Email verified'
-          })
+          res.status(301).redirect(frontendUrl+'/#/login');
         })
       }
     })
@@ -82,7 +78,7 @@ router.post('/signup', (req, res, next) => {
         email: req.body.email,
         password: hash,
         token: authToken,
-        url: 'http://' + backendUrl + '/user/verify/' + authToken,
+        url: backendUrl + '/user/verify/' + authToken,
         verified: false
       })
 
