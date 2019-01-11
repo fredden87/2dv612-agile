@@ -12,8 +12,8 @@ const crypto = require('crypto')
 const saltRounds = 10
 const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const mailModel = require('../../mail.js')
-import { frontendUrl } from "../frontendURL.js";
-import { backendUrl } from "../backendURL.js";
+const frontendUrl = require ('../frontendURL.js');
+const backendUrl = require ('../backendURL.js');
 
 function connect (response) {
   mongoose.connect(MONGODB_URL, {
