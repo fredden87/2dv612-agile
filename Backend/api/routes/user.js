@@ -47,7 +47,7 @@ router.get('/verify/:auth', function (req, res) {
             })
           }
           mongoose.connection.close()
-          res.status(301).redirect(frontendUrl+'/login');
+          res.status(301).redirect(frontendUrl+'/#/login');
         })
       }
     })
