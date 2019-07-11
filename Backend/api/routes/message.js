@@ -16,27 +16,16 @@ const Messagemodel = require('../db_resources/messagemodel.js')
  *        "message": "Tjolahopp, tjolahej, tjolahoppsan..."
  *      }
  *
- * 500: DB connection error
+ *
  *
  */
 router.get('/', (req, res, next) => {
-  const mongoose = require('mongoose')
-
-  mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
-    if (error) {
-      res.status(500).json({
-        message: 'Unable to establish database connection'
-      })
+  Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.status(200).json(result)
     }
-
-    Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
-      if (err) {
-        console.log(err)
-      } else {
-        mongoose.connection.close()
-        res.status(200).json(result)
-      }
-    })
   })
 })
 
@@ -48,34 +37,20 @@ router.get('/', (req, res, next) => {
  *
  * 200: Success setting new message, clears viewed-by-list.
  *
- * 500: DB Connection error.
- *
  */
 router.post('/', (req, res, next) => {
-  const mongoose = require('mongoose')
-  console.log(req.body)
+  // Updates the message in database, creates if not exists
+  let query = { stringId: 'admin_message' }
+  let update = { message: req.body.message, viewed_by: [], stringId: 'admin_message' }
+  let options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
-  mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
-    if (error) {
-      res.status(500).json({
-        message: 'Unable to establish database connection'
-      })
+  Messagemodel.findOneAndUpdate(query, update, options, function (err, response) {
+    if (err) {
+      console.log(err)
+      res.status(400).json({ message: 'Message could not be updated!' })
+    } else {
+      res.status(200).json({ message: 'Message updated!' })
     }
-    // Updates the message in database, creates if not exists
-    let query = { stringId: 'admin_message' }
-    let update = { message: req.body.message, viewed_by: [], stringId: 'admin_message' }
-    let options = { upsert: true, new: true, setDefaultsOnInsert: true }
-
-    Messagemodel.findOneAndUpdate(query, update, options, function (err, response) {
-      if (err) {
-        console.log(err)
-        mongoose.connection.close()
-        res.status(400).json({ message: 'Message could not be updated!' })
-      } else {
-        mongoose.connection.close()
-        res.status(200).json({ message: 'Message updated!' })
-      }
-    })
   })
 })
 
@@ -87,49 +62,35 @@ router.post('/', (req, res, next) => {
  *
  * 200: Added email to list.
  *
- * 500: DB Connection error.
- *
  */
 router.patch('/', (req, res, next) => {
-  const mongoose = require('mongoose')
-
-  mongoose.connect('mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3', { useNewUrlParser: true }, function (error) {
-    if (error) {
-      res.status(500).json({
-        message: 'Unable to establish database connection'
+  Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
+    if (err) {
+      console.log(err)
+    } else {
+      result.save((err) => {
+        if (err) {
+          console.log(err)
+        }
       })
     }
-
-    Messagemodel.findOne({ stringId: 'admin_message' }, function (err, result) {
-      if (err) {
-        console.log(err)
-      } else {
-        result.save((err) => {
-          if (err) {
-            console.log(err)
-          }
-        })
-      }
-    })
-      .then(data => {
-        data.viewed_by.push(req.body.email)
-        console.log(data)
-
-        Messagemodel.findByIdAndUpdate(
-          data._id,
-          data,
-          { new: true },
-          (err, message) => {
-            if (err) {
-              mongoose.connection.close()
-              return res.status(500).send(err)
-            }
-            mongoose.connection.close()
-            return res.status(200).json(message)
-          }
-        )
-      })
   })
+    .then(data => {
+      data.viewed_by.push(req.body.email)
+      console.log(data)
+
+      Messagemodel.findByIdAndUpdate(
+        data._id,
+        data,
+        { new: true },
+        (err, message) => {
+          if (err) {
+            return res.status(500).send(err)
+          }
+          return res.status(200).json(message)
+        }
+      )
+    })
 })
 
 module.exports = router

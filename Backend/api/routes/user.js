@@ -10,44 +10,27 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const saltRounds = 10
-const MONGODB_URL = 'mongodb+srv://team3:' + process.env.PASS + '@cluster0-xwlga.mongodb.net/team3'
 const mailModel = require('../../mail.js')
-const frontendUrl = require ('../frontendURL.js');
-const backendUrl = require ('../backendURL.js');
-
-function connect (response) {
-  mongoose.connect(MONGODB_URL, {
-    autoReconnect: true,
-    useNewUrlParser: true
-  }).catch(err => {
-    console.log('Mongo connection error', err)
-    response.status(500).json({
-      error: err
-    })
-  })
-}
+const frontendUrl = require('../frontendURL.js')
+const backendUrl = require('../backendURL.js')
 
 router.get('/verify/:auth', function (req, res) {
-  connect(res)
   let authToken = req.params.auth
   User.find({ token: authToken })
     .exec()
     .then(user => {
       if (user.length !== 1) {
-        mongoose.connection.close()
         return res.status(404).json({
           message: 'Email Verification Failed'
         })
       } else {
         User.update({ token: authToken }, { $set: { verified: true } }, function (err, user) {
           if (err) {
-            mongoose.connection.close()
             res.status(500).json({
               error: err
             })
           }
-          mongoose.connection.close()
-          res.status(301).redirect(frontendUrl+'/#/login');
+          res.status(301).redirect(frontendUrl + '/#/login')
         })
       }
     })
@@ -61,12 +44,10 @@ router.get('/verify/:auth', function (req, res) {
 router.post('/signup', (req, res, next) => {
   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
     if (err) {
-      mongoose.connection.close()
       return res.status(500).json({
         error: err
       })
     } else {
-      connect(res)
       let seed = crypto.randomBytes(20)
       let authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex')
 
@@ -88,13 +69,11 @@ router.post('/signup', (req, res, next) => {
             return console.log('Error: ' + error)
           }
         })
-        mongoose.connection.close()
         res.status(200).json({
           message: 'New user added'
         })
       }).catch(err => {
         console.log(err)
-        mongoose.connection.close()
         res.status(500).json({
           error: err
         })
@@ -104,16 +83,13 @@ router.post('/signup', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  connect(res)
   User.find({ _id: req.params.id, email: req.body.email })
     .exec()
     .then(user => {
-      mongoose.connection.close()
       return res.status(200).send(user)
     })
     .catch(err => {
       console.log(err)
-      mongoose.connection.close()
       res.status(500).json({
         error: err
       })
@@ -121,7 +97,6 @@ router.post('/', (req, res, next) => {
 })
 
 router.post('/delete/:id', (req, res, next) => {
-  connect(res)
   User.find({ _id: req.params.id, email: req.body.email })
     .remove()
     .exec()
@@ -132,12 +107,10 @@ router.post('/delete/:id', (req, res, next) => {
         .exec()
         .then(user => {
           console.log(user)
-          mongoose.connection.close()
           return res.status(200).json({ message: JSON.stringify(req.body.email) + ' removed' })
         })
         .catch(err => {
           console.log(err)
-          mongoose.connection.close()
           res.status(500).json({
             error: err
           })
@@ -145,14 +118,12 @@ router.post('/delete/:id', (req, res, next) => {
     })
     .catch(err => {
       console.log(err)
-      mongoose.connection.close()
       res.status(500).json({
         error: err
       })
     })
 })
 router.post('/changepw', (req, res, next) => {
-  connect(res)
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
@@ -176,7 +147,6 @@ router.post('/changepw', (req, res, next) => {
           })
         }
       })
-      mongoose.connection.close()
     })
     .catch(err => {
       console.log(err)
@@ -187,7 +157,6 @@ router.post('/changepw', (req, res, next) => {
 })
 
 router.post('/changeemail', (req, res, next) => {
-  connect(res)
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
@@ -222,7 +191,6 @@ router.post('/changeemail', (req, res, next) => {
         error: err
       })
     })
-  // mongoose.connection.close()
 })
 
 module.exports = router
